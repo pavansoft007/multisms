@@ -1,1 +1,1 @@
-remote
+remotes
