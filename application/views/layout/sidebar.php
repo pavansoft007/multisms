@@ -41,6 +41,16 @@
                                 </a>
                             </li>
                     <?php } ?>
+
+                    <?php if (is_superadmin_loggedin() || is_master_loggedin()) : ?>
+                    <!-- master admin -->
+                    <li class="<?php if ($main_menu == 'school') echo 'nav-active';?>">
+                        <a href="<?=base_url('school')?>">
+                            <i class="fas fa-school"></i><span><?=translate('school')?></span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+
                     <?php if (is_superadmin_loggedin()) : ?>
                     <!-- branch -->
                     <li class="<?php if ($main_menu == 'branch') echo 'nav-active';?>">

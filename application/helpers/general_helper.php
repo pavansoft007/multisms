@@ -160,6 +160,26 @@ function is_student_loggedin()
     return false;
 }
 
+// is master admin logged in @return boolean
+function is_master_loggedin()
+{
+    $CI = &get_instance();
+    if ($CI->session->userdata('loggedin_role_id') == 8) {
+        return true;
+    }
+    return false;
+}
+
+// is super admin logged in @return boolean
+function is_superadmin2_loggedin()
+{
+    $CI = &get_instance();
+    if ($CI->session->userdata('loggedin_role_id') == 9) {
+        return true;
+    }
+    return false;
+}
+
 // get logged in user id - login credential DB id
 function get_loggedin_id()
 {
