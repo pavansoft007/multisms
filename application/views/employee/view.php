@@ -2,7 +2,7 @@
 	<div class="tabs-custom">
 		<ul class="nav nav-tabs">
 			<?php
-			$this->db->where_not_in('id', array(1,6,7));
+			$this->db->where_not_in('id', array(1,6,7,8,9));
 			$roles = $this->db->get('roles')->result();
 			foreach ($roles as $role){
 			?> 	

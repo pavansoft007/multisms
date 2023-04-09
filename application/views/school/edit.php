@@ -27,11 +27,54 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('person_name')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" name="person_name" value="<?=set_value('person_name', $data->person_name)?>" />
+							<span class="error"><?=form_error('person_name') ?></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('gender')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<?php
+								$array = array(
+									"" => translate('select'),
+									"male" => translate('male'),
+									"female" => translate('female')
+								);
+								echo form_dropdown("sex", $array, set_value('sex', $data->sex), "class='form-control' data-plugin-selectTwo data-width='100%'
+								data-minimum-results-for-search='Infinity'");
+							?>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('email')?> <span class="required">*</span></label>
 						<div class="col-md-6">
 							<input type="text" class="form-control" name="email" value="<?=set_value('email', $data->email)?>"  />
 							<span class="error"><?=form_error('email') ?></span>
 						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('password')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<input type="password" class="form-control" name="password" value="<?=set_value('password')?>" />
+							<span class="error"><?=form_error('password') ?></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('retype_password')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<input type="password" class="form-control" name="retype_password" value="<?=set_value('retype_password')?>" />
+							<span class="error"><?=form_error('retype_password') ?></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('joining_date')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" name="joining_date" value="<?=set_value('joining_date', $data->joining_date)?>" data-plugin-datepicker
+							data-plugin-options='{ "todayHighlight" : true }' />
+						</div>
+						<span class="error"><?=form_error('joining_date')?></span>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
@@ -43,14 +86,14 @@
 					<div class="form-group">
 						<label  class="col-md-3 control-label"><?=translate('currency')?> <span class="required">*</span></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" name="currency" value="<?=set_value('currency', $data->currency)?>" />
+							<input type="text" class="form-control" name="currency" value="<?=set_value('currency', $data->currency)?>" readonly/>
 							<span class="error"><?=form_error('currency') ?></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('currency_symbol')?> <span class="required">*</span></label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" name="currency_symbol" value="<?=set_value('currency_symbol', $data->symbol)?>" />
+							<input type="text" class="form-control" name="currency_symbol" value="<?=set_value('currency_symbol', $data->symbol)?>" readonly/>
 							<span class="error"><?=form_error('currency_symbol') ?></span>
 						</div>
 					</div>
