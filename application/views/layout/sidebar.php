@@ -68,7 +68,7 @@
                     <!-- admission -->
                     <li class="nav-parent <?php if ($main_menu == 'admission') echo 'nav-expanded nav-active';?>">
                         <a>
-                            <i class="far fa-edit"></i><span><?=translate('admission')?></span>
+                            <i class="far fa-edit"></i><span><?=translate('student_admission')?></span>
                         </a>
                         <ul class="nav nav-children">
                         <?php if(get_permission('student', 'is_add')){ ?>
@@ -348,7 +348,7 @@
                                                                 $main_menu == 'subject' ||
                                                                     $main_menu == 'transfer') echo 'nav-expanded nav-active';?>">
                         <a>
-                            <i class="icons icon-home" aria-hidden="true"></i><span><?=translate('academic')?></span>
+                            <i class="icons icon-home" aria-hidden="true"></i><span><?=translate('classes_&_subjects')?></span>
                         </a>
 
                         <ul class="nav nav-children">
@@ -618,7 +618,7 @@
                     <!-- supervision -->
                     <li class="nav-parent <?php if ($main_menu == 'hostels' || $main_menu == 'transport') echo 'nav-expanded nav-active';?>">
                         <a>
-                            <i class="icons icon-feed" aria-hidden="true"></i><span><?=translate('supervision')?></span>
+                            <i class="icons icon-feed" aria-hidden="true"></i><span><?=translate('transport_&_hostel')?></span>
                         </a>
                         <ul class="nav nav-children">
                             <?php
