@@ -28,7 +28,7 @@ class Dashboard_model extends CI_Model
         if (!empty($role)) {
             $this->db->where('login_credential.role', $role);
         }else{
-            $this->db->where_not_in('login_credential.role', array(1,3,6,7));
+            $this->db->where_not_in('login_credential.role', array(1,3,6,7,8,9));
         }
         if (!empty($branchID)) {
             $this->db->where('staff.branch_id', $branchID);
