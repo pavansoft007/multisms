@@ -67,7 +67,7 @@ class Application_model extends CI_Model
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
         $this->db->where('e.class_id', $classID);
         $this->db->where('e.branch_id', $branchID);
-        $this->db->where('e.session_id', get_session_id());
+        // $this->db->where('e.session_id', get_session_id());
         if ($rollOrder == true) {
             $this->db->order_by('e.roll', 'ASC');
         } else {
