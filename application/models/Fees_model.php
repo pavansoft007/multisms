@@ -358,7 +358,13 @@ class Fees_model extends MY_Model
 
     function getStudentsListReminder($groupID='', $typeID='')
     {
-        $sessionID = get_type_name_by_id('global_settings', 1, 'session_id');
+        $branchID = $this->application_model->get_branch_id();
+        if($branchID){
+            $sessionID_data = $this->db->select('session_id')->where(array('branch_id' => $branchID))->get('global_settings')->row();
+            $sessionID = $sessionID_data['session_id'];
+        }else{
+            $sessionID = get_type_name_by_id('global_settings', 1, 'session_id');
+        }
         $this->db->select('a.id as allocation_id,CONCAT(s.first_name," ",s.last_name) as child_name,s.mobileno as child_mobileno,pr.name as guardian_name,pr.mobileno as guardian_mobileno');
         $this->db->from('fee_allocation as a');
         $this->db->join('student as s','s.id = a.student_id', 'inner');
