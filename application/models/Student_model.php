@@ -268,12 +268,27 @@ class Student_model extends MY_Model
     public function regSerNumber()
     {
         $prefix = '';
-        $config = $this->db->select('institution_code,reg_prefix')->where(array('id' => 1))->get('global_settings')->row();
+        $branchID = $this->application_model->get_branch_id();
+        if($branchID){
+            $config = $this->db->select('institution_code,reg_prefix')->where(array('branch_id' => $branchID))->get('global_settings')->row();
+        }else{
+            $config = $this->db->select('institution_code,reg_prefix')->where(array('id' => 1))->get('global_settings')->row();
+        }
         if ($config->reg_prefix == 'on') {
             $prefix = $config->institution_code;
         }
-        $result = $this->db->select("max(id) as id")->get('student')->row_array();
-        $id = $result["id"];
+
+        $this->db->select('s.id');
+        $this->db->from('enroll as e');
+        $this->db->join('student as s', 'e.student_id = s.id', 'left');
+        if (!is_superadmin_loggedin()) {
+            $this->db->where('e.branch_id', get_loggedin_branch_id());
+        }
+        $query = $this->db->get();
+        if ($query->num_rows() == 0) {
+            show_404();
+        }
+        $id = $query->num_rows();
         if (!empty($id)) {
             $maxNum = str_pad($id + 1, 5, '0', STR_PAD_LEFT);
         } else {

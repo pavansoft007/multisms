@@ -48,7 +48,7 @@ class Settings extends Admin_Controller
             if (empty($config['reg_prefix'])) {
                 $config['reg_prefix'] = false;
             }
-            if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
+            if($branchID){
                 $branchID = $this->application_model->get_branch_id();
                 $config['branch_id'] = $branchID;
                 $select_global_settings = $this->db->select('id')->where(array(

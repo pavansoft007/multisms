@@ -59,6 +59,9 @@ class Authentication extends Authentication_Controller
                         }
                         $getUser = $this->application_model->getUserNameByRoleID($login_credential->role, $login_credential->user_id);
                         $getConfig = $this->db->get_where('global_settings', array('id' => 1))->row_array();
+                        if(($login_credential->role !=1) && ($login_credential->role !=8)){
+                            $getConfig = $this->db->get_where('global_settings', array('branch_id' => $login_credential->user_id))->row_array();
+                        }
                         // get logger name
                         $sessionData = array(
                             'name' => $getUser['name'],

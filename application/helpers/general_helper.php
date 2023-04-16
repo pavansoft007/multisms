@@ -80,9 +80,18 @@ function get_global_setting($name = '')
 {
     $CI = &get_instance();
     $name = trim($name);
-    $CI->db->where('id', 1);
-    $CI->db->select($name);
-    $query = $CI->db->get('global_settings');
+    $branchID = get_loggedin_branch_id();
+    $roleID = loggedin_role_id();
+    if($roleID != 1){
+        $CI->db->where('branch_id', $branchID);
+        $CI->db->select($name);
+        $query = $CI->db->get('global_settings');
+    }else{
+        $CI->db->where('id', 1);
+        $CI->db->select($name);
+        $query = $CI->db->get('global_settings');
+    }
+    
 
     if ($query->num_rows() > 0) {
         $row = $query->row();

@@ -36,6 +36,24 @@ class Cron_api extends MY_Controller
             $this->db->update('global_settings', array('cron_secret_key' => generate_encryption_key()));
             set_alert('success', "Successfully Created The New Secret Key.");
             redirect(current_url());
+
+            if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
+                $branchID = $this->application_model->get_branch_id();
+                $select_global_settings = $this->db->select('id')->where(array(
+                    'branch_id' => $branchID,
+                ))->get('global_settings')->num_rows();
+                if($select_global_settings == 1){
+                    $this->db->where('branch_id', $branchID);
+                    $this->db->update('global_settings', array('cron_secret_key' => generate_encryption_key()));
+                    set_alert('success', "Successfully Created The New Secret Key.");
+                    redirect(current_url());
+                }
+            }else{
+                $this->db->where('id', 1);
+                $this->db->update('global_settings', array('cron_secret_key' => generate_encryption_key()));
+                set_alert('success', "Successfully Created The New Secret Key.");
+                redirect(current_url());
+            }
         }
 
         $this->data['title'] = translate('cron_job');
