@@ -48,10 +48,26 @@ class Settings extends Admin_Controller
             if (empty($config['reg_prefix'])) {
                 $config['reg_prefix'] = false;
             }
-            $this->db->where('id', 1);
-            $this->db->update('global_settings', $config);
-            set_alert('success', translate('the_configuration_has_been_updated'));
-            redirect(current_url());
+            if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
+                $branchID = $this->application_model->get_branch_id();
+                $config['branch_id'] = $branchID;
+                $select_global_settings = $this->db->select('id')->where(array(
+                    'branch_id' => $branchID,
+                ))->get('global_settings')->num_rows();
+                if($select_global_settings == 1){
+                    $this->db->where('branch_id', $branchID);
+                    $this->db->update('global_settings', $config);
+                    set_alert('success', translate('the_configuration_has_been_updated'));
+                    redirect(current_url());
+                }else{
+                    $this->db->insert('global_settings', $config);
+                }
+            }else{
+                $this->db->where('id', 1);
+                $this->db->update('global_settings', $config);
+                set_alert('success', translate('the_configuration_has_been_updated'));
+                redirect(current_url());
+            }
         }
 
         if ($this->input->post('submit') == 'theme') {
@@ -61,11 +77,29 @@ class Settings extends Admin_Controller
                 }
                 $config[$input] = $value;
             }
-            $this->db->where('id', 1);
-            $this->db->update('theme_settings', $config);
-            set_alert('success', translate('the_configuration_has_been_updated'));
-            $this->session->set_flashdata('active', 2);
-            redirect(current_url());
+
+            if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
+                $branchID = $this->application_model->get_branch_id();
+                $config['branch_id'] = $branchID;
+                $select_theme_settings = $this->db->select('id')->where(array(
+                    'branch_id' => $branchID,
+                ))->get('theme_settings')->num_rows();
+                if($select_theme_settings == 1){
+                    $this->db->where('branch_id', $branchID);
+                    $this->db->update('theme_settings', $config);
+                    set_alert('success', translate('the_configuration_has_been_updated'));
+                    $this->session->set_flashdata('active', 2);
+                    redirect(current_url());
+                }else{
+                    $this->db->insert('theme_settings', $config);
+                }
+            }else{
+                $this->db->where('id', 1);
+                $this->db->update('theme_settings', $config);
+                set_alert('success', translate('the_configuration_has_been_updated'));
+                $this->session->set_flashdata('active', 2);
+                redirect(current_url());
+            }
         }
 
         if ($this->input->post('submit') == 'logo') {
