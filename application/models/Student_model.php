@@ -108,7 +108,7 @@ class Student_model extends MY_Model
     public function csvImport($row, $classID, $sectionID, $branchID)
     {
         $getParent = $this->db->select('id')->where(array('branch_id' => $branchID, 'email' => $row['GuardianEmail']))->get('parent')->row_array();
-        if (count($getParent)) {
+        if (sizeof($getParent)) {
             $parentID = $getParent['id'];
         } else {
             // add new guardian all information in db
