@@ -61,13 +61,13 @@
 						<?=translate('currency');?>
 					</label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="currency" value="<?=set_value('currency', $global_config['currency'])?>" />
+						<input type="text" class="form-control" name="currency" value="INR" readonly/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('currency_symbol');?></label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="currency_symbol" value="<?=set_value('currency_symbol', $global_config['currency_symbol'])?>" />
+						<input type="text" class="form-control" name="currency_symbol" value="₹" readonly/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -129,6 +129,7 @@
 						?>
 					</div>
 				</div>
+				<?php if((is_master_loggedin()) || (is_superadmin_loggedin())){ ?>
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('footer_text');?></label>
 					<div class="col-md-6">
@@ -161,7 +162,7 @@
 						<input type="text" class="form-control" name="youtube_url" value="<?=set_value('youtube_url', $global_config['youtube_url'])?>" />
 					</div>
 				</div>
-
+				<?php } ?>
 				<footer class="panel-footer mt-lg">
 					<div class="row">
 						<div class="col-md-2 col-sm-offset-3">
@@ -256,33 +257,39 @@
 					<i class="fab fa-envira"></i> <?=translate('logo');?>
 				</div>
 				<div class="row">
+					<?php if(is_master_loggedin() || is_superadmin_loggedin()){ ?>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label"><?=translate('system_logo');?></label>
 							<input type="file" name="logo_file" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=base_url('uploads/app_image/logo.png')?>" />
 						</div>
 					</div>
+					<?php } ?>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label"><?=translate('text_logo');?></label>
-							<input type="file" name="text_logo" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=base_url('uploads/app_image/logo-small.png')?>" />
+							<input type="file" name="text_logo" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=($global_images['branch_id']==''||$global_images['text_logo']=='logo-small.png')?base_url('uploads/app_image/logo-small.png'):base_url('uploads/app_image/text_logo/'.$global_images['text_logo'].'')?>" />
+							<input type="hidden" name="old_text_logo" value="<?php echo $global_images['text_logo']; ?>" />
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label"><?=translate('printing_logo');?></label>
-							<input type="file" name="print_file" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=base_url('uploads/app_image/printing-logo.png')?>" />
+							<input type="file" name="print_file" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=($global_images['branch_id']==''||$global_images['printing_logo']=='printing-logo.png')?base_url('uploads/app_image/printing-logo.png'):base_url('uploads/app_image/printing_logo/'.$global_images['printing_logo'].'')?>" />
+							<input type="hidden" name="old_printing_logo" value="<?php echo $global_images['printing_logo']; ?>" />
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label"><?=translate('report_card');?></label>
-							<input type="file" name="report_card" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=base_url('uploads/app_image/report-card-logo.png')?>" />
+							<input type="file" name="report_card" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=($global_images['branch_id']=='' || $global_images['report_logo'] == 'report-card-logo.png')?base_url('uploads/app_image/report-card-logo.png'):base_url('uploads/app_image/report_logo/'.$global_images['report_logo'].'')?>" />
+							<input type="hidden" name="old_report_logo" value="<?php echo $global_images['report_logo']; ?>" />
 						</div>
 					</div>
 				</div>
 
 				<!-- login background -->
+				<?php if(is_master_loggedin() || is_superadmin_loggedin()){ ?>
 				<div class="headers-line mt-lg">
 					<i class="fas fa-sign-out-alt"></i> Login Background
 				</div>
@@ -306,7 +313,7 @@
 						</div>
 					</div>
 				</div>
-				
+				<?php } ?>
 				<footer class="panel-footer">
 					<div class="row">
 						<div class="col-md-2 col-sm-offset-10">

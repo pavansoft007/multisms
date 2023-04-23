@@ -20,10 +20,11 @@ class MY_Controller extends CI_Controller {
         if($branchID){
 		    $get_config = $this->db->get_where('global_settings',array('branch_id'=>$branchID))->row_array();
             $get_theme_config = $this->db->get_where('theme_settings',array('branch_id'=>$branchID))->row_array();
+            $get_global_images = $this->db->get_where('global_images',array('branch_id'=>$branchID))->row_array();
         }
         $this->data['global_config'] = $get_config;
 		$this->data['theme_config'] = $get_theme_config;
-
+        $this->data['global_images'] = $get_global_images;
 		date_default_timezone_set($get_config['timezone']);
 	}
 

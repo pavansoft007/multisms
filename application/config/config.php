@@ -526,4 +526,4 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 $config['installed'] = TRUE;
-$config['product_name'] = 'ramom_school_v2.5';
+$config['product_name'] = 'bigwala technologies';

@@ -103,15 +103,93 @@ class Settings extends Admin_Controller
         }
 
         if ($this->input->post('submit') == 'logo') {
-            move_uploaded_file($_FILES['logo_file']['tmp_name'], 'uploads/app_image/logo.png');
-            move_uploaded_file($_FILES['text_logo']['tmp_name'], 'uploads/app_image/logo-small.png');
-            move_uploaded_file($_FILES['print_file']['tmp_name'], 'uploads/app_image/printing-logo.png');
-            move_uploaded_file($_FILES['report_card']['tmp_name'], 'uploads/app_image/report-card-logo.png');
+            if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
+                $text_logo = 'logo-small.png';
+                $old_text_logo = $this->input->post('old_text_logo');
+                if ((isset($_FILES["text_logo"]) && !empty($_FILES['text_logo']['name']))) {
+                    $config['upload_path'] = './uploads/app_image/text_logo';
+                    $config['allowed_types'] = 'png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload("text_logo")) {
+                        // need to unlink previous photo
+                        if (!empty($old_text_logo)) {
+                            $unlink_path = 'uploads/app_image/text_logo/';
+                            if (file_exists($unlink_path . $old_text_logo)) {
+                                @unlink($unlink_path . $old_text_logo);
+                            }
+                        }
+                        $text_logo = $this->upload->data('file_name');
+                    }
+                }else{
+                    if (!empty($old_text_logo)){
+                        $text_logo = $old_text_logo;
+                    }
+                }
+                $printing_logo = 'printing-logo.png';
+                $old_printing_logo = $this->input->post('old_printing_logo');
+                if ((isset($_FILES["print_file"]) && !empty($_FILES['print_file']['name']))) {
+                    $config['upload_path'] = './uploads/app_image/printing_logo';
+                    $config['allowed_types'] = 'png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload("print_file")) {
+                        // need to unlink previous photo
+                        if (!empty($old_printing_logo)) {
+                            $unlink_path = 'uploads/app_image/printing_logo/';
+                            if (file_exists($unlink_path . $old_printing_logo)) {
+                                @unlink($unlink_path . $old_printing_logo);
+                            }
+                        }
+                        $printing_logo = $this->upload->data('file_name');
+                    }
+                }else{
+                    if (!empty($old_printing_logo)){
+                        $printing_logo = $old_printing_logo;
+                    }
+                }
+                $report_logo = 'report-card-logo.png';
+                $old_report_logo = $this->input->post('old_report_logo');
+                if ((isset($_FILES["report_card"]) && !empty($_FILES['report_card']['name']))) {
+                    $config['upload_path'] = './uploads/app_image/report_logo';
+                    $config['allowed_types'] = 'png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload("report_card")) {
+                        // need to unlink previous photo
+                        if (!empty($old_report_logo)) {
+                            $unlink_path = 'uploads/app_image/report_logo/';
+                            if (file_exists($unlink_path . $old_report_logo)) {
+                                @unlink($unlink_path . $old_report_logo);
+                            }
+                        }
+                        $report_logo = $this->upload->data('file_name');
+                    }
+                }else{
+                    if (!empty($old_report_logo)){
+                        $report_logo = $old_report_logo;
+                    }
+                }
+                $branchID = $this->application_model->get_branch_id();
+                $global_images['branch_id'] = $branchID;
+                $global_images['text_logo'] = $text_logo;
+                $global_images['printing_logo'] = $printing_logo;
+                $global_images['report_logo'] = $report_logo;
+                $select_global_images = $this->db->select('id')->where(array('branch_id' => $branchID,))->get('global_images')->num_rows();
+                if($select_global_images == 1){
+                    $this->db->where('branch_id', $branchID);
+                    $this->db->update('global_images', $global_images);
+                    set_alert('success', translate('the_configuration_has_been_updated'));
+                    $this->session->set_flashdata('active', 3);
+                    redirect(current_url());
+                }else{
+                    $this->db->insert('global_images', $global_images);
+                }
 
-            move_uploaded_file($_FILES['slider_1']['tmp_name'], 'uploads/login_image/slider_1.jpg');
-            move_uploaded_file($_FILES['slider_2']['tmp_name'], 'uploads/login_image/slider_2.jpg');
-            move_uploaded_file($_FILES['slider_3']['tmp_name'], 'uploads/login_image/slider_3.jpg');
-
+            }
             set_alert('success', translate('the_configuration_has_been_updated'));
             $this->session->set_flashdata('active', 3);
             redirect(current_url());
