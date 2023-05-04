@@ -1,18 +1,47 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 28, 2023 at 04:31 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `multisms`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `number` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `balance` double(18,2) NOT NULL DEFAULT '0.00',
+  `balance` double(18,2) NOT NULL DEFAULT 0.00,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `advance_salary`
+-- Table structure for table `advance_salary`
 --
 
 CREATE TABLE `advance_salary` (
@@ -21,20 +50,20 @@ CREATE TABLE `advance_salary` (
   `amount` decimal(18,2) NOT NULL,
   `deduct_month` varchar(20) DEFAULT NULL,
   `year` varchar(20) NOT NULL,
-  `reason` text CHARACTER SET utf32 COLLATE utf32_unicode_ci,
-  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reason` text CHARACTER SET utf32 COLLATE utf32_unicode_ci DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `paid_date` varchar(20) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=pending,2=paid,3=rejected',
-  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=pending,2=paid,3=rejected',
+  `create_at` datetime NOT NULL DEFAULT current_timestamp(),
   `issued_by` varchar(200) DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
-  `branch_id` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `branch_id` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `attachments`
+-- Table structure for table `attachments`
 --
 
 CREATE TABLE `attachments` (
@@ -50,28 +79,28 @@ CREATE TABLE `attachments` (
   `session_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `attachments_type`
+-- Table structure for table `attachments_type`
 --
 
 CREATE TABLE `attachments_type` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `award`
+-- Table structure for table `award`
 --
 
 CREATE TABLE `award` (
@@ -85,12 +114,12 @@ CREATE TABLE `award` (
   `given_date` date NOT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `book`
+-- Table structure for table `book`
 --
 
 CREATE TABLE `book` (
@@ -107,27 +136,27 @@ CREATE TABLE `book` (
   `price` decimal(18,2) NOT NULL,
   `total_stock` varchar(20) NOT NULL,
   `issued_copies` varchar(20) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `book_category`
+-- Table structure for table `book_category`
 --
 
 CREATE TABLE `book_category` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `book_issues`
+-- Table structure for table `book_issues`
 --
 
 CREATE TABLE `book_issues` (
@@ -139,18 +168,18 @@ CREATE TABLE `book_issues` (
   `date_of_expiry` date DEFAULT NULL,
   `return_date` date DEFAULT NULL,
   `fine_amount` decimal(18,2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = pending, 1 = accepted, 2 = rejected, 3 = returned',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = pending, 1 = accepted, 2 = rejected, 3 = returned',
   `issued_by` varchar(255) DEFAULT NULL,
   `return_by` int(11) DEFAULT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `branch`
+-- Table structure for table `branch`
 --
 
 CREATE TABLE `branch` (
@@ -164,14 +193,22 @@ CREATE TABLE `branch` (
   `city` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `address` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `branch`
+--
+
+INSERT INTO `branch` (`id`, `name`, `school_name`, `email`, `mobileno`, `currency`, `symbol`, `city`, `state`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'amaa high school - akp', 'amaa high school', 'pavansoft007@gmail.com', '9440966070', 'INR', '₹', 'anakapalli', 'andhra pradesh', 'anakapalli', '2023-04-15 14:07:58', '2023-04-15 14:07:58'),
+(2, 'dav public school - akp', 'dav public school', 'srinu@gmail.com', '8521479630', 'INR', '₹', 'anakapalli', 'andhra pradesh', 'anakapalli', '2023-04-15 15:42:06', '2023-04-15 15:42:06');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `bulk_msg_category`
+-- Table structure for table `bulk_msg_category`
 --
 
 CREATE TABLE `bulk_msg_category` (
@@ -180,72 +217,82 @@ CREATE TABLE `bulk_msg_category` (
   `body` longtext NOT NULL,
   `type` tinyint(4) NOT NULL COMMENT 'sms=1, email=2',
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `bulk_sms_email`
+-- Table structure for table `bulk_sms_email`
 --
 
 CREATE TABLE `bulk_sms_email` (
   `id` int(11) NOT NULL,
   `campaign_name` varchar(255) DEFAULT NULL,
   `sms_gateway` varchar(55) DEFAULT '0',
-  `message` text,
+  `message` text DEFAULT NULL,
   `email_subject` varchar(255) DEFAULT NULL,
-  `message_type` tinyint(3) DEFAULT '0' COMMENT 'sms=1, email=2',
+  `message_type` tinyint(3) DEFAULT 0 COMMENT 'sms=1, email=2',
   `recipient_type` tinyint(3) NOT NULL COMMENT 'group=1, individual=2, class=3',
-  `recipients_details` longtext,
-  `additional` longtext,
-  `schedule_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `recipients_details` longtext DEFAULT NULL,
+  `additional` longtext DEFAULT NULL,
+  `schedule_time` datetime NOT NULL DEFAULT current_timestamp(),
   `posting_status` tinyint(3) NOT NULL COMMENT 'schedule=1,competed=2',
   `total_thread` int(11) NOT NULL,
   `successfully_sent` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `class`
+-- Table structure for table `class`
 --
 
 CREATE TABLE `class` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `name_numeric` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`id`, `name`, `name_numeric`, `created_at`, `updated_at`, `branch_id`) VALUES
+(1, 'first', '1', '2023-04-15 14:10:40', '2023-04-15 14:10:40', 1),
+(2, 'second', '2', '2023-04-15 14:11:50', '2023-04-15 14:11:50', 1),
+(3, 'third', '3', '2023-04-15 14:12:14', '2023-04-15 14:12:14', 1),
+(4, 'first', '1', '2023-04-16 15:09:48', '2023-04-16 15:09:48', 2);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `custom_field`
+-- Table structure for table `custom_field`
 --
 
 CREATE TABLE `custom_field` (
   `id` int(11) NOT NULL,
   `form_to` varchar(50) DEFAULT NULL,
   `field_label` varchar(100) NOT NULL,
-  `default_value` text,
+  `default_value` text DEFAULT NULL,
   `field_type` enum('text','textarea','dropdown','date','checkbox','number','url','email') NOT NULL,
   `required` varchar(5) NOT NULL DEFAULT 'false',
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `show_on_table` varchar(5) DEFAULT NULL,
   `field_order` int(11) NOT NULL,
   `bs_column` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `custom_fields_values`
+-- Table structure for table `custom_fields_values`
 --
 
 CREATE TABLE `custom_fields_values` (
@@ -253,12 +300,12 @@ CREATE TABLE `custom_fields_values` (
   `relid` int(11) NOT NULL,
   `field_id` int(11) NOT NULL,
   `value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `email_config`
+-- Table structure for table `email_config`
 --
 
 CREATE TABLE `email_config` (
@@ -271,22 +318,22 @@ CREATE TABLE `email_config` (
   `smtp_port` varchar(100) DEFAULT NULL,
   `smtp_encryption` varchar(10) DEFAULT NULL,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `email_templates`
+-- Table structure for table `email_templates`
 --
 
 CREATE TABLE `email_templates` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `tags` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `email_templates`
+-- Dumping data for table `email_templates`
 --
 
 INSERT INTO `email_templates` (`id`, `name`, `tags`) VALUES
@@ -304,7 +351,7 @@ INSERT INTO `email_templates` (`id`, `name`, `tags`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `email_templates_details`
+-- Table structure for table `email_templates_details`
 --
 
 CREATE TABLE `email_templates_details` (
@@ -312,14 +359,14 @@ CREATE TABLE `email_templates_details` (
   `template_id` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `template_body` text NOT NULL,
-  `notified` tinyint(1) NOT NULL DEFAULT '1',
+  `notified` tinyint(1) NOT NULL DEFAULT 1,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `enroll`
+-- Table structure for table `enroll`
 --
 
 CREATE TABLE `enroll` (
@@ -330,14 +377,24 @@ CREATE TABLE `enroll` (
   `roll` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` tinyint(3) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `enroll`
+--
+
+INSERT INTO `enroll` (`id`, `student_id`, `class_id`, `section_id`, `roll`, `session_id`, `branch_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 3, 1, '2023-04-15 15:34:19', '2023-04-16 15:04:15'),
+(2, 2, 1, 1, 2, 6, 1, '2023-04-16 13:45:54', '2023-04-16 21:56:41'),
+(3, 3, 1, 1, 3, 6, 1, '2023-04-16 13:52:14', '2023-04-16 21:56:37'),
+(4, 4, 4, 5, 1, 6, 2, '2023-04-16 15:15:58', '2023-04-16 15:15:58');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `event`
+-- Table structure for table `event`
 --
 
 CREATE TABLE `event` (
@@ -351,15 +408,15 @@ CREATE TABLE `event` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `created_by` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `event_types`
+-- Table structure for table `event_types`
 --
 
 CREATE TABLE `event_types` (
@@ -367,12 +424,12 @@ CREATE TABLE `event_types` (
   `name` varchar(255) NOT NULL,
   `icon` varchar(200) NOT NULL,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `exam`
+-- Table structure for table `exam`
 --
 
 CREATE TABLE `exam` (
@@ -384,14 +441,14 @@ CREATE TABLE `exam` (
   `branch_id` int(11) DEFAULT NULL,
   `remark` text NOT NULL,
   `mark_distribution` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `exam_attendance`
+-- Table structure for table `exam_attendance`
 --
 
 CREATE TABLE `exam_attendance` (
@@ -402,14 +459,14 @@ CREATE TABLE `exam_attendance` (
   `status` varchar(4) DEFAULT NULL COMMENT 'P=Present, A=Absent, L=Late',
   `remark` varchar(255) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `exam_hall`
+-- Table structure for table `exam_hall`
 --
 
 CREATE TABLE `exam_hall` (
@@ -417,24 +474,24 @@ CREATE TABLE `exam_hall` (
   `hall_no` longtext NOT NULL,
   `seats` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `exam_mark_distribution`
+-- Table structure for table `exam_mark_distribution`
 --
 
 CREATE TABLE `exam_mark_distribution` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `exam_term`
+-- Table structure for table `exam_term`
 --
 
 CREATE TABLE `exam_term` (
@@ -442,12 +499,12 @@ CREATE TABLE `exam_term` (
   `name` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `session_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fees_reminder`
+-- Table structure for table `fees_reminder`
 --
 
 CREATE TABLE `fees_reminder` (
@@ -458,13 +515,13 @@ CREATE TABLE `fees_reminder` (
   `student` tinyint(3) NOT NULL,
   `guardian` tinyint(3) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fees_type`
+-- Table structure for table `fees_type`
 --
 
 CREATE TABLE `fees_type` (
@@ -472,14 +529,23 @@ CREATE TABLE `fees_type` (
   `name` varchar(255) NOT NULL,
   `fee_code` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `branch_id` int(11) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `branch_id` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `fees_type`
+--
+
+INSERT INTO `fees_type` (`id`, `name`, `fee_code`, `description`, `branch_id`, `created_at`) VALUES
+(1, 'Exam Fee', 'exam-fee', '', 1, '2023-04-16 21:01:21'),
+(2, 'Regular School Fee', 'regular-school-fee', '', 1, '2023-04-16 21:01:33'),
+(3, 'school fee', 'school-fee', '', 2, '2023-04-16 21:54:24');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fee_allocation`
+-- Table structure for table `fee_allocation`
 --
 
 CREATE TABLE `fee_allocation` (
@@ -488,13 +554,21 @@ CREATE TABLE `fee_allocation` (
   `group_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `fee_allocation`
+--
+
+INSERT INTO `fee_allocation` (`id`, `student_id`, `group_id`, `branch_id`, `session_id`, `created_at`) VALUES
+(1, 2, 1, 1, 6, '2023-04-16 21:56:57'),
+(2, 3, 1, 1, 6, '2023-04-16 22:31:35');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fee_fine`
+-- Table structure for table `fee_fine`
 --
 
 CREATE TABLE `fee_fine` (
@@ -506,27 +580,35 @@ CREATE TABLE `fee_fine` (
   `fee_frequency` varchar(20) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fee_groups`
+-- Table structure for table `fee_groups`
 --
 
 CREATE TABLE `fee_groups` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `fee_groups`
+--
+
+INSERT INTO `fee_groups` (`id`, `name`, `description`, `session_id`, `branch_id`, `created_at`) VALUES
+(1, 'First class', '', 6, 1, '2023-04-16 15:32:17'),
+(2, 'first class fee', '', 6, 2, '2023-04-16 16:24:46');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fee_groups_details`
+-- Table structure for table `fee_groups_details`
 --
 
 CREATE TABLE `fee_groups_details` (
@@ -535,13 +617,22 @@ CREATE TABLE `fee_groups_details` (
   `fee_type_id` int(11) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `due_date` date DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `fee_groups_details`
+--
+
+INSERT INTO `fee_groups_details` (`id`, `fee_groups_id`, `fee_type_id`, `amount`, `due_date`, `created_at`) VALUES
+(1, 1, 1, '800.00', '2023-05-01', '2023-04-16 21:02:17'),
+(2, 1, 2, '15000.00', '2023-05-01', '2023-04-16 21:02:17'),
+(3, 2, 3, '13000.00', '2023-05-10', '2023-04-16 21:54:46');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `fee_payment_history`
+-- Table structure for table `fee_payment_history`
 --
 
 CREATE TABLE `fee_payment_history` (
@@ -555,16 +646,41 @@ CREATE TABLE `fee_payment_history` (
   `pay_via` varchar(20) NOT NULL,
   `remarks` longtext NOT NULL,
   `date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `global_settings`
+-- Table structure for table `global_images`
+--
+
+CREATE TABLE `global_images` (
+  `id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `system_logo` text NOT NULL,
+  `text_logo` text NOT NULL,
+  `printing_logo` text NOT NULL,
+  `report_logo` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `global_images`
+--
+
+INSERT INTO `global_images` (`id`, `branch_id`, `system_logo`, `text_logo`, `printing_logo`, `report_logo`, `created_at`, `updated_at`) VALUES
+(5, 1, '', 'fccf8c68d5498cfdfb7acdf8a922432a.png', '9b36e696a6e99ceb23445520e3bb73d4.png', '9de3a2a3fa800ba8c6684c7b8ff2e916.png', '2023-04-23 23:32:29', '2023-04-23 23:33:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `global_settings`
 --
 
 CREATE TABLE `global_settings` (
   `id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `institute_name` varchar(255) NOT NULL,
   `institution_code` varchar(255) NOT NULL,
   `reg_prefix` varchar(255) NOT NULL,
@@ -585,21 +701,23 @@ CREATE TABLE `global_settings` (
   `linkedin_url` varchar(255) NOT NULL,
   `youtube_url` varchar(255) NOT NULL,
   `cron_secret_key` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `global_settings`
+-- Dumping data for table `global_settings`
 --
 
-INSERT INTO `global_settings` (`id`, `institute_name`, `institution_code`, `reg_prefix`, `institute_email`, `address`, `mobileno`, `currency`, `currency_symbol`, `sms_service_provider`, `session_id`, `translation`, `footer_text`, `animations`, `timezone`, `date_format`, `facebook_url`, `twitter_url`, `linkedin_url`, `youtube_url`, `cron_secret_key`, `created_at`, `updated_at`) VALUES
-(1, 'Test', 'RSM-', 'on', 'ramom@example.com', '', '', 'USD', '₹', 'disabled', 3, 'english', '© 2020 Ramom School Management - Developed by RamomCoder', 'fadeInUp', 'Pacific/Midway', 'd.M.Y', 'https://www.facebook.com/username', 'https://www.twitter.com/username', 'https://www.linkedin.com/username', 'https://www.youtube.com/username', '340fe292903d1bdc2eb79298a71ebda6', '2018-10-22 15:07:49', '2020-05-31 13:06:26');
+INSERT INTO `global_settings` (`id`, `branch_id`, `institute_name`, `institution_code`, `reg_prefix`, `institute_email`, `address`, `mobileno`, `currency`, `currency_symbol`, `sms_service_provider`, `session_id`, `translation`, `footer_text`, `animations`, `timezone`, `date_format`, `facebook_url`, `twitter_url`, `linkedin_url`, `youtube_url`, `cron_secret_key`, `created_at`, `updated_at`) VALUES
+(1, 0, 'Bigwala Technologies', 'BGT-', 'on', 'ramom@example.com', 'Bigwala Technologies', '9247998120', 'INR', '₹', 'disabled', 6, 'english', '© 2023 Multi School Management - Developed by Bigwala Technologies', 'fadeInUp', 'Asia/Kolkata', 'd-m-Y', 'https://www.facebook.com/username', 'https://www.twitter.com/username', 'https://www.linkedin.com/username', 'https://www.youtube.com/username', '340fe292903d1bdc2eb79298a71ebda6', '2018-10-22 15:07:49', '2023-04-23 12:07:30'),
+(3, 1, 'Amaa High School', 'AMAA-', 'on', '', 'akp', '9247998120', 'INR', '₹', '', 6, 'english', '© 2023 Multi School Management - Developed by Bigwala Technologies', 'fadeInUp', 'Asia/Kolkata', 'd-m-Y', 'https://www.facebook.com/username', 'https://www.twitter.com/username', 'https://www.linkedin.com/username', 'https://www.youtube.com/username', NULL, '2023-04-16 17:13:13', '2023-04-16 17:42:07'),
+(4, 2, 'DAV Public School', 'DAV-', 'on', '', 'AKP', '', 'INR', '₹', '', 6, 'english', '', 'fadeIn', 'Asia/Kolkata', 'd-m-Y', '', '', '', '', NULL, '2023-04-16 17:47:02', '2023-04-16 17:47:46');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `grade`
+-- Table structure for table `grade`
 --
 
 CREATE TABLE `grade` (
@@ -610,12 +728,12 @@ CREATE TABLE `grade` (
   `upper_mark` int(11) NOT NULL,
   `remark` text NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `hall_allocation`
+-- Table structure for table `hall_allocation`
 --
 
 CREATE TABLE `hall_allocation` (
@@ -627,13 +745,13 @@ CREATE TABLE `hall_allocation` (
   `exam_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `homework`
+-- Table structure for table `homework`
 --
 
 CREATE TABLE `homework` (
@@ -654,12 +772,12 @@ CREATE TABLE `homework` (
   `evaluation_date` date DEFAULT NULL,
   `evaluated_by` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `homework_evaluation`
+-- Table structure for table `homework_evaluation`
 --
 
 CREATE TABLE `homework_evaluation` (
@@ -670,12 +788,12 @@ CREATE TABLE `homework_evaluation` (
   `rank` int(11) NOT NULL,
   `date` date NOT NULL,
   `status` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `hostel`
+-- Table structure for table `hostel`
 --
 
 CREATE TABLE `hostel` (
@@ -684,32 +802,32 @@ CREATE TABLE `hostel` (
   `category_id` int(11) NOT NULL,
   `address` longtext NOT NULL,
   `watchman` longtext NOT NULL,
-  `remarks` longtext,
-  `branch_id` int(11) DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `remarks` longtext DEFAULT NULL,
+  `branch_id` int(11) DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `hostel_category`
+-- Table structure for table `hostel_category`
 --
 
 CREATE TABLE `hostel_category` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
-  `description` longtext,
+  `description` longtext DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `type` text,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `type` text DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `hostel_room`
+-- Table structure for table `hostel_room`
 --
 
 CREATE TABLE `hostel_room` (
@@ -721,36 +839,36 @@ CREATE TABLE `hostel_room` (
   `bed_fee` decimal(18,2) NOT NULL,
   `remarks` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `languages`
+-- Table structure for table `languages`
 --
 
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL,
-  `word` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `english` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `bengali` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `arabic` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `french` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `hindi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `indonesian` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `italian` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `japanese` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `korean` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `dutch` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `portuguese` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `thai` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `turkish` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `urdu` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `chinese` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `word` varchar(255) NOT NULL,
+  `english` varchar(255) NOT NULL,
+  `bengali` varchar(255) NOT NULL,
+  `arabic` varchar(255) NOT NULL,
+  `french` varchar(255) NOT NULL,
+  `hindi` varchar(255) NOT NULL,
+  `indonesian` varchar(255) NOT NULL,
+  `italian` varchar(255) NOT NULL,
+  `japanese` varchar(255) NOT NULL,
+  `korean` varchar(255) NOT NULL,
+  `dutch` varchar(255) NOT NULL,
+  `portuguese` varchar(255) NOT NULL,
+  `thai` varchar(255) NOT NULL,
+  `turkish` varchar(255) NOT NULL,
+  `urdu` varchar(255) NOT NULL,
+  `chinese` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `languages`
+-- Dumping data for table `languages`
 --
 
 INSERT INTO `languages` (`id`, `word`, `english`, `bengali`, `arabic`, `french`, `hindi`, `indonesian`, `italian`, `japanese`, `korean`, `dutch`, `portuguese`, `thai`, `turkish`, `urdu`, `chinese`) VALUES
@@ -1737,29 +1855,57 @@ INSERT INTO `languages` (`id`, `word`, `english`, `bengali`, `arabic`, `french`,
 (977, 'system_logo', 'System Logo', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (978, 'text_logo', 'Text Logo', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (979, 'printing_logo', 'Printing Logo', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(980, 'expired', 'Expired', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+(980, 'expired', 'Expired', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(981, 'not_found_anything', 'Not Found Anything', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(982, 'translation_update', 'Translation Update', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(983, 'master admin', 'Master Admin', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(984, 'edit_branch', 'Edit Branch', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(985, 'school_list', 'School List', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(986, 'create_school', 'Create School', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(987, 'edit_school', 'Edit School', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(988, 'database_backup_failed', 'Database Backup Failed', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(989, 'person_name', 'Person Name', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(990, 'language_unpublished', 'Language Unpublished', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(991, 'language_published', 'Language Published', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(992, 'create_section', 'Create Section', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(993, 'section_list', 'Section List', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(994, 'username_has_already_been_used', 'Username Has Already Been Used', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(995, 'collect_fees', 'Collect Fees', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(996, 'select_for_everyone', 'Select For Everyone', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(997, 'audition', 'Audition', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(998, 'write_message', 'Write Message', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(999, 'discard', 'Discard', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1000, 'message_sent_successfully', 'Message Sent Successfully', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1001, 'file_size_shoud_be_less_than', 'File Size Shoud Be Less Than', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1002, 'classes_&_subjects', 'Classes & Subjects', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1003, 'transport_&_hostel', 'Transport & Hostel', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1004, 'change', 'Change', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1005, 'password_has_been_changed', 'Password Has Been Changed', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1006, 'parents_profile', 'Parents Profile', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1007, 'childs', 'Childs', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(1008, 'fee_payment', 'Fee Payment', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `language_list`
+-- Table structure for table `language_list`
 --
 
 CREATE TABLE `language_list` (
   `id` int(11) NOT NULL,
   `name` varchar(600) NOT NULL,
   `lang_field` varchar(600) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `language_list`
+-- Dumping data for table `language_list`
 --
 
 INSERT INTO `language_list` (`id`, `name`, `lang_field`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'English', 'english', 1, '2018-11-15 17:36:31', '2020-04-18 20:05:12'),
+(1, 'English', 'english', 1, '2018-11-15 17:36:31', '2023-04-09 18:11:21'),
 (2, 'Bengali', 'bengali', 1, '2018-11-15 17:36:31', '2018-12-04 15:41:50'),
 (3, 'Arabic', 'arabic', 1, '2018-11-15 17:36:31', '2019-01-20 03:04:53'),
 (4, 'French', 'french', 1, '2018-11-15 17:36:31', '2019-01-20 03:04:55'),
@@ -1778,7 +1924,7 @@ INSERT INTO `language_list` (`id`, `name`, `lang_field`, `status`, `created_at`,
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `leave_application`
+-- Table structure for table `leave_application`
 --
 
 CREATE TABLE `leave_application` (
@@ -1790,22 +1936,22 @@ CREATE TABLE `leave_application` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `leave_days` varchar(20) NOT NULL DEFAULT '0',
-  `status` int(2) NOT NULL DEFAULT '1' COMMENT '1=pending,2=accepted 3=rejected',
-  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int(2) NOT NULL DEFAULT 1 COMMENT '1=pending,2=accepted 3=rejected',
+  `apply_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `approved_by` int(11) NOT NULL,
   `orig_file_name` varchar(255) NOT NULL,
   `enc_file_name` varchar(255) NOT NULL,
   `comments` varchar(255) NOT NULL,
   `session_id` int(11) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `leave_category`
+-- Table structure for table `leave_category`
 --
 
 CREATE TABLE `leave_category` (
@@ -1814,12 +1960,12 @@ CREATE TABLE `leave_category` (
   `role_id` tinyint(1) NOT NULL,
   `days` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `live_class`
+-- Table structure for table `live_class`
 --
 
 CREATE TABLE `live_class` (
@@ -1834,14 +1980,14 @@ CREATE TABLE `live_class` (
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `created_by` int(11) NOT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime DEFAULT current_timestamp(),
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `live_class_config`
+-- Table structure for table `live_class_config`
 --
 
 CREATE TABLE `live_class_config` (
@@ -1849,12 +1995,12 @@ CREATE TABLE `live_class_config` (
   `zoom_api_key` varchar(255) DEFAULT NULL,
   `zoom_api_secret` varchar(255) NOT NULL,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `login_credential`
+-- Table structure for table `login_credential`
 --
 
 CREATE TABLE `login_credential` (
@@ -1863,23 +2009,31 @@ CREATE TABLE `login_credential` (
   `username` varchar(100) NOT NULL,
   `password` varchar(250) NOT NULL,
   `role` tinyint(2) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1(active) 0(deactivate)',
+  `active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1(active) 0(deactivate)',
   `last_login` datetime DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `login_credential`
+-- Dumping data for table `login_credential`
 --
 
 INSERT INTO `login_credential` (`id`, `user_id`, `username`, `password`, `role`, `active`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin@admin.com', '$2y$10$A2Q8iSy0IXmkzayG31JXpu4D1b3mKy3tHQ.VOAf2mGrtESV8GI.mK', 1, 1, NULL, '2020-05-31 13:06:26', '2020-05-31 13:06:26');
+(3, 1, 'pavansoft007@gmail.com', '$2y$10$aOxduhCBbIPIoxlItpzEq.bPX0BY5RFj8h/MENAKA8CztZC8jbec2', 9, 1, '2023-04-23 21:33:57', '2023-04-15 14:07:58', '2023-04-23 21:33:57'),
+(4, 1, 'dhana@gmail.com', '$2y$10$sv4f/ouQo.dnfaaJRz2Mg.KFKfttNrofSdWZSEevES/j704Csi4cG', 6, 1, NULL, '2023-04-15 15:34:19', '2023-04-15 15:44:37'),
+(5, 1, 'divyasoft007@gmail.com', '$2y$10$q3jiBCQE47R3vHwuUAfmueHJbR03ys2HzWBfM1b4bhSkp7PaQ7hfS', 7, 1, '2023-04-15 15:36:19', '2023-04-15 15:34:19', '2023-04-15 15:36:19'),
+(6, 2, 'srinu@gmail.com', '$2y$10$OycARwJ74/dySfjP3wxtwe9Tk/Dkm4ZDD6fHWcagX3GQPA7KIn22.', 9, 1, '2023-04-23 23:34:12', '2023-04-15 15:42:06', '2023-04-23 23:34:12'),
+(7, 2, 'hari@gmail.com', '$2y$10$xG81pXe0/mOHrwbcOnNnK.uGCNaikUarBJv9EDuzXTwfzxvG.eUAG', 6, 1, NULL, '2023-04-16 13:45:54', '2023-04-16 13:45:54'),
+(8, 2, 'vamsi@gmail.com', '$2y$10$q2Xe2A4BXG/oaRa.BO4qr.ZFbASB46CBKWPtoDbQjRS0rJrxeH27m', 7, 1, NULL, '2023-04-16 13:45:54', '2023-04-16 13:45:54'),
+(9, 3, 'praveen@gmail.com', '$2y$10$xSRW1sqwomqVv/HItx.XoOscO7GBy1QeTsCNlVlTSDI2KoXzeac2q', 7, 1, NULL, '2023-04-16 13:52:14', '2023-04-16 13:52:14'),
+(10, 3, 'krishna@gmail.com', '$2y$10$.Uj95ZbxWwPkVCZbwrghfOYSSqkrUAqsD82D2HlQeQSVzl96IZXtS', 6, 1, NULL, '2023-04-16 15:15:58', '2023-04-16 15:15:58'),
+(11, 4, 'anand@gmail.com', '$2y$10$TKGBvEqgqs.aHYk5ptB3neCJNFUMKa9O3q8spFI37NBZpVKBdg5Ye', 7, 1, NULL, '2023-04-16 15:15:58', '2023-04-16 15:15:58');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mark`
+-- Table structure for table `mark`
 --
 
 CREATE TABLE `mark` (
@@ -1889,40 +2043,40 @@ CREATE TABLE `mark` (
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
-  `mark` text,
+  `mark` text DEFAULT NULL,
   `absent` varchar(4) DEFAULT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `message`
+-- Table structure for table `message`
 --
 
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
   `body` longtext NOT NULL,
   `subject` varchar(255) NOT NULL,
-  `file_name` text,
-  `enc_name` text,
+  `file_name` text DEFAULT NULL,
+  `enc_name` text DEFAULT NULL,
   `trash_sent` tinyint(1) NOT NULL,
   `trash_inbox` int(11) NOT NULL,
   `fav_inbox` tinyint(1) NOT NULL,
   `fav_sent` tinyint(1) NOT NULL,
   `reciever` varchar(100) NOT NULL,
   `sender` varchar(100) NOT NULL,
-  `read_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 unread 1 read',
-  `reply_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 unread 1 read',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `read_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 unread 1 read',
+  `reply_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 unread 1 read',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `message_reply`
+-- Table structure for table `message_reply`
 --
 
 CREATE TABLE `message_reply` (
@@ -1932,13 +2086,13 @@ CREATE TABLE `message_reply` (
   `file_name` text NOT NULL,
   `enc_name` text NOT NULL,
   `identity` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `parent`
+-- Table structure for table `parent`
 --
 
 CREATE TABLE `parent` (
@@ -1960,15 +2114,24 @@ CREATE TABLE `parent` (
   `facebook_url` varchar(255) DEFAULT NULL,
   `linkedin_url` varchar(255) DEFAULT NULL,
   `twitter_url` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0(active) 1(deactivate)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `active` tinyint(2) NOT NULL DEFAULT 0 COMMENT '0(active) 1(deactivate)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `parent`
+--
+
+INSERT INTO `parent` (`id`, `name`, `relation`, `father_name`, `mother_name`, `occupation`, `income`, `education`, `email`, `mobileno`, `address`, `city`, `state`, `branch_id`, `photo`, `facebook_url`, `linkedin_url`, `twitter_url`, `created_at`, `updated_at`, `active`) VALUES
+(1, 'dhana lakshmi', 'mother', '', '', 'house wife', '', '', 'dhana@gmail.com', '9515385959', '', '', '', 1, 'defualt.png', '', '', '', '2023-04-15 15:34:19', '2023-04-15 15:44:18', 0),
+(2, 'hari', 'father', '', '', '', '', '', 'hari@gmail.com', '7412536980', 'anakapalli', '', '', 1, 'defualt.png', NULL, NULL, NULL, '2023-04-16 13:45:53', '2023-04-16 13:45:53', 0),
+(3, 'krishna', 'father', '', '', 'government job holder', '', '', 'krishna@gmail.com', '8745963210', '', '', '', 2, 'defualt.png', NULL, NULL, NULL, '2023-04-16 15:15:58', '2023-04-16 15:15:58', 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `payment_config`
+-- Table structure for table `payment_config`
 --
 
 CREATE TABLE `payment_config` (
@@ -1993,14 +2156,14 @@ CREATE TABLE `payment_config` (
   `razorpay_demo` tinyint(4) NOT NULL,
   `razorpay_status` tinyint(4) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `payment_salary_stipend`
+-- Table structure for table `payment_salary_stipend`
 --
 
 CREATE TABLE `payment_salary_stipend` (
@@ -2009,23 +2172,23 @@ CREATE TABLE `payment_salary_stipend` (
   `name` longtext NOT NULL,
   `amount` int(11) NOT NULL,
   `type` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `payment_types`
+-- Table structure for table `payment_types`
 --
 
 CREATE TABLE `payment_types` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
-  `branch_id` int(11) NOT NULL DEFAULT '0',
+  `branch_id` int(11) NOT NULL DEFAULT 0,
   `timestamp` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `payment_types`
+-- Dumping data for table `payment_types`
 --
 
 INSERT INTO `payment_types` (`id`, `name`, `branch_id`, `timestamp`) VALUES
@@ -2043,7 +2206,7 @@ INSERT INTO `payment_types` (`id`, `name`, `branch_id`, `timestamp`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `payslip`
+-- Table structure for table `payslip`
 --
 
 CREATE TABLE `payslip` (
@@ -2059,15 +2222,15 @@ CREATE TABLE `payslip` (
   `remarks` text NOT NULL,
   `pay_via` tinyint(1) NOT NULL,
   `hash` varchar(200) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `paid_by` varchar(200) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `payslip_details`
+-- Table structure for table `payslip_details`
 --
 
 CREATE TABLE `payslip_details` (
@@ -2076,12 +2239,12 @@ CREATE TABLE `payslip_details` (
   `name` varchar(255) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `type` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `permission`
+-- Table structure for table `permission`
 --
 
 CREATE TABLE `permission` (
@@ -2089,15 +2252,15 @@ CREATE TABLE `permission` (
   `module_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `prefix` varchar(100) NOT NULL,
-  `show_view` tinyint(1) DEFAULT '1',
-  `show_add` tinyint(1) DEFAULT '1',
-  `show_edit` tinyint(1) DEFAULT '1',
-  `show_delete` tinyint(1) DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `show_view` tinyint(1) DEFAULT 1,
+  `show_add` tinyint(1) DEFAULT 1,
+  `show_edit` tinyint(1) DEFAULT 1,
+  `show_delete` tinyint(1) DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `permission`
+-- Dumping data for table `permission`
 --
 
 INSERT INTO `permission` (`id`, `module_id`, `name`, `prefix`, `show_view`, `show_add`, `show_edit`, `show_delete`, `created_at`) VALUES
@@ -2214,7 +2377,7 @@ INSERT INTO `permission` (`id`, `module_id`, `name`, `prefix`, `show_view`, `sho
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `permission_modules`
+-- Table structure for table `permission_modules`
 --
 
 CREATE TABLE `permission_modules` (
@@ -2224,10 +2387,10 @@ CREATE TABLE `permission_modules` (
   `system` tinyint(1) NOT NULL,
   `sorted` tinyint(10) NOT NULL,
   `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `permission_modules`
+-- Dumping data for table `permission_modules`
 --
 
 INSERT INTO `permission_modules` (`id`, `name`, `prefix`, `system`, `sorted`, `created_at`) VALUES
@@ -2254,40 +2417,170 @@ INSERT INTO `permission_modules` (`id`, `name`, `prefix`, `system`, `sorted`, `c
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `reset_password`
+-- Table structure for table `reset_password`
 --
 
 CREATE TABLE `reset_password` (
   `key` longtext NOT NULL,
   `username` varchar(100) NOT NULL,
   `login_credential_id` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `rm_sessions`
+-- Table structure for table `rm_sessions`
 --
 
 CREATE TABLE `rm_sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `data` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `rm_sessions`
+-- Dumping data for table `rm_sessions`
 --
 
 INSERT INTO `rm_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('el3ibj2rga989smvnfhmrtj4t2pm6av8', '127.0.0.1', 1590930667, 0x5f5f63695f6c6173745f726567656e65726174657c693a313539303933303338313b);
+('0g22g1suhc1qder8j9edm3dbi0mcjk75', '::1', 1681638013, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633383031333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('0jev23tvfh34hlkodgnie98q6f6tj9k1', '::1', 1681641447, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634313434373b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('0k16esn2soqk7gjt0b5vd90jfhh8121a', '::1', 1682267219, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236373231393b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('0odh7tk4g1c2655t327lrrvtr1gb5o99', '::1', 1681658488, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635383438383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('0varpenoveb4st82ip2vb3p85s525gm3', '::1', 1682236226, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233363232363b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('13tsl6s0rq4ihof6d5b7kg655vvq74l4', '::1', 1681657310, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635373331303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('1cnbfda5niqspgf68of140a1a8233v7d', '::1', 1681643075, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634333037353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('1p0bo26fl8ngeflhh5pgosdlb9umsc7h', '::1', 1681647378, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373337383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('1q1lcirst2tlscp55btgbo8q7o654c16', '::1', 1681656028, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635363032383b),
+('1qo5lrb6tvajsprlok9km1vl4uas4f1c', '::1', 1681662246, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323234363b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('21tstqo06r16ni0qh4hfm7ieg3df2fr0', '::1', 1681664448, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343434383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('23i6vqtls7dh5sie88jpd89793qdjmfj', '::1', 1681653393, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333339333b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a323b),
+('24ml6fb7nd65r898qc5gelatncuhsati', '::1', 1681653855, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333835353b),
+('281ma98cn1r3i0ioekn5dso8hu0dfdqs', '::1', 1681649504, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634393530343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('28fv387kq42o4f760ak3qi1ome8ua4vq', '::1', 1681673086, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637333038363b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226e6577223b7d70726f66696c655f7461627c693a313b),
+('29cskgmektri6kool79qteuik3oti3ea', '::1', 1682233358, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233333335383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('2s6u1lfoo12bh5ebajlb7cmbl2oef4pe', '::1', 1681649578, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634393537383b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('37bsh11buvsc4m6bhr80qqc4d4fg5akv', '::1', 1681661462, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636313436323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('3ak9mv5un73hh07ls53uli2j0r357lce', '::1', 1682266818, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236363831383b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('3o3vq2tn3lpcj7aa5d4r44migvimng4m', '::1', 1681649132, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634393133323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('3tavamr3k0uvvsi8qbptu0vhrta564us', '::1', 1681664380, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343237353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('3tp8qcqurdbb1ircrsmevkvbfr39pd04', '::1', 1682266359, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236363335393b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('56reffcfp06tae5hhmje547m37lcuv4b', '::1', 1682231642, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233313634323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('57rop9nuv4fnaobfng3k3gu0st4ijoir', '::1', 1681632542, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633323534323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('581qtc0jebefv1t6unqkdh91aep4h5hb', '::1', 1681653569, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333536393b),
+('5gq03dnnh4qeu8mpr1p8gtp3u1tv4kun', '::1', 1681657664, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635373636343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('5jfostu9e8fer21tmf11ad7r0m2i28e0', '::1', 1682272548, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237323534383b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('5ru3m5qtc36lqp7scdm9hm9a2hp7jjsr', '::1', 1681653255, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333235353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a323b),
+('601qm3l4kti7l6kgucnb0kf25qla786g', '::1', 1682268521, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236383532313b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('631kjd9prsai3t79efudbubjg9q5klgs', '::1', 1682272882, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237323838323b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('64kqa7299pt5lpd4trnfomk1oqbk15fj', '::1', 1681657006, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635373030363b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('652d5m4vmtc0uh2rulo45l3nbral0hh6', '::1', 1681745811, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313734353739323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226f6c64223b7d70726f66696c655f7461627c693a313b),
+('689lgu7jgt8tf7khdbf4t3fuhubljd5q', '::1', 1681641764, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634313736343b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b),
+('69pc9rn1pkics693jv02bqnt72ssd6id', '::1', 1681648353, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383335333b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('6bqt6kl3f6313bco5ht4b6us7efef22v', '::1', 1682273060, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237333032343b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('6dudoue30i38mrh0opghe2tiaa39p93k', '::1', 1682271136, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237313133363b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('6ipbe1tikr1l3epbshd6uikvkue76oeo', '::1', 1681671710, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637313731303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('6jfqungt2gpbal1ra2ad0ko8sghesm7q', '::1', 1681657692, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635373639323b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('6s5g51012rbduoul5dohlproic0uh6pp', '::1', 1681656183, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635363138333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('71avre6gvt05cd5lq3t4krobik4cdel3', '::1', 1682238165, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233383136343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('737kutkl5uh9iocgajo7c6gn1j01hsv9', '::1', 1682272109, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237323130393b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('85pk51mommeellqrsj8rvipp6sf21u8p', '::1', 1682231857, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233313738313b),
+('88n1d7crffgobvbitrheguea9v1liega', '::1', 1681664275, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343237353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('8b593f44pu1pqjed01gf0ta7oqqikc1t', '::1', 1681632953, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633323935333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('90jto8utif27rkh0cat8hf62t0c6svl6', '::1', 1681658508, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635383530383b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('98hrj740g05q6igonqtj9eiitmmqipqo', '::1', 1681658361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635383336313b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('akja45dmrdfim5ap09kqfkikpm1883eh', '::1', 1681647709, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373730393b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('arofcbt8vn2vja882shb3aqre2905pl1', '::1', 1682231684, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233313638343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2234223b6c6f67676564696e7c623a313b),
+('asm3agktvn1fpflr89lvc4n9u30a6ag5', '::1', 1682270818, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237303831383b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('b9788ns85drqbae5atlae17lip6apked', '::1', 1681639692, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393639323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('bn9tbgh8sah2l24b9pf8vqlfm5elvok5', '::1', 1681661765, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636313736353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('btlmo9e3prifesld8uvapepcrppj7br3', '::1', 1681649883, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634393838333b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a323b),
+('bts6cqcknfq2smphm7b6oavdsbbtegev', '::1', 1681639362, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393130363b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('bvrtpvutqkpvq2p5dsh8j6s3fo6ojipb', '::1', 1681637312, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633373331323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('cf6uksh2fa90fnd07sjveoq758bgr6mj', '::1', 1681639106, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393130363b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('cjdbsi4q2dc0jo9ikg6v77ntljfr2nsn', '::1', 1681648838, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383833383b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('d077kf7r8e5p0lk65cap516e82fvn636', '::1', 1682233368, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233333336383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('d2i9vsarhj0dehflipuijjansubc6b40', '::1', 1681648853, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383835333b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('d8rh27kcl826hqtmj0og0jfscbhk6ptr', '::1', 1681639681, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393638313b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('df7t621gnpevbkv9t5srneuaf9jig00r', '::1', 1681655746, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635353734363b),
+('f7mg2lvm9qcrrkprip7lib3kd1d47oui', '::1', 1681647914, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373931343b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('fdkaepm33002fm3btfh3bufn8mruvgqi', '::1', 1681665784, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636353738343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('femqq4bhv3f65pc481vfnaok6g4eafr7', '::1', 1681646709, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634363730393b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('fme15is28mh56fg3sv7qa546e7u55td4', '::1', 1682255950, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323235353935303b),
+('foah0t8j6cpf4n7qtq95tg9v7ea6qe2n', '::1', 1681663135, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636333133353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('fsm73h7e6ec6hf81mgv9ce6909ho6m6k', '::1', 1681665483, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636353438333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('ge5qt13k0pcp4487sn1bkv2slmla0lj7', '::1', 1681673677, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637333637373b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226e6577223b7d70726f66696c655f7461627c693a313b),
+('gf1cvmarrr69t36ln1396isrkfvfv7ba', '::1', 1681648154, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383135343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d);
+INSERT INTO `rm_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
+('h0kane9u9b4iadkij14irbgf30lqi48s', '::1', 1681674038, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637343033383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226f6c64223b7d70726f66696c655f7461627c693a313b),
+('h0kgrnfd3l0nsrrdfu7menbe4k2lrvic', '::1', 1681636865, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633363836353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a393a22637376696d706f7274223b733a333a226f6c64223b7d637376696d706f72747c733a35333a2276616d73692062202d20496d706f72746564204661696c6564203a20456d61696c20416c7265616479204578697374732e3c62723e223b),
+('h3h0d5c887v735g37m1vhenrivrtd2pv', '::1', 1681645193, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634353139333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('h58hrs3ik0atamah3quqfqqlee60htt0', '::1', 1681644150, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634343135303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('hb5uhstjv1ji5i92383s8engnqgbt99p', '::1', 1681647076, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373037363b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('hctan22fmb5f89kjq81bllh3tk30f20t', '::1', 1681646384, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634363338343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('ipb0953epha4btdfamqekqpufuqa37ps', '::1', 1681663288, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636333238383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('irl2u19jegmrec8eeu1hfjbu4g5eh8hj', '::1', 1681638388, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633383338383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('j2sbsf1og28knjtpl4ja40vctj2814le', '::1', 1681659071, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635393037313b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('j4vfntlgnil8h1k8gk63bfafd9ofo3vq', '::1', 1682230253, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233303235333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('jvsu6m8dkj7u0np7ui8h1g4t06bu4jmh', '::1', 1681639143, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393134333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('kogvjeigop347ujmpn9ik504r1frbfdb', '::1', 1682268844, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236383834343b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a323b),
+('kp8memghaqeerkci3vu81eeu854fpgsk', '::1', 1681663480, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636333438303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('l6gk5f4eom0aeq6u22sq4lgi6dnmjmk3', '::1', 1682269622, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236393632323b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('l8locngkr2gf7rl596qp45tjh21sk4ut', '::1', 1681637658, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633373635383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('lbb6o36a7cqciekpbuar7jd6unaalte7', '::1', 1682233490, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233333336383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('ldceesacuci8rurct7o1v7jfp0tseuj6', '::1', 1681657340, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635373334303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('lffsomgddgar5hg3b3sl9vud7kg2pjmq', '::1', 1682254367, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323235343336373b616c6572742d6d6573736167652d6572726f727c733a33333a22557365726e616d65204f722050617373776f726420497320496e636f7272656374223b5f5f63695f766172737c613a313a7b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('lr78dfroilgmjj8se9uokielbk6g2o5q', '::1', 1681645545, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634353534353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('lrt58eo5a2c7sfnarkes18p717ejc5ia', '::1', 1681639682, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633393638313b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('lv969n1ci6stval29qa88qmj6hfpn87k', '::1', 1681662298, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323234363b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('m2jevgcv691l48neqruuv0hrubc3meo1', '::1', 1681642698, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634323639383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('m8b6ja7mkton7c0do6nc07ti5eruj0m6', '::1', 1681662804, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323830343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('ma91on69e6l6rrgdp6003foph4h2fkam', '::1', 1682270467, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237303436373b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('mh3v4cjeg05rgn116f8ca113gfjo4fh0', '::1', 1681664129, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343132393b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('mpu2dsvd84bf9tcpuf3lqm2i488hbvpd', '::1', 1681640703, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634303730333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('n2ecr8ocegjapdj6bhaakrncinouas4g', '::1', 1681647271, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373237313b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('nb7lusv09i4dbi53pbp31htb3qarl11v', '::1', 1681647731, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373733313b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('nga7or8jpl2auin9m9h6oc06q3vh9cdp', '::1', 1682271507, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323237313530373b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('nsnmaq0fjis04smencm3m42kjiq0qcsc', '::1', 1681631029, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633313032393b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('oa5rtcdcc3grl674h9gkk6td1a0ogaqr', '::1', 1681662888, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323838383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('oc7m7b58qbo80c6lna73nqt1mpketlpo', '::1', 1681662157, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323135373b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('ohs3f8qi50qremkidohedq9p48le5en6', '::1', 1681672664, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637323636343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226e6577223b7d70726f66696c655f7461627c693a313b),
+('ojlsqql14jk6sv1mh4i922s3uvmcntuf', '::1', 1681648035, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383033353b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('onvgbkf47sev4q5bk712hrc9hvns5jma', '::1', 1681647328, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634373332383b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('op356dml9qj819unahq5576jknkf8tg6', '::1', 1681631980, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633313938303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('p1uh2ec5it8jvtgfeqm0mgoeqbetvun4', '::1', 1681745792, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313734353739323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226f6c64223b7d70726f66696c655f7461627c693a313b),
+('p7irefevphe2v6vlhd1fon2k78epa3a5', '::1', 1681664812, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343831323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('pcegsmagf064773gmom8nbrkdefndslb', '::1', 1682269280, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236393238303b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('pe67pps3e74n57llc5ecls97i3p7asgv', '::1', 1681663675, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636333637353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('q3l76d56tcvbk2c5nr1k8otd9bsjgads', '::1', 1682233005, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233333030353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('q6n46hqhrh614k8dtq76qlsob3mtivd7', '::1', 1682238164, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233383136343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('q8n7o29hkoiphllaq5rc01i9q5traln6', '::1', 1682692226, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323639323232363b),
+('qd0bvavmu4r3fgm3osd1akh9pthdu1ki', '::1', 1682256044, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323235353935303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('qnq5ua3ma7o41bhe85iro4tc452ueq1m', '::1', 1681656048, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635363034383b),
+('qsiccntdqk2uvrf7sltehqkls8q1hq5e', '::1', 1681746892, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313734363835343b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f73747564656e742f70726f66696c652f31223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('r378s3babrabph45a7s4348tjigavdna', '::1', 1681638179, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633383137393b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('r54fhc0847iojqbbqucifslj12r0uait', '::1', 1681644701, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634343730313b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('r66j3dfg8p5cbpaubrjjab0q9ovsa4rr', '::1', 1681633334, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633333333343b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22312053747564656e74732048617665204265656e205375636365737366756c6c79204164646564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a393a22637376696d706f7274223b733a333a226f6c64223b7d637376696d706f72747c733a35333a2276616d73692062202d20496d706f72746564204661696c6564203a20456d61696c20416c7265616479204578697374732e3c62723e223b),
+('rs465ro8jqp7r8hf89sputg871lnp375', '::1', 1681638773, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633383737333b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('s1v3ro0pohchi4fdvi4riafsho5ao9rq', '::1', 1682234832, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323233343833323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('ssv05qdbs51qkgtmhh1ltnl8h7k6rad7', '::1', 1681664136, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636343133363b72656469726563745f75726c7c733a34393a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f73657373696f6e732f7365745f61636164656d69632f36223b),
+('suq4508l1d2lie78otgbdq10kgo4rco9', '::1', 1681656385, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635363338353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('tlmuomeq42n8luldaoq48fij8al18t05', '::1', 1681653876, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333837363b),
+('tqqomkhm9bardnv84vpnk2ncoeslv6qd', '::1', 1681631599, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313633313539393b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b),
+('u4jt0lecf6cn9p5h9udetumfbckbgnsh', '::1', 1681641905, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634313930353b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2233223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31393a22616c6572742d6d6573736167652d6572726f72223b733a333a226f6c64223b7d616c6572742d6d6573736167652d6572726f727c733a31333a224163636573732044656e696564223b),
+('u8n8vf0ir1fdl88qjtahj5pq24mh9cfv', '::1', 1681672330, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313637323333303b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a34313a22496e666f726d6174696f6e20486173204265656e2055706461746564205375636365737366756c6c79223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a31313a2270726f66696c655f746162223b733a333a226f6c64223b7d70726f66696c655f7461627c693a313b),
+('ugtkjb5je7o1f9jjr9etlj8rlg9tr9dd', '::1', 1681648558, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313634383535383b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('uicsi0d1gnfchtrgent3k97o0lka5tga', '::1', 1681656391, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635363339313b6e616d657c733a353a227372696e75223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2232223b6c6f67676564696e5f69647c733a313a2236223b6c6f67676564696e5f7573657269647c733a313a2232223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b),
+('v51u8ce62bmd7n6olta6tck55qj8r9dd', '::1', 1681662462, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313636323436323b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33393a22496e666f726d6174696f6e20486173204265656e205361766564205375636365737366756c6c79223b5f5f63695f766172737c613a313a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b7d),
+('v5e95fqeg6eemhi1so9gdsd9h260ru0v', '::1', 1682268017, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638323236383031373b72656469726563745f75726c7c733a33353a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f64617368626f617264223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a33363a2233366361336262343034396134393630383832636164333062396566636432312e6a7067223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2233223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2239223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b616c6572742d6d6573736167652d737563636573737c733a33343a2254686520436f6e66696775726174696f6e20486173204265656e2055706461746564223b5f5f63695f766172737c613a323a7b733a32313a22616c6572742d6d6573736167652d73756363657373223b733a333a226f6c64223b733a363a22616374697665223b733a333a226f6c64223b7d6163746976657c693a333b),
+('vtetftincesis4npaovtsgssf93nrrpv', '::1', 1681653304, 0x5f5f63695f6c6173745f726567656e65726174657c693a313638313635333330343b72656469726563745f75726c7c733a34333a22687474703a2f2f6c6f63616c686f73742f6d756c7469736d732f726f6c652f7065726d697373696f6e2f39223b6e616d657c733a353a22706176616e223b6c6f676765725f70686f746f7c733a31313a2264656675616c742e706e67223b6c6f67676564696e5f6272616e63687c733a313a2231223b6c6f67676564696e5f69647c733a313a2231223b6c6f67676564696e5f7573657269647c733a313a2231223b6c6f67676564696e5f726f6c655f69647c733a313a2231223b6c6f67676564696e5f747970657c733a353a227374616666223b7365745f6c616e677c733a373a22656e676c697368223b7365745f73657373696f6e5f69647c733a313a2236223b6c6f67676564696e7c623a313b);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -2295,25 +2588,27 @@ CREATE TABLE `roles` (
   `name` varchar(50) NOT NULL,
   `prefix` varchar(50) DEFAULT NULL,
   `is_system` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `prefix`, `is_system`) VALUES
-(1, 'Super Admin', 'superadmin', '1'),
+(1, 'Devloper Admin', 'developeradmin', '1'),
 (2, 'Admin', 'admin', '1'),
 (3, 'Teacher', 'teacher', '1'),
 (4, 'Accountant', 'accountant', '1'),
 (5, 'Librarian', 'librarian', '1'),
 (6, 'Parent', 'parent', '1'),
-(7, 'Student', 'student', '1');
+(7, 'Student', 'student', '1'),
+(8, 'Master Admin', 'masteradmin', '1'),
+(9, 'Super Admin', 'superadmin', '1');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `salary_template`
+-- Table structure for table `salary_template`
 --
 
 CREATE TABLE `salary_template` (
@@ -2322,38 +2617,38 @@ CREATE TABLE `salary_template` (
   `basic_salary` decimal(18,2) NOT NULL,
   `overtime_salary` varchar(100) NOT NULL DEFAULT '0',
   `branch_id` tinyint(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `salary_template_details`
+-- Table structure for table `salary_template_details`
 --
 
 CREATE TABLE `salary_template_details` (
   `id` int(11) NOT NULL,
   `salary_template_id` varchar(20) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `amount` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `amount` decimal(18,2) NOT NULL DEFAULT 0.00,
   `type` tinyint(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `schoolyear`
+-- Table structure for table `schoolyear`
 --
 
 CREATE TABLE `schoolyear` (
   `id` int(11) NOT NULL,
   `school_year` varchar(255) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `schoolyear`
+-- Dumping data for table `schoolyear`
 --
 
 INSERT INTO `schoolyear` (`id`, `school_year`, `created_by`, `created_at`, `updated_at`) VALUES
@@ -2368,7 +2663,7 @@ INSERT INTO `schoolyear` (`id`, `school_year`, `created_by`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `section`
+-- Table structure for table `section`
 --
 
 CREATE TABLE `section` (
@@ -2376,33 +2671,60 @@ CREATE TABLE `section` (
   `name` varchar(255) NOT NULL,
   `capacity` varchar(20) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `section`
+--
+
+INSERT INTO `section` (`id`, `name`, `capacity`, `branch_id`) VALUES
+(1, 'A', '50', 1),
+(2, 'B', '50', 1),
+(3, 'C', '50', 1),
+(4, 'D', '50', 1),
+(5, 'A', '50', 2);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sections_allocation`
+-- Table structure for table `sections_allocation`
 --
 
 CREATE TABLE `sections_allocation` (
   `id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `sections_allocation`
+--
+
+INSERT INTO `sections_allocation` (`id`, `class_id`, `section_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 1),
+(4, 2, 2),
+(5, 2, 3),
+(6, 2, 4),
+(7, 3, 1),
+(8, 3, 2),
+(9, 3, 3),
+(10, 4, 5);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sms_api`
+-- Table structure for table `sms_api`
 --
 
 CREATE TABLE `sms_api` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `sms_api`
+-- Dumping data for table `sms_api`
 --
 
 INSERT INTO `sms_api` (`id`, `name`) VALUES
@@ -2415,7 +2737,7 @@ INSERT INTO `sms_api` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sms_credential`
+-- Table structure for table `sms_credential`
 --
 
 CREATE TABLE `sms_credential` (
@@ -2427,24 +2749,24 @@ CREATE TABLE `sms_credential` (
   `field_four` varchar(300) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sms_template`
+-- Table structure for table `sms_template`
 --
 
 CREATE TABLE `sms_template` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `tags` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `sms_template`
+-- Dumping data for table `sms_template`
 --
 
 INSERT INTO `sms_template` (`id`, `name`, `tags`) VALUES
@@ -2459,23 +2781,23 @@ INSERT INTO `sms_template` (`id`, `name`, `tags`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sms_template_details`
+-- Table structure for table `sms_template_details`
 --
 
 CREATE TABLE `sms_template_details` (
   `id` int(11) NOT NULL,
   `template_id` int(11) NOT NULL,
-  `notify_student` tinyint(3) NOT NULL DEFAULT '1',
-  `notify_parent` tinyint(3) NOT NULL DEFAULT '1',
+  `notify_student` tinyint(3) NOT NULL DEFAULT 1,
+  `notify_parent` tinyint(3) NOT NULL DEFAULT 1,
   `template_body` longtext NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff`
+-- Table structure for table `staff`
 --
 
 CREATE TABLE `staff` (
@@ -2494,28 +2816,29 @@ CREATE TABLE `staff` (
   `permanent_address` text NOT NULL,
   `mobileno` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `salary_template_id` int(11) DEFAULT '0',
+  `salary_template_id` int(11) DEFAULT 0,
   `branch_id` int(11) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
   `facebook_url` varchar(255) DEFAULT NULL,
   `linkedin_url` varchar(255) DEFAULT NULL,
   `twitter_url` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `hash` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `staff`
+-- Dumping data for table `staff`
 --
 
 INSERT INTO `staff` (`id`, `staff_id`, `name`, `department`, `qualification`, `designation`, `joining_date`, `birthday`, `sex`, `religion`, `blood_group`, `present_address`, `permanent_address`, `mobileno`, `email`, `salary_template_id`, `branch_id`, `photo`, `facebook_url`, `linkedin_url`, `twitter_url`, `created_at`, `updated_at`, `hash`) VALUES
-(1, '3597c7f', 'admin', 0, '', 0, '2020-05-31', '', '', '', '', '', '', '', 'admin@admin.com', 0, NULL, NULL, NULL, NULL, NULL, '2020-05-31 13:06:26', '2020-05-31 13:06:26', '');
+(1, '90d7ca8', 'pavan', 0, '', 0, '2023-04-15', '', 'male', '', '', 'anakapalli', 'anakapalli', '9440966070', 'pavansoft007@gmail.com', 0, 1, '36ca3bb4049a4960882cad30b9efcd21.jpg', '', '', '', '2023-04-15 14:07:58', '2023-04-23 13:23:48', ''),
+(2, '0500992', 'srinu', 0, '', 0, '2023-04-15', '', 'male', '', '', 'anakapalli', 'anakapalli', '8521479630', 'srinu@gmail.com', 0, 2, 'defualt.png', NULL, NULL, NULL, '2023-04-15 15:42:06', '2023-04-15 15:42:06', '');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_attendance`
+-- Table structure for table `staff_attendance`
 --
 
 CREATE TABLE `staff_attendance` (
@@ -2525,12 +2848,12 @@ CREATE TABLE `staff_attendance` (
   `remark` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_bank_account`
+-- Table structure for table `staff_bank_account`
 --
 
 CREATE TABLE `staff_bank_account` (
@@ -2542,42 +2865,42 @@ CREATE TABLE `staff_bank_account` (
   `bank_address` varchar(255) NOT NULL,
   `ifsc_code` varchar(200) NOT NULL,
   `account_no` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_department`
+-- Table structure for table `staff_department`
 --
 
 CREATE TABLE `staff_department` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_designation`
+-- Table structure for table `staff_designation`
 --
 
 CREATE TABLE `staff_designation` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_documents`
+-- Table structure for table `staff_documents`
 --
 
 CREATE TABLE `staff_documents` (
@@ -2588,14 +2911,14 @@ CREATE TABLE `staff_documents` (
   `remarks` text NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `enc_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `staff_privileges`
+-- Table structure for table `staff_privileges`
 --
 
 CREATE TABLE `staff_privileges` (
@@ -2606,10 +2929,10 @@ CREATE TABLE `staff_privileges` (
   `is_edit` tinyint(1) NOT NULL,
   `is_view` tinyint(1) NOT NULL,
   `is_delete` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `staff_privileges`
+-- Dumping data for table `staff_privileges`
 --
 
 INSERT INTO `staff_privileges` (`id`, `role_id`, `permission_id`, `is_add`, `is_edit`, `is_view`, `is_delete`) VALUES
@@ -3140,12 +3463,230 @@ INSERT INTO `staff_privileges` (`id`, `role_id`, `permission_id`, `is_add`, `is_
 (530, 3, 104, 0, 0, 0, 0),
 (531, 3, 105, 0, 0, 0, 0),
 (532, 3, 106, 0, 0, 0, 0),
-(533, 3, 108, 0, 0, 0, 0);
+(533, 3, 108, 0, 0, 0, 0),
+(534, 8, 91, 0, 0, 0, 0),
+(535, 8, 92, 0, 0, 0, 0),
+(536, 8, 93, 0, 0, 1, 0),
+(537, 8, 94, 0, 0, 1, 0),
+(538, 8, 95, 0, 0, 1, 0),
+(539, 8, 96, 0, 0, 1, 0),
+(540, 8, 97, 0, 0, 0, 0),
+(541, 8, 98, 0, 0, 0, 0),
+(542, 8, 99, 0, 0, 0, 0),
+(543, 8, 100, 0, 0, 0, 0),
+(544, 8, 101, 0, 0, 1, 0),
+(545, 8, 102, 0, 0, 1, 0),
+(546, 8, 1, 1, 1, 1, 1),
+(547, 8, 2, 1, 0, 0, 0),
+(548, 8, 3, 1, 1, 1, 1),
+(549, 8, 4, 0, 0, 0, 0),
+(550, 8, 5, 0, 0, 0, 0),
+(551, 8, 30, 1, 0, 1, 0),
+(552, 8, 7, 1, 1, 1, 1),
+(553, 8, 8, 0, 0, 0, 0),
+(554, 8, 6, 0, 0, 0, 0),
+(555, 8, 9, 0, 0, 0, 0),
+(556, 8, 10, 0, 0, 0, 0),
+(557, 8, 11, 0, 0, 0, 0),
+(558, 8, 12, 0, 0, 0, 0),
+(559, 8, 13, 0, 0, 0, 0),
+(560, 8, 14, 0, 0, 0, 0),
+(561, 8, 15, 0, 0, 0, 0),
+(562, 8, 16, 0, 0, 0, 0),
+(563, 8, 17, 0, 0, 0, 0),
+(564, 8, 18, 0, 0, 0, 0),
+(565, 8, 19, 0, 0, 0, 0),
+(566, 8, 20, 0, 0, 0, 0),
+(567, 8, 21, 0, 0, 0, 0),
+(568, 8, 22, 0, 0, 0, 0),
+(569, 8, 107, 0, 0, 0, 0),
+(570, 8, 23, 0, 0, 0, 0),
+(571, 8, 24, 0, 0, 0, 0),
+(572, 8, 25, 0, 0, 0, 0),
+(573, 8, 26, 0, 0, 0, 0),
+(574, 8, 27, 0, 0, 0, 0),
+(575, 8, 28, 0, 0, 0, 0),
+(576, 8, 29, 0, 0, 0, 0),
+(577, 8, 109, 0, 0, 0, 0),
+(578, 8, 32, 0, 0, 0, 0),
+(579, 8, 88, 0, 0, 0, 0),
+(580, 8, 89, 0, 0, 0, 0),
+(581, 8, 31, 0, 0, 0, 0),
+(582, 8, 33, 0, 0, 0, 0),
+(583, 8, 34, 0, 0, 0, 0),
+(584, 8, 35, 0, 0, 0, 0),
+(585, 8, 36, 0, 0, 0, 0),
+(586, 8, 37, 0, 0, 0, 0),
+(587, 8, 38, 0, 0, 0, 0),
+(588, 8, 39, 0, 0, 0, 0),
+(589, 8, 77, 0, 0, 0, 0),
+(590, 8, 78, 0, 0, 0, 0),
+(591, 8, 79, 0, 0, 0, 0),
+(592, 8, 40, 0, 0, 0, 0),
+(593, 8, 41, 0, 0, 0, 0),
+(594, 8, 42, 0, 0, 0, 0),
+(595, 8, 43, 0, 0, 0, 0),
+(596, 8, 44, 0, 0, 0, 0),
+(597, 8, 45, 0, 0, 0, 0),
+(598, 8, 46, 0, 0, 0, 0),
+(599, 8, 47, 0, 0, 0, 0),
+(600, 8, 48, 0, 0, 0, 0),
+(601, 8, 49, 0, 0, 0, 0),
+(602, 8, 50, 0, 0, 0, 0),
+(603, 8, 51, 0, 0, 0, 0),
+(604, 8, 52, 0, 0, 0, 0),
+(605, 8, 53, 0, 0, 0, 0),
+(606, 8, 54, 0, 0, 0, 0),
+(607, 8, 55, 0, 0, 0, 0),
+(608, 8, 56, 0, 0, 0, 0),
+(609, 8, 57, 0, 0, 0, 0),
+(610, 8, 58, 0, 0, 0, 0),
+(611, 8, 59, 1, 1, 1, 1),
+(612, 8, 60, 1, 1, 1, 1),
+(613, 8, 61, 1, 0, 1, 1),
+(614, 8, 62, 1, 1, 1, 1),
+(615, 8, 80, 0, 0, 1, 0),
+(616, 8, 69, 0, 0, 0, 0),
+(617, 8, 70, 0, 0, 0, 0),
+(618, 8, 71, 0, 0, 0, 0),
+(619, 8, 72, 0, 0, 0, 0),
+(620, 8, 73, 0, 0, 0, 0),
+(621, 8, 74, 0, 0, 0, 0),
+(622, 8, 75, 0, 0, 0, 0),
+(623, 8, 76, 0, 0, 0, 0),
+(624, 8, 104, 0, 0, 0, 0),
+(625, 8, 63, 0, 0, 0, 0),
+(626, 8, 64, 0, 0, 0, 0),
+(627, 8, 65, 0, 0, 0, 0),
+(628, 8, 66, 0, 0, 0, 0),
+(629, 8, 67, 0, 0, 0, 0),
+(630, 8, 68, 0, 0, 0, 0),
+(631, 8, 81, 0, 1, 1, 0),
+(632, 8, 82, 1, 0, 1, 0),
+(633, 8, 83, 0, 0, 0, 0),
+(634, 8, 84, 0, 0, 0, 0),
+(635, 8, 85, 1, 1, 1, 1),
+(636, 8, 86, 0, 0, 0, 0),
+(637, 8, 87, 0, 0, 0, 0),
+(638, 8, 90, 0, 1, 1, 0),
+(639, 8, 103, 0, 0, 0, 0),
+(640, 8, 105, 0, 0, 0, 0),
+(641, 8, 106, 0, 0, 0, 0),
+(642, 8, 108, 0, 0, 0, 0),
+(643, 9, 91, 0, 0, 0, 0),
+(644, 9, 92, 0, 0, 1, 0),
+(645, 9, 93, 0, 0, 1, 0),
+(646, 9, 94, 0, 0, 1, 0),
+(647, 9, 95, 0, 0, 1, 0),
+(648, 9, 96, 0, 0, 1, 0),
+(649, 9, 97, 0, 0, 0, 0),
+(650, 9, 98, 0, 0, 1, 0),
+(651, 9, 99, 0, 0, 1, 0),
+(652, 9, 100, 0, 0, 1, 0),
+(653, 9, 101, 0, 0, 1, 0),
+(654, 9, 102, 0, 0, 1, 0),
+(655, 9, 1, 1, 1, 1, 1),
+(656, 9, 2, 1, 0, 0, 0),
+(657, 9, 3, 1, 1, 1, 1),
+(658, 9, 4, 0, 0, 1, 0),
+(659, 9, 5, 1, 0, 1, 0),
+(660, 9, 30, 1, 0, 1, 0),
+(661, 9, 7, 1, 1, 1, 1),
+(662, 9, 8, 1, 0, 1, 0),
+(663, 9, 6, 1, 1, 1, 1),
+(664, 9, 9, 1, 1, 1, 1),
+(665, 9, 10, 1, 1, 1, 1),
+(666, 9, 11, 1, 0, 1, 0),
+(667, 9, 12, 1, 1, 1, 1),
+(668, 9, 13, 1, 0, 1, 0),
+(669, 9, 14, 1, 0, 1, 0),
+(670, 9, 15, 0, 0, 1, 0),
+(671, 9, 16, 1, 1, 1, 1),
+(672, 9, 17, 1, 1, 1, 1),
+(673, 9, 18, 1, 0, 1, 1),
+(674, 9, 19, 1, 1, 1, 1),
+(675, 9, 20, 1, 1, 1, 1),
+(676, 9, 21, 1, 1, 1, 1),
+(677, 9, 22, 1, 1, 1, 1),
+(678, 9, 107, 0, 0, 1, 0),
+(679, 9, 23, 1, 1, 1, 1),
+(680, 9, 24, 1, 1, 1, 1),
+(681, 9, 25, 1, 1, 1, 1),
+(682, 9, 26, 1, 1, 1, 1),
+(683, 9, 27, 1, 1, 1, 1),
+(684, 9, 28, 1, 0, 1, 1),
+(685, 9, 29, 1, 1, 1, 1),
+(686, 9, 109, 1, 1, 1, 1),
+(687, 9, 32, 1, 1, 1, 1),
+(688, 9, 88, 1, 0, 1, 0),
+(689, 9, 89, 0, 0, 1, 0),
+(690, 9, 31, 1, 1, 1, 1),
+(691, 9, 33, 1, 1, 1, 1),
+(692, 9, 34, 1, 1, 1, 1),
+(693, 9, 35, 1, 1, 1, 1),
+(694, 9, 36, 1, 1, 1, 1),
+(695, 9, 37, 1, 0, 1, 1),
+(696, 9, 38, 1, 1, 1, 1),
+(697, 9, 39, 1, 1, 1, 1),
+(698, 9, 77, 1, 1, 1, 1),
+(699, 9, 78, 0, 0, 1, 0),
+(700, 9, 79, 0, 0, 1, 0),
+(701, 9, 40, 1, 1, 1, 1),
+(702, 9, 41, 1, 1, 1, 1),
+(703, 9, 42, 1, 1, 1, 1),
+(704, 9, 43, 0, 0, 1, 1),
+(705, 9, 44, 1, 1, 1, 1),
+(706, 9, 45, 1, 1, 1, 1),
+(707, 9, 46, 1, 1, 1, 1),
+(708, 9, 47, 1, 1, 1, 1),
+(709, 9, 48, 0, 0, 1, 1),
+(710, 9, 49, 1, 0, 0, 0),
+(711, 9, 50, 1, 0, 0, 0),
+(712, 9, 51, 1, 0, 0, 0),
+(713, 9, 52, 0, 0, 1, 0),
+(714, 9, 53, 0, 0, 1, 0),
+(715, 9, 54, 0, 0, 1, 0),
+(716, 9, 55, 1, 1, 1, 1),
+(717, 9, 56, 1, 1, 1, 1),
+(718, 9, 57, 1, 0, 1, 1),
+(719, 9, 58, 1, 0, 1, 1),
+(720, 9, 59, 1, 1, 1, 1),
+(721, 9, 60, 1, 1, 1, 1),
+(722, 9, 61, 0, 0, 0, 0),
+(723, 9, 62, 0, 0, 0, 0),
+(724, 9, 80, 0, 0, 0, 0),
+(725, 9, 69, 1, 1, 1, 1),
+(726, 9, 70, 1, 1, 1, 1),
+(727, 9, 71, 1, 1, 1, 1),
+(728, 9, 72, 1, 1, 1, 1),
+(729, 9, 73, 1, 0, 0, 0),
+(730, 9, 74, 1, 1, 1, 1),
+(731, 9, 75, 0, 0, 1, 0),
+(732, 9, 76, 0, 0, 1, 1),
+(733, 9, 104, 0, 0, 1, 0),
+(734, 9, 63, 1, 1, 1, 1),
+(735, 9, 64, 1, 1, 1, 1),
+(736, 9, 65, 1, 1, 1, 1),
+(737, 9, 66, 0, 0, 1, 0),
+(738, 9, 67, 1, 1, 1, 1),
+(739, 9, 68, 1, 1, 1, 1),
+(740, 9, 81, 0, 1, 1, 0),
+(741, 9, 82, 1, 0, 1, 0),
+(742, 9, 83, 1, 1, 1, 1),
+(743, 9, 84, 1, 1, 1, 1),
+(744, 9, 85, 1, 1, 1, 1),
+(745, 9, 86, 0, 0, 0, 0),
+(746, 9, 87, 0, 0, 0, 0),
+(747, 9, 90, 0, 0, 0, 0),
+(748, 9, 103, 0, 1, 1, 0),
+(749, 9, 105, 0, 0, 0, 0),
+(750, 9, 106, 1, 1, 1, 1),
+(751, 9, 108, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -3160,28 +3701,38 @@ CREATE TABLE `student` (
   `caste` varchar(100) NOT NULL,
   `blood_group` varchar(100) NOT NULL,
   `mother_tongue` varchar(100) DEFAULT NULL,
-  `current_address` text,
-  `permanent_address` text,
+  `current_address` text DEFAULT NULL,
+  `permanent_address` text DEFAULT NULL,
   `city` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `mobileno` varchar(100) NOT NULL,
-  `category_id` int(11) NOT NULL DEFAULT '0',
+  `category_id` int(11) NOT NULL DEFAULT 0,
   `email` varchar(100) NOT NULL,
   `parent_id` int(11) NOT NULL,
-  `route_id` int(11) NOT NULL DEFAULT '0',
-  `vehicle_id` int(11) NOT NULL DEFAULT '0',
-  `hostel_id` int(11) NOT NULL DEFAULT '0',
-  `room_id` int(11) NOT NULL DEFAULT '0',
+  `route_id` int(11) NOT NULL DEFAULT 0,
+  `vehicle_id` int(11) NOT NULL DEFAULT 0,
+  `hostel_id` int(11) NOT NULL DEFAULT 0,
+  `room_id` int(11) NOT NULL DEFAULT 0,
   `previous_details` text NOT NULL,
   `photo` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id`, `register_no`, `admission_date`, `first_name`, `last_name`, `gender`, `birthday`, `religion`, `caste`, `blood_group`, `mother_tongue`, `current_address`, `permanent_address`, `city`, `state`, `mobileno`, `category_id`, `email`, `parent_id`, `route_id`, `vehicle_id`, `hostel_id`, `room_id`, `previous_details`, `photo`, `created_at`, `updated_at`) VALUES
+(1, 'SRT-00001', '2023-04-15', 'divya', 'd', 'female', '2020-05-28', 'hindu', 'bc-d', 'O+', 'telugu', 'anakapalli', 'anakapalli', 'anakapalli', 'andhra pradesh', '9247998120', 1, 'divyasoft007@gmail.com', 1, 0, 0, 0, 0, '{\"school_name\":\"\",\"qualification\":\"\",\"remarks\":\"\"}', '04e0655acb09377f5d01aac079fbcb19.jpg', '2023-04-15 10:04:19', '2023-04-17 15:36:50'),
+(2, '67567ef', '2022-04-15', 'vamsi', 'b', 'male', '2001-11-17', 'hindu', 'bc-d', 'A+', 'telugu', 'anakapalli', 'anakapalli', 'anakapalli', 'andhra pradesh', '7458963210', 1, 'vamsi@gmail.com', 2, 0, 0, 0, 0, '', 'defualt.png', '2023-04-16 08:15:54', '2023-04-16 09:29:54'),
+(3, 'SRT-00003', '2023-04-16', 'praveen', 'd', 'male', '1970-01-01', '', '', '', '', 'anakapalli', 'anakapalli', 'anakapalli', 'andhra pradesh', '7485912360', 1, 'praveen@gmail.com', 1, 0, 0, 0, 0, '{\"school_name\":\"\",\"qualification\":\"\",\"remarks\":\"\"}', 'defualt.png', '2023-04-16 08:22:14', '2023-04-16 09:29:57'),
+(4, 'SRT-00004', '2023-04-16', 'Anand', 'd', 'male', '1970-01-01', '', '', '', '', '', '', 'vizag', 'andhra pradesh', '7412563089', 3, 'anand@gmail.com', 3, 0, 0, 0, 0, '{\"school_name\":\"\",\"qualification\":\"\",\"remarks\":\"\"}', 'defualt.png', '2023-04-16 09:45:58', '2023-04-16 09:45:58');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_attendance`
+-- Table structure for table `student_attendance`
 --
 
 CREATE TABLE `student_attendance` (
@@ -3189,28 +3740,37 @@ CREATE TABLE `student_attendance` (
   `student_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `status` varchar(4) DEFAULT NULL COMMENT 'P=Present, A=Absent, H=Holiday, L=Late',
-  `remark` text,
+  `remark` text DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_category`
+-- Table structure for table `student_category`
 --
 
 CREATE TABLE `student_category` (
   `id` int(11) NOT NULL,
-  `branch_id` int(11) NOT NULL DEFAULT '0',
+  `branch_id` int(11) NOT NULL DEFAULT 0,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `student_category`
+--
+
+INSERT INTO `student_category` (`id`, `branch_id`, `name`) VALUES
+(1, 1, 'primary'),
+(2, 1, 'secondary'),
+(3, 2, 'primary');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_documents`
+-- Table structure for table `student_documents`
 --
 
 CREATE TABLE `student_documents` (
@@ -3221,14 +3781,14 @@ CREATE TABLE `student_documents` (
   `remarks` text NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `enc_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `subject`
+-- Table structure for table `subject`
 --
 
 CREATE TABLE `subject` (
@@ -3238,12 +3798,12 @@ CREATE TABLE `subject` (
   `subject_type` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `subject_author` varchar(255) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `subject_assign`
+-- Table structure for table `subject_assign`
 --
 
 CREATE TABLE `subject_assign` (
@@ -3254,14 +3814,14 @@ CREATE TABLE `subject_assign` (
   `teacher_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher_allocation`
+-- Table structure for table `teacher_allocation`
 --
 
 CREATE TABLE `teacher_allocation` (
@@ -3271,12 +3831,12 @@ CREATE TABLE `teacher_allocation` (
   `teacher_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher_note`
+-- Table structure for table `teacher_note`
 --
 
 CREATE TABLE `teacher_note` (
@@ -3289,35 +3849,38 @@ CREATE TABLE `teacher_note` (
   `class_id` longtext NOT NULL,
   `teacher_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `theme_settings`
+-- Table structure for table `theme_settings`
 --
 
 CREATE TABLE `theme_settings` (
   `id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `border_mode` varchar(200) NOT NULL,
   `dark_skin` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `theme_settings`
+-- Dumping data for table `theme_settings`
 --
 
-INSERT INTO `theme_settings` (`id`, `border_mode`, `dark_skin`, `created_at`, `updated_at`) VALUES
-(1, 'true', 'false', '2018-10-23 22:59:38', '2020-05-02 14:18:35');
+INSERT INTO `theme_settings` (`id`, `branch_id`, `border_mode`, `dark_skin`, `created_at`, `updated_at`) VALUES
+(1, 0, 'false', 'false', '2018-10-23 22:59:38', '2023-04-09 19:33:07'),
+(2, 1, 'false', 'false', '2023-04-16 18:21:50', '2023-04-16 18:22:34'),
+(3, 2, 'true', 'false', '2023-04-16 18:23:03', '2023-04-16 18:28:17');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `timetable_class`
+-- Table structure for table `timetable_class`
 --
 
 CREATE TABLE `timetable_class` (
@@ -3333,12 +3896,12 @@ CREATE TABLE `timetable_class` (
   `day` varchar(20) NOT NULL,
   `session_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `timetable_exam`
+-- Table structure for table `timetable_exam`
 --
 
 CREATE TABLE `timetable_exam` (
@@ -3354,14 +3917,14 @@ CREATE TABLE `timetable_exam` (
   `exam_date` date NOT NULL,
   `branch_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transactions`
+-- Table structure for table `transactions`
 --
 
 CREATE TABLE `transactions` (
@@ -3371,24 +3934,24 @@ CREATE TABLE `transactions` (
   `type` varchar(100) NOT NULL,
   `category` varchar(20) NOT NULL,
   `ref` varchar(255) NOT NULL,
-  `amount` decimal(18,2) NOT NULL DEFAULT '0.00',
-  `dr` decimal(18,2) NOT NULL DEFAULT '0.00',
-  `cr` decimal(18,2) NOT NULL DEFAULT '0.00',
-  `bal` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `amount` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `dr` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `cr` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `bal` decimal(18,2) NOT NULL DEFAULT 0.00,
   `date` date NOT NULL,
   `pay_via` varchar(20) NOT NULL,
   `description` text NOT NULL,
   `attachments` varchar(255) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `system` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `system` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transactions_links`
+-- Table structure for table `transactions_links`
 --
 
 CREATE TABLE `transactions_links` (
@@ -3397,12 +3960,12 @@ CREATE TABLE `transactions_links` (
   `deposit` tinyint(3) DEFAULT NULL,
   `expense` tinyint(3) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transport_assign`
+-- Table structure for table `transport_assign`
 --
 
 CREATE TABLE `transport_assign` (
@@ -3411,13 +3974,13 @@ CREATE TABLE `transport_assign` (
   `stoppage_id` int(11) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transport_route`
+-- Table structure for table `transport_route`
 --
 
 CREATE TABLE `transport_route` (
@@ -3427,12 +3990,12 @@ CREATE TABLE `transport_route` (
   `remarks` longtext NOT NULL,
   `stop_place` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transport_stoppage`
+-- Table structure for table `transport_stoppage`
 --
 
 CREATE TABLE `transport_stoppage` (
@@ -3441,13 +4004,13 @@ CREATE TABLE `transport_stoppage` (
   `stop_time` time NOT NULL,
   `route_fare` decimal(18,2) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `transport_vehicle`
+-- Table structure for table `transport_vehicle`
 --
 
 CREATE TABLE `transport_vehicle` (
@@ -3459,108 +4022,108 @@ CREATE TABLE `transport_vehicle` (
   `driver_phone` longtext NOT NULL,
   `driver_license` longtext NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `voucher_head`
+-- Table structure for table `voucher_head`
 --
 
 CREATE TABLE `voucher_head` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(20) NOT NULL,
-  `system` tinyint(1) DEFAULT '0',
+  `system` tinyint(1) DEFAULT 0,
   `branch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `accounts`
+-- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `advance_salary`
+-- Indexes for table `advance_salary`
 --
 ALTER TABLE `advance_salary`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `attachments`
+-- Indexes for table `attachments`
 --
 ALTER TABLE `attachments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `attachments_type`
+-- Indexes for table `attachments_type`
 --
 ALTER TABLE `attachments_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `award`
+-- Indexes for table `award`
 --
 ALTER TABLE `award`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `book`
+-- Indexes for table `book`
 --
 ALTER TABLE `book`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `book_category`
+-- Indexes for table `book_category`
 --
 ALTER TABLE `book_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `book_issues`
+-- Indexes for table `book_issues`
 --
 ALTER TABLE `book_issues`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `branch`
+-- Indexes for table `branch`
 --
 ALTER TABLE `branch`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `bulk_msg_category`
+-- Indexes for table `bulk_msg_category`
 --
 ALTER TABLE `bulk_msg_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `bulk_sms_email`
+-- Indexes for table `bulk_sms_email`
 --
 ALTER TABLE `bulk_sms_email`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `class`
+-- Indexes for table `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `custom_field`
+-- Indexes for table `custom_field`
 --
 ALTER TABLE `custom_field`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `custom_fields_values`
+-- Indexes for table `custom_fields_values`
 --
 ALTER TABLE `custom_fields_values`
   ADD PRIMARY KEY (`id`),
@@ -3568,1046 +4131,1062 @@ ALTER TABLE `custom_fields_values`
   ADD KEY `fieldid` (`field_id`);
 
 --
--- Индексы таблицы `email_config`
+-- Indexes for table `email_config`
 --
 ALTER TABLE `email_config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `email_templates`
+-- Indexes for table `email_templates`
 --
 ALTER TABLE `email_templates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `email_templates_details`
+-- Indexes for table `email_templates_details`
 --
 ALTER TABLE `email_templates_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `enroll`
+-- Indexes for table `enroll`
 --
 ALTER TABLE `enroll`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `event`
+-- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `event_types`
+-- Indexes for table `event_types`
 --
 ALTER TABLE `event_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exam`
+-- Indexes for table `exam`
 --
 ALTER TABLE `exam`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exam_attendance`
+-- Indexes for table `exam_attendance`
 --
 ALTER TABLE `exam_attendance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exam_hall`
+-- Indexes for table `exam_hall`
 --
 ALTER TABLE `exam_hall`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exam_mark_distribution`
+-- Indexes for table `exam_mark_distribution`
 --
 ALTER TABLE `exam_mark_distribution`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exam_term`
+-- Indexes for table `exam_term`
 --
 ALTER TABLE `exam_term`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fees_reminder`
+-- Indexes for table `fees_reminder`
 --
 ALTER TABLE `fees_reminder`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fees_type`
+-- Indexes for table `fees_type`
 --
 ALTER TABLE `fees_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fee_allocation`
+-- Indexes for table `fee_allocation`
 --
 ALTER TABLE `fee_allocation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fee_fine`
+-- Indexes for table `fee_fine`
 --
 ALTER TABLE `fee_fine`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fee_groups`
+-- Indexes for table `fee_groups`
 --
 ALTER TABLE `fee_groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fee_groups_details`
+-- Indexes for table `fee_groups_details`
 --
 ALTER TABLE `fee_groups_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `fee_payment_history`
+-- Indexes for table `fee_payment_history`
 --
 ALTER TABLE `fee_payment_history`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `global_settings`
+-- Indexes for table `global_images`
+--
+ALTER TABLE `global_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `global_settings`
 --
 ALTER TABLE `global_settings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `grade`
+-- Indexes for table `grade`
 --
 ALTER TABLE `grade`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `hall_allocation`
+-- Indexes for table `hall_allocation`
 --
 ALTER TABLE `hall_allocation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `homework`
+-- Indexes for table `homework`
 --
 ALTER TABLE `homework`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `homework_evaluation`
+-- Indexes for table `homework_evaluation`
 --
 ALTER TABLE `homework_evaluation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `hostel`
+-- Indexes for table `hostel`
 --
 ALTER TABLE `hostel`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `hostel_category`
+-- Indexes for table `hostel_category`
 --
 ALTER TABLE `hostel_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `hostel_room`
+-- Indexes for table `hostel_room`
 --
 ALTER TABLE `hostel_room`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `languages`
+-- Indexes for table `languages`
 --
 ALTER TABLE `languages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `language_list`
+-- Indexes for table `language_list`
 --
 ALTER TABLE `language_list`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `leave_application`
+-- Indexes for table `leave_application`
 --
 ALTER TABLE `leave_application`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `leave_category`
+-- Indexes for table `leave_category`
 --
 ALTER TABLE `leave_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `live_class`
+-- Indexes for table `live_class`
 --
 ALTER TABLE `live_class`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `live_class_config`
+-- Indexes for table `live_class_config`
 --
 ALTER TABLE `live_class_config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `login_credential`
+-- Indexes for table `login_credential`
 --
 ALTER TABLE `login_credential`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `mark`
+-- Indexes for table `mark`
 --
 ALTER TABLE `mark`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `message`
+-- Indexes for table `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `message_reply`
+-- Indexes for table `message_reply`
 --
 ALTER TABLE `message_reply`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `parent`
+-- Indexes for table `parent`
 --
 ALTER TABLE `parent`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `payment_config`
+-- Indexes for table `payment_config`
 --
 ALTER TABLE `payment_config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `payment_salary_stipend`
+-- Indexes for table `payment_salary_stipend`
 --
 ALTER TABLE `payment_salary_stipend`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `payment_types`
+-- Indexes for table `payment_types`
 --
 ALTER TABLE `payment_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `payslip`
+-- Indexes for table `payslip`
 --
 ALTER TABLE `payslip`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `payslip_details`
+-- Indexes for table `payslip_details`
 --
 ALTER TABLE `payslip_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `permission`
+-- Indexes for table `permission`
 --
 ALTER TABLE `permission`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `permission_modules`
+-- Indexes for table `permission_modules`
 --
 ALTER TABLE `permission_modules`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Индексы таблицы `rm_sessions`
+-- Indexes for table `rm_sessions`
 --
 ALTER TABLE `rm_sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
 --
--- Индексы таблицы `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `salary_template`
+-- Indexes for table `salary_template`
 --
 ALTER TABLE `salary_template`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `salary_template_details`
+-- Indexes for table `salary_template_details`
 --
 ALTER TABLE `salary_template_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `schoolyear`
+-- Indexes for table `schoolyear`
 --
 ALTER TABLE `schoolyear`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `section`
+-- Indexes for table `section`
 --
 ALTER TABLE `section`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sections_allocation`
+-- Indexes for table `sections_allocation`
 --
 ALTER TABLE `sections_allocation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sms_api`
+-- Indexes for table `sms_api`
 --
 ALTER TABLE `sms_api`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sms_credential`
+-- Indexes for table `sms_credential`
 --
 ALTER TABLE `sms_credential`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sms_template`
+-- Indexes for table `sms_template`
 --
 ALTER TABLE `sms_template`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sms_template_details`
+-- Indexes for table `sms_template_details`
 --
 ALTER TABLE `sms_template_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff`
+-- Indexes for table `staff`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_attendance`
+-- Indexes for table `staff_attendance`
 --
 ALTER TABLE `staff_attendance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_bank_account`
+-- Indexes for table `staff_bank_account`
 --
 ALTER TABLE `staff_bank_account`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_department`
+-- Indexes for table `staff_department`
 --
 ALTER TABLE `staff_department`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_designation`
+-- Indexes for table `staff_designation`
 --
 ALTER TABLE `staff_designation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_documents`
+-- Indexes for table `staff_documents`
 --
 ALTER TABLE `staff_documents`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `staff_privileges`
+-- Indexes for table `staff_privileges`
 --
 ALTER TABLE `staff_privileges`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `student_attendance`
+-- Indexes for table `student_attendance`
 --
 ALTER TABLE `student_attendance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `student_category`
+-- Indexes for table `student_category`
 --
 ALTER TABLE `student_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `student_documents`
+-- Indexes for table `student_documents`
 --
 ALTER TABLE `student_documents`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `subject`
+-- Indexes for table `subject`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `subject_assign`
+-- Indexes for table `subject_assign`
 --
 ALTER TABLE `subject_assign`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `teacher_allocation`
+-- Indexes for table `teacher_allocation`
 --
 ALTER TABLE `teacher_allocation`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `teacher_note`
+-- Indexes for table `teacher_note`
 --
 ALTER TABLE `teacher_note`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `theme_settings`
+-- Indexes for table `theme_settings`
 --
 ALTER TABLE `theme_settings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `timetable_class`
+-- Indexes for table `timetable_class`
 --
 ALTER TABLE `timetable_class`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `timetable_exam`
+-- Indexes for table `timetable_exam`
 --
 ALTER TABLE `timetable_exam`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transactions`
+-- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transactions_links`
+-- Indexes for table `transactions_links`
 --
 ALTER TABLE `transactions_links`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transport_assign`
+-- Indexes for table `transport_assign`
 --
 ALTER TABLE `transport_assign`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transport_route`
+-- Indexes for table `transport_route`
 --
 ALTER TABLE `transport_route`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transport_stoppage`
+-- Indexes for table `transport_stoppage`
 --
 ALTER TABLE `transport_stoppage`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `transport_vehicle`
+-- Indexes for table `transport_vehicle`
 --
 ALTER TABLE `transport_vehicle`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `voucher_head`
+-- Indexes for table `voucher_head`
 --
 ALTER TABLE `voucher_head`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `accounts`
+-- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `advance_salary`
+-- AUTO_INCREMENT for table `advance_salary`
 --
 ALTER TABLE `advance_salary`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `attachments`
+-- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `attachments_type`
+-- AUTO_INCREMENT for table `attachments_type`
 --
 ALTER TABLE `attachments_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `award`
+-- AUTO_INCREMENT for table `award`
 --
 ALTER TABLE `award`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `book`
+-- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `book_category`
+-- AUTO_INCREMENT for table `book_category`
 --
 ALTER TABLE `book_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `book_issues`
+-- AUTO_INCREMENT for table `book_issues`
 --
 ALTER TABLE `book_issues`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `branch`
+-- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `bulk_msg_category`
+-- AUTO_INCREMENT for table `bulk_msg_category`
 --
 ALTER TABLE `bulk_msg_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `bulk_sms_email`
+-- AUTO_INCREMENT for table `bulk_sms_email`
 --
 ALTER TABLE `bulk_sms_email`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `class`
+-- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблицы `custom_field`
+-- AUTO_INCREMENT for table `custom_field`
 --
 ALTER TABLE `custom_field`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `custom_fields_values`
+-- AUTO_INCREMENT for table `custom_fields_values`
 --
 ALTER TABLE `custom_fields_values`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `email_config`
+-- AUTO_INCREMENT for table `email_config`
 --
 ALTER TABLE `email_config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `email_templates`
+-- AUTO_INCREMENT for table `email_templates`
 --
 ALTER TABLE `email_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `email_templates_details`
+-- AUTO_INCREMENT for table `email_templates_details`
 --
 ALTER TABLE `email_templates_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `enroll`
+-- AUTO_INCREMENT for table `enroll`
 --
 ALTER TABLE `enroll`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблицы `event`
+-- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `event_types`
+-- AUTO_INCREMENT for table `event_types`
 --
 ALTER TABLE `event_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `exam`
+-- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `exam_attendance`
+-- AUTO_INCREMENT for table `exam_attendance`
 --
 ALTER TABLE `exam_attendance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `exam_hall`
+-- AUTO_INCREMENT for table `exam_hall`
 --
 ALTER TABLE `exam_hall`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `exam_mark_distribution`
+-- AUTO_INCREMENT for table `exam_mark_distribution`
 --
 ALTER TABLE `exam_mark_distribution`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `exam_term`
+-- AUTO_INCREMENT for table `exam_term`
 --
 ALTER TABLE `exam_term`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `fees_reminder`
+-- AUTO_INCREMENT for table `fees_reminder`
 --
 ALTER TABLE `fees_reminder`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `fees_type`
+-- AUTO_INCREMENT for table `fees_type`
 --
 ALTER TABLE `fees_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `fee_allocation`
+-- AUTO_INCREMENT for table `fee_allocation`
 --
 ALTER TABLE `fee_allocation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `fee_fine`
+-- AUTO_INCREMENT for table `fee_fine`
 --
 ALTER TABLE `fee_fine`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `fee_groups`
+-- AUTO_INCREMENT for table `fee_groups`
 --
 ALTER TABLE `fee_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `fee_groups_details`
+-- AUTO_INCREMENT for table `fee_groups_details`
 --
 ALTER TABLE `fee_groups_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `fee_payment_history`
+-- AUTO_INCREMENT for table `fee_payment_history`
 --
 ALTER TABLE `fee_payment_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `global_settings`
+-- AUTO_INCREMENT for table `global_images`
 --
-ALTER TABLE `global_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `global_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблицы `grade`
+-- AUTO_INCREMENT for table `global_settings`
+--
+ALTER TABLE `global_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `grade`
 --
 ALTER TABLE `grade`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `hall_allocation`
+-- AUTO_INCREMENT for table `hall_allocation`
 --
 ALTER TABLE `hall_allocation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `homework`
+-- AUTO_INCREMENT for table `homework`
 --
 ALTER TABLE `homework`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `homework_evaluation`
+-- AUTO_INCREMENT for table `homework_evaluation`
 --
 ALTER TABLE `homework_evaluation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `hostel`
+-- AUTO_INCREMENT for table `hostel`
 --
 ALTER TABLE `hostel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `hostel_category`
+-- AUTO_INCREMENT for table `hostel_category`
 --
 ALTER TABLE `hostel_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `hostel_room`
+-- AUTO_INCREMENT for table `hostel_room`
 --
 ALTER TABLE `hostel_room`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `languages`
+-- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=981;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1009;
 
 --
--- AUTO_INCREMENT для таблицы `language_list`
+-- AUTO_INCREMENT for table `language_list`
 --
 ALTER TABLE `language_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT для таблицы `leave_application`
+-- AUTO_INCREMENT for table `leave_application`
 --
 ALTER TABLE `leave_application`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `leave_category`
+-- AUTO_INCREMENT for table `leave_category`
 --
 ALTER TABLE `leave_category`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `live_class`
+-- AUTO_INCREMENT for table `live_class`
 --
 ALTER TABLE `live_class`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `live_class_config`
+-- AUTO_INCREMENT for table `live_class_config`
 --
 ALTER TABLE `live_class_config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `login_credential`
+-- AUTO_INCREMENT for table `login_credential`
 --
 ALTER TABLE `login_credential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT для таблицы `mark`
+-- AUTO_INCREMENT for table `mark`
 --
 ALTER TABLE `mark`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `message`
+-- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `message_reply`
+-- AUTO_INCREMENT for table `message_reply`
 --
 ALTER TABLE `message_reply`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `parent`
+-- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `payment_config`
+-- AUTO_INCREMENT for table `payment_config`
 --
 ALTER TABLE `payment_config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `payment_salary_stipend`
+-- AUTO_INCREMENT for table `payment_salary_stipend`
 --
 ALTER TABLE `payment_salary_stipend`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `payment_types`
+-- AUTO_INCREMENT for table `payment_types`
 --
 ALTER TABLE `payment_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `payslip`
+-- AUTO_INCREMENT for table `payslip`
 --
 ALTER TABLE `payslip`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `payslip_details`
+-- AUTO_INCREMENT for table `payslip_details`
 --
 ALTER TABLE `payslip_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `permission`
+-- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
--- AUTO_INCREMENT для таблицы `permission_modules`
+-- AUTO_INCREMENT for table `permission_modules`
 --
 ALTER TABLE `permission_modules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT для таблицы `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT для таблицы `salary_template`
+-- AUTO_INCREMENT for table `salary_template`
 --
 ALTER TABLE `salary_template`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `salary_template_details`
+-- AUTO_INCREMENT for table `salary_template_details`
 --
 ALTER TABLE `salary_template_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `schoolyear`
+-- AUTO_INCREMENT for table `schoolyear`
 --
 ALTER TABLE `schoolyear`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT для таблицы `section`
+-- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблицы `sections_allocation`
+-- AUTO_INCREMENT for table `sections_allocation`
 --
 ALTER TABLE `sections_allocation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `sms_api`
+-- AUTO_INCREMENT for table `sms_api`
 --
 ALTER TABLE `sms_api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблицы `sms_credential`
+-- AUTO_INCREMENT for table `sms_credential`
 --
 ALTER TABLE `sms_credential`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `sms_template`
+-- AUTO_INCREMENT for table `sms_template`
 --
 ALTER TABLE `sms_template`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT для таблицы `sms_template_details`
+-- AUTO_INCREMENT for table `sms_template_details`
 --
 ALTER TABLE `sms_template_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff`
+-- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `staff_attendance`
+-- AUTO_INCREMENT for table `staff_attendance`
 --
 ALTER TABLE `staff_attendance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff_bank_account`
+-- AUTO_INCREMENT for table `staff_bank_account`
 --
 ALTER TABLE `staff_bank_account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff_department`
+-- AUTO_INCREMENT for table `staff_department`
 --
 ALTER TABLE `staff_department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff_designation`
+-- AUTO_INCREMENT for table `staff_designation`
 --
 ALTER TABLE `staff_designation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff_documents`
+-- AUTO_INCREMENT for table `staff_documents`
 --
 ALTER TABLE `staff_documents`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `staff_privileges`
+-- AUTO_INCREMENT for table `staff_privileges`
 --
 ALTER TABLE `staff_privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=534;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=752;
 
 --
--- AUTO_INCREMENT для таблицы `student`
+-- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблицы `student_attendance`
+-- AUTO_INCREMENT for table `student_attendance`
 --
 ALTER TABLE `student_attendance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `student_category`
+-- AUTO_INCREMENT for table `student_category`
 --
 ALTER TABLE `student_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `student_documents`
+-- AUTO_INCREMENT for table `student_documents`
 --
 ALTER TABLE `student_documents`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `subject`
+-- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `subject_assign`
+-- AUTO_INCREMENT for table `subject_assign`
 --
 ALTER TABLE `subject_assign`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `teacher_allocation`
+-- AUTO_INCREMENT for table `teacher_allocation`
 --
 ALTER TABLE `teacher_allocation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `teacher_note`
+-- AUTO_INCREMENT for table `teacher_note`
 --
 ALTER TABLE `teacher_note`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `theme_settings`
+-- AUTO_INCREMENT for table `theme_settings`
 --
 ALTER TABLE `theme_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `timetable_class`
+-- AUTO_INCREMENT for table `timetable_class`
 --
 ALTER TABLE `timetable_class`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `timetable_exam`
+-- AUTO_INCREMENT for table `timetable_exam`
 --
 ALTER TABLE `timetable_exam`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transactions`
+-- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transactions_links`
+-- AUTO_INCREMENT for table `transactions_links`
 --
 ALTER TABLE `transactions_links`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transport_assign`
+-- AUTO_INCREMENT for table `transport_assign`
 --
 ALTER TABLE `transport_assign`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transport_route`
+-- AUTO_INCREMENT for table `transport_route`
 --
 ALTER TABLE `transport_route`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transport_stoppage`
+-- AUTO_INCREMENT for table `transport_stoppage`
 --
 ALTER TABLE `transport_stoppage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `transport_vehicle`
+-- AUTO_INCREMENT for table `transport_vehicle`
 --
 ALTER TABLE `transport_vehicle`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `voucher_head`
+-- AUTO_INCREMENT for table `voucher_head`
 --
 ALTER TABLE `voucher_head`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
