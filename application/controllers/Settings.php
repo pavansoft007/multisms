@@ -104,7 +104,7 @@ class Settings extends Admin_Controller
 
         if ($this->input->post('submit') == 'logo') {
             if((!is_master_loggedin()) || (!is_superadmin_loggedin())){
-                $text_logo = 'logo-small.png';
+                $text_logo = 'logo-small.png'; 
                 $old_text_logo = $this->input->post('old_text_logo');
                 if ((isset($_FILES["text_logo"]) && !empty($_FILES['text_logo']['name']))) {
                     $config['upload_path'] = './uploads/app_image/text_logo';
