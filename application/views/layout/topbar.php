@@ -43,7 +43,7 @@
 						<?php if(get_permission('student', 'is_add')){ ?>
 							<a href="<?php echo base_url('student/add');?>"><i class="fas fa-users"></i> <?php echo translate('student_admission');?></a>
 						<?php } if(get_permission('student_attendance_report', 'is_view')) { ?>
-							<a href="<?php echo base_url('attendance/studentwise_report');?>"><i class="far fa-chart-bar"></i> <?php echo translate('student_attendance_report');?></a>
+							<a href="<?php echo base_url('attendance/studentwise_report');?>"><i class="far fa-chart-bar"></i> <?php echo translate('student_attendance');?></a>
 						<?php } if(get_permission('salary_payment', 'is_add')) { ?>
 							<a href="<?php echo base_url('payroll'); ?>"><i class="fas fa-donate"></i> <?php echo translate('salary_payment');?></a>
 						<?php } if(get_permission('leave_manage', 'is_view')) { ?>
