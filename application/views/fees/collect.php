@@ -24,7 +24,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="ib">
-										<img src="<?=base_url('uploads/app_image/printing-logo.png')?>" alt="RamomCoder Img" />
+										<img src="<?=base_url('uploads/app_image/printing_logo/'.$global_images['printing_logo'].'')?>" alt="Bigwala Technologies Img" />
 									</div>
 								</div>
 								<div class="col-md-6 text-right">
@@ -196,7 +196,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="ib">
-										<img src="<?=base_url('uploads/app_image/printing-logo.png')?>" alt="RamomCoder Img" />
+										<img src="<?=base_url('uploads/app_image/printing_logo/'.$global_images['printing_logo'].'')?>" alt="Bigwala Technologies Img" />
 									</div>
 								</div>
 								<div class="col-md-6 text-right">

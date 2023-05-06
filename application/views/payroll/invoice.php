@@ -6,7 +6,7 @@
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="ib">
-							<img src="<?php echo base_url('uploads/app_image/printing-logo.png'); ?>" alt="Img" />
+							<img src="<?php echo base_url('uploads/app_image/printing_logo/'.$global_images['printing_logo'].''); ?>" alt="Img" />
 						</div>
 					</div>
 					<div class="col-xs-6 text-right">

@@ -37,7 +37,7 @@
                                 <h2><?php echo translate('welcome_to');?></h2>
                             </div>
                             <div class="center img-hol-p">
-                                <img src="<?php echo base_url('uploads/app_image/logo.png');?>" height="60" alt="Bigwala Technologies school management system">
+                                <img src="<?php echo base_url('uploads/app_image/system_logo/'.$global_images['system_logo'].'');?>" height="60" alt="Bigwala Technologies school management system">
                             </div>
                             <div class="address">
                                 <p><?php echo $global_config['address'];?></p>

@@ -481,7 +481,7 @@ class Feespayment extends Admin_Controller
                     'amount' => ($params['amount'] + $params['fine']) * 100, 
                     'name' => $params['student_name'], 
                     'description' => "Submitting student fees online. Invoice No - " . $params['invoice_no'], 
-                    'image' => base_url('uploads/app_image/logo-small.png'), 
+                    'image' => base_url('uploads/app_image/text_logo/'.$global_images['text_logo'].''), 
                     'currency' => 'INR', 
                     'order_id' => $params['razorpay_order_id'], 
                     'theme' => ["color" => "#F37254"], 

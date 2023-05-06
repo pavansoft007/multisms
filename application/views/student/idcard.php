@@ -73,7 +73,7 @@
 						</div>
 						<div class="id-card-holder">
 							<header class="id-card-heading">
-								<center><img class="img-fs" src="<?=base_url('uploads/app_image/printing-logo.png')?>" alt="RamomCoder Img" /></center>
+								<center><img class="img-fs" src="<?=base_url('uploads/app_image/printing_logo/'.$global_images['printing_logo'].'')?>" alt="RamomCoder Img" /></center>
 							</header>
 							<div class="id-card">
 								<div class="photo">
