@@ -261,7 +261,8 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label"><?=translate('system_logo');?></label>
-							<input type="file" name="logo_file" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=base_url('uploads/app_image/logo.png')?>" />
+							<input type="file" name="system_logo" class="dropify" data-allowed-file-extensions="png" data-default-file="<?=($global_images['branch_id']==''||$global_images['system_logo']=='logo.png')?base_url('uploads/app_image/logo.png'):base_url('uploads/app_image/system_logo/'.$global_images['system_logo'].'')?>" />
+							<input type="hidden" name="old_system_logo" value="<?php echo $global_images['system_logo']; ?>" />
 						</div>
 					</div>
 					<?php } ?>

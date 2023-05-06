@@ -1307,7 +1307,7 @@ small,
 mark,
 .mark {
   padding: .2em;
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
 }
 .text-left {
   text-align: left;
@@ -1394,7 +1394,7 @@ a.bg-info:focus {
   background-color: #afd9ee;
 }
 .bg-warning {
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
 }
 a.bg-warning:hover,
 a.bg-warning:focus {
@@ -2409,7 +2409,7 @@ table th[class*="col-"] {
 .table > thead > tr.warning > th,
 .table > tbody > tr.warning > th,
 .table > tfoot > tr.warning > th {
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
 }
 .table-hover > tbody > tr > td.warning:hover,
 .table-hover > tbody > tr > th.warning:hover,
@@ -2864,7 +2864,7 @@ select[multiple].input-lg {
 }
 .has-warning .input-group-addon {
   color: #8a6d3b;
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
   border-color: #8a6d3b;
 }
 .has-warning .form-control-feedback {
@@ -5079,7 +5079,7 @@ a.thumbnail.active {
 }
 .alert-warning {
   color: #8a6d3b;
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
   border-color: #faebcc;
 }
 .alert-warning hr {
@@ -5383,7 +5383,7 @@ button.list-group-item-info.active:focus {
 }
 .list-group-item-warning {
   color: #8a6d3b;
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
 }
 a.list-group-item-warning,
 button.list-group-item-warning {
@@ -5759,14 +5759,14 @@ button.list-group-item-danger.active:focus {
 }
 .panel-warning > .panel-heading {
   color: #8a6d3b;
-  background-color: #fcf8e3;
+  background-color: #E8E6F5;
   border-color: #faebcc;
 }
 .panel-warning > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #faebcc;
 }
 .panel-warning > .panel-heading .badge {
-  color: #fcf8e3;
+  color: #E8E6F5;
   background-color: #8a6d3b;
 }
 .panel-warning > .panel-footer + .panel-collapse > .panel-body {

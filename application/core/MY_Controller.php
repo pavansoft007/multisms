@@ -16,7 +16,8 @@ class MY_Controller extends CI_Controller {
 		
 		$get_config = $this->db->get_where('global_settings',array('id'=>1))->row_array();
         $get_theme_config = $this->db->get_where('theme_settings',array('id'=>1))->row_array();
-        $branchID = $this->application_model->get_branch_id();    
+        $get_global_images = $this->db->get_where('global_images',array('id'=>1))->row_array();
+        $branchID = $this->application_model->get_branch_id();  
         if($branchID){
 		    $get_config = $this->db->get_where('global_settings',array('branch_id'=>$branchID))->row_array();
             $get_theme_config = $this->db->get_where('theme_settings',array('branch_id'=>$branchID))->row_array();
