@@ -4,11 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * @package : Ramom school management system
  * @version : 2.0
- * @developed by : RamomCoder
- * @support : ramomcoder@yahoo.com
- * @author url : http://codecanyon.net/user/RamomCoder
+ * @developed by : Bigwala Technologies
+ * @support : bigwalatechnologies@bigwallatechnologies.com
+ * @author url : http://codecanyon.net/user/Bigwala Technologies
  * @filename : School_settings.php
- * @copyright : Reserved RamomCoders Team
+ * @copyright : Reserved Bigwala Technologiess Team
  */
 
 class School_settings extends Admin_Controller

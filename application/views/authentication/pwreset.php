@@ -6,7 +6,7 @@
 	<meta content="width=device-width,initial-scale=1" name="viewport">
 	<meta name="keywords" content="">
 	<meta name="description" content="Ramom School Management System">
-	<meta name="author" content="RamomCoder">
+	<meta name="author" content="Bigwala Technologies">
 	<title><?php echo translate('reset_password');?></title>
 	<link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.png');?>">
 	

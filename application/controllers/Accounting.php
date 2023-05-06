@@ -4,9 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * @package : Ramom SSchool Management System
  * @version : 2.0
- * @developed by : RamomCoder
- * @support : ramomcoder@yahoo.com
- * @author url : http://codecanyon.net/user/RamomCoder
+ * @developed by : Bigwala Technologies
+ * @support : bigwalatechnologies@bigwallatechnologies.com
+ * @author url : http://codecanyon.net/user/Bigwala Technologies
  * @filename : Accounting.php
  */
 

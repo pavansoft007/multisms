@@ -3,7 +3,7 @@
 	<meta name="keywords" content="">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Ramom School Management System">
-	<meta name="author" content="RamomCoder">
+	<meta name="author" content="Bigwala Technologies">
 	<title><?php echo html_escape($title);?></title>
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.png');?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
