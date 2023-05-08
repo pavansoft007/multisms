@@ -403,11 +403,12 @@ class Fees extends Admin_Controller
         if (isset($_POST['save'])) {
             $student_array = $this->input->post('stu_operations');
             $fee_groupID = $this->input->post('fee_group_id');
+            $sessionID = get_session_id();
             foreach ($student_array as $key => $value) {
                 $arrayData = array(
                     'student_id' => $value,
                     'group_id' => $fee_groupID,
-                    'session_id' => get_session_id(),
+                    'session_id' => $sessionID,
                     'branch_id' => $branchID,
                 );
                 $this->db->where($arrayData);
@@ -420,7 +421,7 @@ class Fees extends Admin_Controller
                 $this->db->where_not_in('student_id', $student_array);
             }
             $this->db->where('group_id', $fee_groupID);
-            $this->db->where('session_id', get_session_id());
+            $this->db->where('session_id', $sessionID);
             $this->db->delete('fee_allocation');
             set_alert('success', translate('information_has_been_saved_successfully'));
             redirect(base_url('fees/allocation'));

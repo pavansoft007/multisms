@@ -182,12 +182,13 @@ class Student_model extends MY_Model
 
     public function getFeeProgress($id)
     {
+        $sessionID = get_session_id();
         $this->db->select('IFNULL(SUM(gd.amount), 0) as totalfees,IFNULL(SUM(p.amount), 0) as totalpay,IFNULL(SUM(p.discount),0) as totaldiscount');
         $this->db->from('fee_allocation as a');
         $this->db->join('fee_groups_details as gd', 'gd.fee_groups_id = a.group_id', 'inner');
         $this->db->join('fee_payment_history as p', 'p.allocation_id = a.id and p.type_id = gd.fee_type_id', 'left');
         $this->db->where('a.student_id', $id);
-        $this->db->where('a.session_id', get_session_id());
+        $this->db->where('a.session_id', $sessionID);
         $r = $this->db->get()->row_array();
         $total_amount = floatval($r['totalfees']);
         $total_paid = floatval($r['totalpay'] + $r['totaldiscount']);
@@ -201,6 +202,7 @@ class Student_model extends MY_Model
 
     public function getStudentList($classID = '', $sectionID = '', $branchID = '', $deactivate = false)
     {
+        $sessionID = get_session_id();
         $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,l.active,c.name as class_name,se.name as section_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'inner');
@@ -209,7 +211,7 @@ class Student_model extends MY_Model
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
         $this->db->where('e.class_id', $classID);
         $this->db->where('e.branch_id', $branchID);
-        $this->db->where('e.session_id', get_session_id());
+        $this->db->where('e.session_id', $sessionID);
         $this->db->order_by('s.id', 'ASC');
         if ($sectionID != 'all') {
             $this->db->where('e.section_id', $sectionID);

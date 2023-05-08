@@ -597,10 +597,11 @@ $previous_details = json_decode($student['previous_details'], true);
 				<div id="exam_result" class="accordion-body collapse">
 					<div class="panel-body">
 						<?php 
+						$sessionID = get_session_id();
 						$studentID = $student['id'];
 						$this->db->where('class_id', $student['class_id']);
 						$this->db->where('section_id', $student['section_id']);
-						$this->db->where('session_id', get_session_id());
+						$this->db->where('session_id', $sessionID);
 						$this->db->group_by('exam_id');
 						$variable = $this->db->get('timetable_exam')->result_array();
 						foreach ($variable as  $erow) {
