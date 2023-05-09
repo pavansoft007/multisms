@@ -369,6 +369,25 @@ input[type="number"] {
 	overflow: hidden;
 	color: #fff;
 }
+.d-flx{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.parent-name-container{
+	background-color: #fff;
+	position: inherit;
+	z-index: 1000;
+	color: #000!important;
+	top: 86%;
+	text-align: center!important;
+	font-weight:bold
+}
+.usr-parent-img{
+	height: 250px!important;
+    width: 250px!important;
+    top: 25%!important;
+}
 	
 .profile-head::before {
 	content: "";
