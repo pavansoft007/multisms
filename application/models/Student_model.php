@@ -224,13 +224,14 @@ class Student_model extends MY_Model
 
     public function getSearchStudentList($search_text)
     {
+        $sessionID = get_session_id();
         $this->db->select('e.*,s.photo,s.first_name,s.last_name,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,c.name as class_name,se.name as section_name,sp.name as parent_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'left');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
         $this->db->join('parent as sp', 'sp.id = s.parent_id', 'left');
-        $this->db->where('e.session_id', get_session_id());
+        $this->db->where('e.session_id', $sessionID);
         if (!is_superadmin_loggedin()) {
             $this->db->where('e.branch_id', get_loggedin_branch_id());
         }

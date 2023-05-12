@@ -439,13 +439,15 @@ class Fees extends Admin_Controller
         if (!get_permission('invoice', 'is_view')) {
             access_denied();
         }
-
+       
         $branchID = $this->application_model->get_branch_id();
+       
         if ($this->input->post('search')) {
             $this->data['class_id'] = $this->input->post('class_id');
             $this->data['section_id'] = $this->input->post('section_id');
             $this->data['invoicelist'] = $this->fees_model->getInvoiceList($this->data['class_id'], $this->data['section_id'], $branchID);
         }
+        
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('payments_history');
         $this->data['sub_page'] = 'fees/invoice_list';
@@ -868,4 +870,33 @@ class Fees extends Admin_Controller
         $this->load->view('layout/index', $this->data);
     }
 
+    public function overall_payment_history()
+    {
+        if (!get_permission('fees_reports', 'is_view')) {
+            access_denied();
+        }
+        $branchID = $this->application_model->get_branch_id();
+        if ($this->input->post('search')) {
+            $classID = $this->input->post('class_id');
+            $paymentVia  = $this->input->post('payment_via');
+            $daterange = explode(' - ', $this->input->post('daterange'));
+            $start = date("Y-m-d", strtotime($daterange[0]));
+            $end = date("Y-m-d", strtotime($daterange[1]));
+            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($classID, "", $paymentVia, $start, $end, $branchID);
+        }
+        $this->data['branch_id'] = $branchID;
+        $this->data['title'] = translate('overall_fees_payment_history');
+        $this->data['sub_page'] = 'fees/overall_payment_history';
+        $this->data['main_menu'] = 'fees_repots';
+        $this->data['headerelements']   = array(
+            'css' => array(
+                'vendor/daterangepicker/daterangepicker.css',
+            ),
+            'js' => array(
+                'vendor/moment/moment.js',
+                'vendor/daterangepicker/daterangepicker.js',
+            ),
+        );
+        $this->load->view('layout/index', $this->data);
+    }
 }

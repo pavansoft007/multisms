@@ -13,12 +13,13 @@ class Fees_model extends MY_Model
 
     public function feeFineCalculation($allocationID, $typeID)
     {
+        $sessionID = get_session_id();
         $this->db->select('fd.amount,fd.due_date,f.*');
         $this->db->from('fee_allocation as a');
         $this->db->join('fee_groups_details as fd', 'fd.fee_groups_id = a.group_id and fd.fee_type_id = ' . $this->db->escape($typeID), 'left');
         $this->db->join('fee_fine as f', 'f.group_id = fd.fee_groups_id and f.type_id = fd.fee_type_id', 'inner');
         $this->db->where('a.id', $allocationID);
-        $this->db->where('f.session_id', get_session_id());
+        $this->db->where('f.session_id', $sessionID);
         $getDB = $this->db->get()->row_array();
         if (is_array($getDB) && count($getDB)) {
             $dueDate = $getDB['due_date'];
@@ -180,6 +181,7 @@ class Fees_model extends MY_Model
 
     public function getInvoiceList($class_id, $section_id, $branch_id)
     {
+        $sessionID = get_session_id();
         $this->db->select('e.student_id,e.roll,s.first_name,s.last_name,s.register_no,s.mobileno,c.name as class_name,se.name as section_name');
         $this->db->from('fee_allocation as fa');
         $this->db->join('enroll as e', 'e.student_id = fa.student_id', 'inner');
@@ -187,7 +189,7 @@ class Fees_model extends MY_Model
         $this->db->join('class as c', 'c.id = e.class_id', 'left');
         $this->db->join('section as se', 'se.id = e.section_id', 'left');
         $this->db->where('fa.branch_id', $branch_id);
-        $this->db->where('fa.session_id', get_session_id());
+        $this->db->where('fa.session_id', $sessionID);
         $this->db->where('e.class_id', $class_id);
         if ($section_id != 'all') {
             $this->db->where('e.section_id', $section_id);
@@ -255,6 +257,7 @@ class Fees_model extends MY_Model
 
     public function getStuPaymentHistory($classID='', $SectionID='', $paymentVia, $start, $end, $branchID, $onlyFine=false)
     {
+        $sessionID = get_session_id();
         $this->db->select('h.*,ft.name as type_name,e.student_id,e.roll,s.first_name,s.last_name,s.register_no,s.mobileno,c.name as class_name,se.name as section_name,pt.name as pay_via');
         $this->db->from('fee_payment_history as h');
         $this->db->join('fee_allocation as fa', 'fa.id = h.allocation_id', 'inner');
@@ -264,7 +267,7 @@ class Fees_model extends MY_Model
         $this->db->join('class as c', 'c.id = e.class_id', 'left');
         $this->db->join('section as se', 'se.id = e.section_id', 'left');
         $this->db->join('payment_types as pt', 'pt.id = h.pay_via', 'left');
-        $this->db->where('fa.session_id', get_session_id());
+        $this->db->where('fa.session_id', $sessionID);
         $this->db->where('h.date  >=', $start);
         $this->db->where('h.date <=', $end);
         $this->db->where('e.branch_id', $branchID);
@@ -319,11 +322,12 @@ class Fees_model extends MY_Model
 
     function getfeeGroup($studentID)
     {
+        $sessionID = get_session_id();
         $this->db->select('g.name');
         $this->db->from('fee_allocation as fa');
         $this->db->join('fee_groups as g', 'g.id = fa.group_id', 'inner');
         $this->db->where('fa.student_id', $studentID);
-        $this->db->where('fa.session_id', get_session_id());
+        $this->db->where('fa.session_id', $sessionID);
         return $this->db->get()->result_array();
     }
 
