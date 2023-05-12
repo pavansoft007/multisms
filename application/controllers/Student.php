@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @version : 2.0
  * @developed by : Bigwala Technologies
  * @support : Bigwala Technologies@yahoo.com
- * @author url : http://codecanyon.net/user/Bigwala Technologies
+ * @author url : https://bigwallatechnologies.com
  * @filename : Accounting.php
  * @copyright : Reserved Bigwala Technologiess Team
  */

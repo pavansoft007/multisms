@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @version : 2.0
  * @developed by : techtune
  * @support : bigwalatechnologies@bigwallatechnologies.com
- * @author url : http://codecanyon.net/user/techtune
+ * @author url : https://bigwallatechnologies.com/techtune
  * @filename : Install.php
  */
 
