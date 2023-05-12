@@ -55,6 +55,9 @@
 						<?php } if(get_permission('invoice', 'is_view')) { ?>
 							<a href="<?php echo base_url('fees/invoice_list');?>"><i class="fab fa-wpforms"></i> <?php echo translate('payments_history');?></a>
 						<?php } ?>
+						<?php } if(get_permission('fees_reports', 'is_view')) { ?>
+							<a href="<?php echo base_url('fees/overall_payment_history');?>"><i class="fas fa-piggy-bank"></i> <?php echo translate('overall_paid_fee_report');?></a>
+						<?php  ?>
 						</div>
 					</div>
 				</div>

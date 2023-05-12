@@ -983,7 +983,7 @@
                                         <a href="<?=base_url('fees/student_fees_report')?>"><?=translate('fees_report')?></a>
                                     </li>
                                     <li class="<?php if ($sub_page == 'fees/overall_payment_history') echo 'nav-active';?>">
-                                        <a href="<?=base_url('fees/overall_payment_history')?>"><?=translate('total_fees_report')?></a>
+                                        <a href="<?=base_url('fees/overall_payment_history')?>"><?=translate('overall_paid_fee_report')?></a>
                                     </li>
                                     <li class="<?php if ($sub_page == 'fees/payment_history') echo 'nav-active';?>">
                                         <a href="<?=base_url('fees/payment_history')?>"><?=translate('receipts_report')?></a>

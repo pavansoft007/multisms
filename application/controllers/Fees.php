@@ -885,7 +885,7 @@ class Fees extends Admin_Controller
             $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($classID, "", $paymentVia, $start, $end, $branchID);
         }
         $this->data['branch_id'] = $branchID;
-        $this->data['title'] = translate('overall_fees_payment_history');
+        $this->data['title'] = translate('overall_paid_fee_report');
         $this->data['sub_page'] = 'fees/overall_payment_history';
         $this->data['main_menu'] = 'fees_repots';
         $this->data['headerelements']   = array(
