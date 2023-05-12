@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <meta name="keywords" content=""/>
-    <meta name="description" content="Ramom School Management System">
+    <meta name="description" content="Bigwala Technologies  school management system">
     <meta name="author" content="Bigwala Technologies">
-    <title>Ramom School - Installation</title>
+    <title>School - Installation</title>
     <link rel="shortcut icon" href="<?=base_url('assets/images/favicon.png')?>">
     <link href="<?=$this->_install->is_secure('fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light')?>" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?=base_url('assets/vendor/bootstrap/css/bootstrap.css')?>"/>

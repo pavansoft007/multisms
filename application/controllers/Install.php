@@ -2,11 +2,11 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * @package : Ramom Diagnostic Management System
- * @version : 2.0
- * @developed by : techtune
+ * @package : Bigwala Technologies School Management System
+ * @version : 1.0
+ * @developed by : pavankumar doddi
  * @support : bigwalatechnologies@bigwallatechnologies.com
- * @author url : https://bigwallatechnologies.com/techtune
+ * @author url : https://bigwallatechnologies.com
  * @filename : Install.php
  */
 

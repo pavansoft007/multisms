@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * @package : Bigwala Technologies school management system
- * @version : 2.0
+ * @version : 1.0
  * @developed by : Bigwala Technologies
  * @support : Bigwala Technologies
  * @author url : https://bigwallatechnologies.com/
