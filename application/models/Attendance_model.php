@@ -44,13 +44,14 @@ class Attendance_model extends MY_Model
 
     public function getStudentList($branch_id, $class_id, $section_id)
     {
+        $sessionID = get_session_id();
         $this->db->select('e.student_id,e.roll,s.first_name,s.last_name,s.register_no');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 's.id = e.student_id', 'left');
         $this->db->where('e.class_id', $class_id);
         $this->db->where('e.section_id', $section_id);
         $this->db->where('e.branch_id', $branch_id);
-        $this->db->where('e.session_id', get_session_id());
+        $this->db->where('e.session_id', $sessionID);
         return $this->db->get()->result_array();
     }
 
