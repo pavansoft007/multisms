@@ -219,7 +219,9 @@ class Settings extends Admin_Controller
             }
 
             $global_images['branch_id'] = $branchID;
-            $global_images['system_logo'] = $system_logo;
+            if($system_logo != ''){
+                $global_images['system_logo'] = $system_logo;
+            }
             $global_images['text_logo'] = $text_logo;
             $global_images['printing_logo'] = $printing_logo;
             $global_images['report_logo'] = $report_logo;
