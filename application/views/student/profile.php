@@ -73,7 +73,7 @@ $previous_details = json_decode($student['previous_details'], true);
 				</li>
 				<li>
 				<a href="<?php echo base_url('attendance/studentwise_report');?>" target="_bla
-					"><i class="far fa-chart-bar"></i> <?php echo translate('attandance'); ?></a>
+					"><i class="far fa-chart-bar"></i><?php echo translate('attandance'); ?></a>
 				</li>
 				<li style="float:right;margin-bottom:0px;margin-top:10px">
 							<button class="btn btn-default btn-circle" id="authentication_btn">
