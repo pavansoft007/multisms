@@ -22,6 +22,7 @@ class Student extends Admin_Controller
         $this->load->model('student_model');
         $this->load->model('email_model');
         $this->load->model('sms_model');
+        $this->load->model('parents_model');
     }
 
     public function index()
@@ -43,15 +44,15 @@ class Student extends Admin_Controller
         $this->form_validation->set_rules('category_id', translate('category'), 'trim|required');
         $this->form_validation->set_rules('first_name', translate('first_name'), 'trim|required');
         $this->form_validation->set_rules('last_name', translate('last_name'), 'trim|required');
-        $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'trim|required');
-        $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email|callback_unique_username');
+        // $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'trim|required');
+        // $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email|callback_unique_username');
         $this->form_validation->set_rules('roll', translate('roll_number'), 'trim|required|numeric|callback_unique_roll');
         $this->form_validation->set_rules('register_no', translate('register_no'), 'trim|required|callback_unique_registerid');
         $this->form_validation->set_rules('user_photo', 'profile_picture',array(array('handle_upload', array($this->application_model, 'profilePicUpload'))));
-        if (!isset($_POST['student_id'])) {
-            $this->form_validation->set_rules('password', translate('password'), 'trim|required|min_length[4]');
-            $this->form_validation->set_rules('retype_password', translate('retype_password'), 'trim|required|matches[password]');
-        }
+        // if (!isset($_POST['student_id'])) {
+        //     $this->form_validation->set_rules('password', translate('password'), 'trim|required|min_length[4]');
+        //     $this->form_validation->set_rules('retype_password', translate('retype_password'), 'trim|required|matches[password]');
+        // }
         // custom fields validation rules
         $class_slug = $this->router->fetch_class();
         $customFields = getCustomFields($class_slug);
@@ -79,10 +80,11 @@ class Student extends Admin_Controller
                 $this->form_validation->set_rules('grd_name', translate('name'), 'trim|required');
                 $this->form_validation->set_rules('grd_relation', translate('relation'), 'trim|required');
                 $this->form_validation->set_rules('grd_occupation', translate('occupation'), 'trim|required');
-                $this->form_validation->set_rules('grd_mobileno', translate('mobile_no'), 'trim|required');
-                $this->form_validation->set_rules('grd_email', translate('email'), 'trim|required|callback_get_valid_guardian_email');
+                $this->form_validation->set_rules('grd_mobileno', translate('mobile_no'), 'trim|required|callback_unique_username');
+                // $this->form_validation->set_rules('grd_email', translate('email'), 'trim|callback_get_valid_guardian_email');
                 $this->form_validation->set_rules('grd_password', translate('password'), 'trim|required');
                 $this->form_validation->set_rules('grd_retype_password', translate('retype_password'), 'trim|required|matches[grd_password]');
+                $this->form_validation->set_rules('parent_photo', 'profile_picture',array(array('handle_upload', array($this->application_model, 'profilePicUpload'))));
             } else {
                 $this->form_validation->set_rules('parent_id', translate('guardian'), 'required');
             }
@@ -371,6 +373,9 @@ class Student extends Admin_Controller
             $sectionID = $this->input->post('section_id');
             $this->data['students'] = $this->application_model->getStudentListByClassSection($classID, $sectionID, $branchID, false, true);
         }
+        // echo '<pre>';
+        // print_r($this->data['students']);
+        // exit;
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('student_list');
         $this->data['main_menu'] = 'student';
@@ -393,6 +398,7 @@ class Student extends Admin_Controller
         $this->load->model('fees_model');
         $this->load->model('exam_model');
         $getStudent = $this->student_model->getSingleStudent($id);
+        $this->data['parent'] = $this->parents_model->getSingleParent($getStudent['parent_id']);
         if (isset($_POST['update'])) {
             $this->session->set_flashdata('profile_tab', 1);
             $this->data['branch_id'] = $this->application_model->get_branch_id();

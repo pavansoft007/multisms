@@ -36,9 +36,9 @@ class Student_model extends MY_Model
             'permanent_address' => $data['permanent_address'],
             'city' => $data['city'],
             'state' => $data['state'],
-            'mobileno' => $data['mobileno'],
+            // 'mobileno' => $data['mobileno'],
             'category_id' => $data['category_id'],
-            'email' => $data['email'],
+            // 'email' => $data['email'],
             'parent_id' => $data['parent_id'],
             'route_id' => $data['route_id'],
             'vehicle_id' => $data['vehicle_id'],
@@ -61,18 +61,18 @@ class Student_model extends MY_Model
                     'occupation' => $data['grd_occupation'],
                     'income' => $data['grd_income'],
                     'education' => $data['grd_education'],
-                    'email' => $data['grd_email'],
+                    // 'email' => $data['grd_email'],
                     'mobileno' => $data['grd_mobileno'],
                     'address' => $data['grd_address'],
                     'city' => $data['grd_city'],
                     'state' => $data['grd_state'],
                     'branch_id' => $this->application_model->get_branch_id(),
-                    'photo' => 'defualt.png',
+                    'photo' => $this->uploadImage2('parent'),
                 );
                 $this->db->insert('parent', $arrayParent);
                 $parentID = $this->db->insert_id();
                 $parent_credential = array(
-                    'username' => $data["grd_email"],
+                    'username' => $data["grd_mobileno"],
                     'role' => 6,
                     'user_id' => $parentID,
                     'password' => $this->app_lib->pass_hashed($data["grd_password"]),
@@ -87,10 +87,10 @@ class Student_model extends MY_Model
             $this->db->insert('student', $inser_data1);
             $student_id = $this->db->insert_id();
             // save student login credential information in the database
-            $inser_data2['role'] = 7;
-            $inser_data2['user_id'] = $student_id;
-            $inser_data2['password'] = $this->app_lib->pass_hashed($data["password"]);
-            $this->db->insert('login_credential', $inser_data2);
+            // $inser_data2['role'] = 7;
+            // $inser_data2['user_id'] = $student_id;
+            // $inser_data2['password'] = $this->app_lib->pass_hashed($data["password"]);
+            // $this->db->insert('login_credential', $inser_data2);
             return $student_id;
         } else {
             // update student all information in the database
@@ -250,10 +250,10 @@ class Student_model extends MY_Model
 
     public function getSingleStudent($id = '')
     {
-        $this->db->select('s.*,l.active,e.class_id,e.section_id,e.id as enrollid,e.roll,e.branch_id,e.session_id,c.name as class_name,se.name as section_name,sc.name as category_name');
+        $this->db->select('s.*,e.class_id,e.section_id,e.id as enrollid,e.roll,e.branch_id,e.session_id,c.name as class_name,se.name as section_name,sc.name as category_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'left');
-        $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
+        // $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
         $this->db->join('section as se', 'e.section_id = se.id', 'left');
         $this->db->join('student_category as sc', 's.category_id=sc.id', 'left');

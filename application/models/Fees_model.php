@@ -294,6 +294,7 @@ class Fees_model extends MY_Model
 
     public function getStuPaymentReport($classID='', $sectionID, $studentID, $typeID, $start, $end, $branchID)
     {
+        $sessionID = get_session_id();
         $this->db->select('h.*,gd.due_date,ft.name as type_name,e.student_id,e.roll,s.first_name,s.last_name,s.register_no,pt.name as pay_via');
         $this->db->from('fee_payment_history as h');
         $this->db->join('fee_allocation as fa', 'fa.id = h.allocation_id', 'inner');
@@ -302,7 +303,7 @@ class Fees_model extends MY_Model
         $this->db->join('enroll as e', 'e.student_id = fa.student_id', 'inner');
         $this->db->join('student as s', 's.id = e.student_id', 'left');
         $this->db->join('payment_types as pt', 'pt.id = h.pay_via', 'left');
-        $this->db->where('fa.session_id', get_session_id());
+        $this->db->where('fa.session_id', $sessionID);
         $this->db->where('h.date  >=', $start);
         $this->db->where('h.date <=', $end);
         $this->db->where('e.branch_id', $branchID);

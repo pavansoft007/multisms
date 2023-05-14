@@ -194,7 +194,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-4 mb-sm">
+					<!-- <div class="col-md-4 mb-sm">
 						<div class="form-group">
 							<label class="control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
 							<div class="input-group">
@@ -203,7 +203,7 @@
 							</div>
 							<span class="error"><?=form_error('mobileno')?></span>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-md-4 mb-sm">
 						<div class="form-group">
 							<label class="control-label"><?=translate('city')?></label>
@@ -249,7 +249,7 @@
 				</div>
 
 				<!-- login details -->
-				<div class="headers-line mt-md">
+				<!-- <div class="headers-line mt-md">
 					<i class="fas fa-user-lock"></i> <?=translate('login_details')?>
 				</div>
 
@@ -284,7 +284,7 @@
 							<span class="error"><?=form_error('retype_password')?></span>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 				<!--guardian details-->
 				<div class="headers-line">
@@ -380,16 +380,6 @@
 								<input class="form-control" name="grd_state" value="<?=set_value('grd_state')?>" type="text">
 							</div>
 						</div>
-						<div class="col-md-4 mb-sm">
-							<div class="form-group">
-								<label class="control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fas fa-phone-volume"></i></span>
-									<input class="form-control" name="grd_mobileno" type="text" value="<?=set_value('grd_mobileno')?>">
-								</div>
-								<span class="error"><?=form_error('grd_mobileno')?></span>
-							</div>
-						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12 mb-sm">
@@ -399,9 +389,17 @@
 							</div>
 						</div>
 					</div>
-
+					<div class="row">
+						<div class="col-md-12 mb-sm">
+							<div class="form-group">
+								<label for="input-file-now"><?=translate('profile_picture')?></label>
+								<input type="file" name="parent_photo" class="dropify" />
+								<span class="error"><?=form_error('parent_photo')?></span>
+							</div>
+						</div>
+					</div>
 					<div class="row mb-lg">
-						<div class="col-md-6 mb-sm">
+					<!-- <div class="col-md-6 mb-sm">
 							<div class="form-group">
 								<label class="control-label"><?=translate('email')?> <span class="required">*</span></label>
 								<div class="input-group">
@@ -409,6 +407,16 @@
 									<input type="email" class="form-control" name="grd_email" id="grd_email" value="<?=set_value('grd_email')?>" />
 								</div>
 								<span class="error"><?=form_error('grd_email')?></span>
+							</div>
+						</div> -->
+						<div class="col-md-6 mb-sm">
+							<div class="form-group">
+								<label class="control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fas fa-phone-volume"></i></span>
+									<input class="form-control" name="grd_mobileno" type="text" value="<?=set_value('grd_mobileno')?>">
+								</div>
+								<span class="error"><?=form_error('grd_mobileno')?></span>
 							</div>
 						</div>
 						<div class="col-md-3 mb-sm">

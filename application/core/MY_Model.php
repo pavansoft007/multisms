@@ -37,6 +37,21 @@ class MY_Model extends CI_Model {
 		return $return_photo;
 	}
 
+	public function uploadImage2($role) {
+		$return_photo = 'defualt.png';
+		if((isset($_FILES["parent_photo"]) && !empty($_FILES['parent_photo']['name']))){
+			$config['upload_path'] = './uploads/images/' . $role . '/';
+			$config['allowed_types'] = 'jpg|png';
+			$config['overwrite'] = FALSE;
+			$config['encrypt_name'] = TRUE;
+			$this->upload->initialize($config);
+			if($this->upload->do_upload("parent_photo")){
+				$return_photo = $this->upload->data('file_name');
+			}
+		}
+		return $return_photo;
+	}
+
     public function get($table, $where_array = NULL, $single = false, $branch = false, $columns = '*')
     {
         $this->db->select($columns);
