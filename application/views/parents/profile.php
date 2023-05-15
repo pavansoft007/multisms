@@ -141,16 +141,7 @@
 								<input type="text" class="form-control" name="state" value="<?=set_value('state', $parent['state'])?>" />
 							</div>
 						</div>
-						<div class="col-md-4 mb-sm">
-							<div class="form-group">
-								<label class="control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fas fa-phone-volume"></i></span>
-									<input class="form-control" name="mobileno" type="text" value="<?=set_value('mobileno', $parent['mobileno'])?>">
-								</div>
-								<span class="error"><?php echo form_error('mobileno'); ?></span>
-							</div>
-						</div>
+						
 					</div>
 					<div class="row">
 						<div class="col-md-12 mb-sm">
@@ -184,13 +175,13 @@
 
 					<div class="row mb-lg">
 						<div class="col-md-12 mb-sm">
-							<div class="form-group <?php if (form_error('email')) echo 'has-error'; ?>">
-								<label class="control-label"><?=translate('email')?> <span class="required">*</span></label>
+							<div class="form-group">
+								<label class="control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="far fa-envelope-open"></i></span>
-									<input type="email" class="form-control" name="email" id="email" value="<?=set_value('email', $parent['email'])?>" />
+									<span class="input-group-addon"><i class="fas fa-phone-volume"></i></span>
+									<input class="form-control" name="mobileno" type="text" value="<?=set_value('mobileno', $parent['mobileno'])?>">
 								</div>
-								<span class="error"><?php echo form_error('email'); ?></span>
+								<span class="error"><?php echo form_error('mobileno'); ?></span>
 							</div>
 						</div>
 					</div>

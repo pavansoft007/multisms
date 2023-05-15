@@ -80,7 +80,7 @@ class Student extends Admin_Controller
                 $this->form_validation->set_rules('grd_name', translate('name'), 'trim|required');
                 $this->form_validation->set_rules('grd_relation', translate('relation'), 'trim|required');
                 $this->form_validation->set_rules('grd_occupation', translate('occupation'), 'trim|required');
-                $this->form_validation->set_rules('grd_mobileno', translate('mobile_no'), 'trim|required|callback_unique_username');
+                $this->form_validation->set_rules('grd_mobileno', translate('mobile_no'), 'trim|required|callback_unique_username|regex_match[/^[0-9]{10}$/]');
                 // $this->form_validation->set_rules('grd_email', translate('email'), 'trim|callback_get_valid_guardian_email');
                 $this->form_validation->set_rules('grd_password', translate('password'), 'trim|required');
                 $this->form_validation->set_rules('grd_retype_password', translate('retype_password'), 'trim|required|matches[grd_password]');

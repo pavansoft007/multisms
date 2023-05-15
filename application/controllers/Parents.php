@@ -37,8 +37,8 @@ class Parents extends Admin_Controller
         $this->form_validation->set_rules('relation', translate('relation'), 'trim|required');
         $this->form_validation->set_rules('occupation', translate('occupation'), 'trim|required');
         $this->form_validation->set_rules('income', translate('income'), 'trim|numeric');
-        $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'trim|required');
-        $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email|callback_unique_username');
+        $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'trim|required|callback_unique_username|regex_match[/^[0-9]{10}$/]');
+        // $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email');
         $this->form_validation->set_rules('user_photo', 'profile_picture',array(array('handle_upload', array($this->application_model, 'profilePicUpload'))));
         $this->form_validation->set_rules('facebook', 'Facebook', 'valid_url');
         $this->form_validation->set_rules('twitter', 'Twitter', 'valid_url');
