@@ -104,6 +104,11 @@
 												<td><?php echo get_type_name_by_id('section', $row->section_id);?></td>
 											</tr>
 											<tr>
+												<td width="80"><?=translate('mobile')?> </td>
+												<td width="8">:</td>
+												<td><?=empty($row->parent_id) ? 'N/A' : get_type_mobile_by_id('parent', $row->parent_id);?></td>
+											</tr>
+											<tr>
 												<td width="80"><?=translate('blood_group')?></td>
 												<td width="8">:</td>
 												<td>
