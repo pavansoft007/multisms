@@ -29,10 +29,10 @@ $previous_details = json_decode($student['previous_details'], true);
 						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('class') ?>"><i class="fas fa-school"></i></div> <?= $student['class_name'] . ' (' . $student['section_name'] . ')' ?>
 					</li>
 					<li>
-						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('mobile_no') ?>"><i class="fas fa-phone-volume"></i></div> <?= (!empty($student['mobileno']) ? $student['mobileno'] : 'N/A'); ?>
+						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('mobile_no') ?>"><i class="fas fa-phone-volume"></i></div> <?= (!empty($parent['mobileno']) ? $parent['mobileno'] : 'N/A'); ?>
 					</li>
 					<li>
-						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('email') ?>"><i class="far fa-envelope"></i></div> <?= $student['email'] ?>
+						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('admission_number') ?>"><i class="fas fa-sort-numeric-down"></i></div> <?= $student['register_no'] ?>
 					</li>
 					<li>
 						<div class="icon-holder" data-toggle="tooltip" data-original-title="<?= translate('present_address') ?>"><i class="fas fa-home"></i></div> <?= (!empty($student['current_address']) ? $student['current_address'] : 'N/A'); ?>
@@ -42,14 +42,14 @@ $previous_details = json_decode($student['previous_details'], true);
 			<div class="col-md-12 col-lg-4 col-xl-3">
 				<div class="image-content-center user-pro usr-parent-img">
 					<div class="preview">
-						<img class="parent-image" src="<?php echo get_image_url('student', $student['photo']); ?>">
+						<img class="parent-image" src="<?php echo get_image_url('parent', $parent['photo']); ?>">
 					</div>
 					<p class='parent-name-container'>Parent</p>
 				</div>
 			</div>
 		</div>
 	</div>
-
+</div>
 	<section class="panel">
 		<div class="tabs-custom">
 			<ul class="nav nav-tabs">
