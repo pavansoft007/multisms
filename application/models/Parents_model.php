@@ -33,7 +33,7 @@ class Parents_model extends MY_Model
             'linkedin_url' => $data['linkedin'],
             'twitter_url' => $data['twitter'],
         );
-        $inser_data2 = array('username' => $data["email"]);
+        $inser_data2 = array('username' => $data["mobileno"]);
         if (!isset($data['parent_id']) && empty($data['parent_id'])) {
             // save employee information in the database
             $this->db->insert('parent', $inser_data1);
