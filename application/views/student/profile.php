@@ -324,7 +324,7 @@ $previous_details = json_decode($student['previous_details'], true);
 						</div>
 
 						<!-- login details -->
-						<div class="headers-line mt-md">
+						<!-- <div class="headers-line mt-md">
 							<i class="fas fa-user-lock"></i> <?= translate('login_details') ?>
 						</div>
 
@@ -339,7 +339,7 @@ $previous_details = json_decode($student['previous_details'], true);
 									<span class="error"><?= form_error('email') ?></span>
 								</div>
 							</div>
-						</div>
+						</div> -->
 
 						<!--guardian details-->
 						<div class="headers-line">
@@ -800,10 +800,10 @@ $previous_details = json_decode($student['previous_details'], true);
 										<th><?= translate('mobile_no') ?></th>
 										<td><?php echo $getParent['mobileno'] ?></td>
 									</tr>
-									<tr>
+									<!-- <tr>
 										<th><?= translate('email') ?></th>
 										<td colspan="3"><?php echo $getParent['email'] ?></td>
-									</tr>
+									</tr> -->
 									<tr class="quick-address">
 										<th><?= translate('address') ?></th>
 										<td colspan="3" height="80px;"><?php echo $getParent['address'] ?></td>

@@ -82,11 +82,11 @@ class Parents_model extends MY_Model
         $this->db->select('s.id,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,c.name as class_name,se.name as section_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'inner');
-        $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
+        // $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
         $this->db->where('s.parent_id', $parent_id);
-        $this->db->where('l.active', 1);
+        // $this->db->where('l.active', 1);
         return $this->db->get()->result_array();
     }
 

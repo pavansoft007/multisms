@@ -15,11 +15,12 @@ class Leave_model extends MY_Model
     // get leave list
     public function getLeaveList($where = '', $single = false)
     {
+        $sesseionID = get_session_id();
         $this->db->select('la.*,c.name as category_name,r.name as role');
         $this->db->from('leave_application as la');
         $this->db->join('leave_category as c', 'c.id = la.category_id', 'left');
         $this->db->join('roles as r', 'r.id = la.role_id', 'left');
-        $this->db->where('session_id', get_session_id());
+        $this->db->where('session_id', $sesseionID);
         if (!empty($where)) {
             $this->db->where($where);
         }

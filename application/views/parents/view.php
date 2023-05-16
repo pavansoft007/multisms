@@ -53,7 +53,7 @@
 								<th><?=translate('guardian_name')?></th>
 								<th><?=translate('occupation')?></th>
 								<th><?=translate('mobile_no')?></th>
-								<th><?=translate('email')?></th>
+								<!-- <th><?=translate('email')?></th> -->
 							<?php
 							$show_custom_fields = custom_form_table('parents', $branch_id);
 							if (count($show_custom_fields)) {
@@ -79,7 +79,7 @@
 								<td><?php echo $row->name;?></td>
 								<td><?php echo $row->occupation;?></td>
 								<td><?php echo $row->mobileno;?></td>
-								<td><?php echo $row->email;?></td>
+								<!-- <td><?php echo $row->email;?></td> -->
 							<?php
 							if (count($show_custom_fields)) {
 								foreach ($show_custom_fields as $fields) {

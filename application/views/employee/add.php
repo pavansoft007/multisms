@@ -49,7 +49,7 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-birthday-cake"></i></span>
 									<input type="text" class="form-control" name="joining_date" data-plugin-datepicker data-plugin-options='{ "todayHighlight" : true }'
-									autocomplete="off" value="<?=set_value('joining_date')?>" />
+									autocomplete="off" value="<?=set_value('joining_date')?>"  readonly/>
 								</div>
 								<span class="error"><?php echo form_error('joining_date'); ?></span>
 							</div>
@@ -143,7 +143,7 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-birthday-cake"></i></span>
 									<input class="form-control" name="birthday" autocomplete="off" value="<?=set_value('birthday')?>" data-plugin-datepicker
-									data-plugin-options='{ "startView": 2 }' type="text">
+									data-plugin-options='{ "startView": 2 }' type="text" readonly>
 								</div>
 							</div>
 						</div>

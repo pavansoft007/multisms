@@ -197,11 +197,7 @@
 							<td><span id="quick_religion"></span></td>
 						</tr>
 						<tr>
-							<th><?=translate('email')?></th>
-							<td colspan="3"><span id="quick_email"></span></td>
-						</tr>
-						<tr>
-							<th><?=translate('mobile_no')?></th>
+							<th><?=translate('parent_mobile_no')?></th>
 							<td><span id="quick_mobile_no"></span></td>
 							<th><?=translate('state')?></th>
 							<td><span id="quick_state"></span></td>

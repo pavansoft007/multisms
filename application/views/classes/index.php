@@ -80,7 +80,9 @@
 										<thead>
 											<tr>
 												<th>#</th>
+												<?php if (is_superadmin_loggedin()) { ?>
 												<th><?=translate('branch')?></th>
+												<?php } ?>
 												<th><?=translate('class_name')?></th>
 												<th><?=translate('class_numeric')?></th>
 												<th><?=translate('section')?></th>
@@ -95,7 +97,9 @@
 											?>
 											<tr>
 												<td><?php echo $count++;?></td>
+												<?php if (is_superadmin_loggedin()) { ?>
 												<td><?php echo $row['branch_name'];?></td>
+												<?php } ?>
 												<td><?php echo $row['name'];?></td>
 												<td><?php echo $row['name_numeric'];?></td>
 												<td>

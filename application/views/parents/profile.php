@@ -21,7 +21,7 @@
 					<li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('occupation')?>"><i class="fas fa-user-tag"></i></div> <?=html_escape(empty($parent['occupation']) ? 'N/A' : $parent['occupation']);?></li>
 					<li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('income')?>"><i class="fas fa-dollar-sign"></i></div> <?=html_escape(empty($parent['income']) ? 'N/A' : $parent['income']);?></li>
 					<li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('mobile_no')?>"><i class="fas fa-phone"></i></div> <?=html_escape(empty($parent['mobileno']) ? 'N/A' : $parent['mobileno']);?></li>
-					<li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('email')?>"><i class="far fa-envelope"></i></div> <?=html_escape($parent['email'])?></li>
+					<!-- <li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('email')?>"><i class="far fa-envelope"></i></div> <?=html_escape($parent['email'])?></li> -->
 					<li><div class="icon-holder" data-toggle="tooltip" data-original-title="<?=translate('address')?>"><i class="fas fa-home"></i></div> <?=html_escape(!empty($parent['address']) ? $parent['address'] : 'N/A'); ?></li>
 				</ul>
 			</div>

@@ -52,7 +52,7 @@
 							<div class="input-group">
 								<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
 								<input type="text" class="form-control" name="admission_date" value="<?=set_value('admission_date', date('Y-m-d'))?>" data-plugin-datepicker
-								data-plugin-options='{ "todayHighlight" : true }' />
+								data-plugin-options='{ "todayHighlight" : true }' readonly/>
 							</div>
 							<span class="error"><?=form_error('admission_date')?></span>
 						</div>
@@ -166,7 +166,7 @@
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fas fa-birthday-cake"></i></span>
 								<input type="text" autocomplete="off" class="form-control" name="birthday" value="<?=set_value('birthday')?>" data-plugin-datepicker
-								data-plugin-options='{ "startView": 2 }' />
+								data-plugin-options='{ "startView": 2 }' readonly/>
 							</div>
 						</div>
 					</div>

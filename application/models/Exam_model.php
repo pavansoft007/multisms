@@ -13,13 +13,14 @@ class Exam_model extends CI_Model
 
     public function getExamList()
     {
+        $sessionID = get_session_id();
         $this->db->select('e.*,b.name as branch_name');
         $this->db->from('exam as e');
         $this->db->join('branch as b', 'b.id = e.branch_id', 'left');
         if (!is_superadmin_loggedin()) {
             $this->db->where('e.branch_id', get_loggedin_branch_id());
         }
-        $this->db->where('e.session_id', get_session_id());
+        $this->db->where('e.session_id',  $sessionID);
         $this->db->order_by('e.id', 'asc');
         return $this->db->get()->result_array();
     }

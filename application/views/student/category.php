@@ -47,7 +47,9 @@
 					<table class="table table-bordered table-hover table-condensed mb-none">
 						<thead>
 							<tr>
+							<?php if (is_superadmin_loggedin()) { ?>
 								<th><?=translate('branch')?></th>
+								<?php } ?>
 								<th><?=translate('id')?></th>
 								<th><?php echo translate('name'); ?></th>
 								<th><?php echo translate('action'); ?></th>
@@ -63,7 +65,9 @@
 							foreach ($categorylist as $row): 
 								?>
 							<tr>
+							<?php if (is_superadmin_loggedin()) { ?>
 								<td><?php echo get_type_name_by_id('branch', $row['branch_id']);?></td>
+								<?php } ?>
 								<td><?php echo html_escape($row['id']);?></td>
 								<td><?php echo html_escape($row['name']); ?></td>
 								<td class="min-w-xs">

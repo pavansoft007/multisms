@@ -31,12 +31,13 @@
 					</thead>
 					<tbody>
 						<?php
+							$sessionID = get_session_id();
 							$count = 1;
 							$this->db->select('bi.*,b.title,b.isbn_no,b.edition,b.author,b.publisher,c.name as category_name');
 							$this->db->from('book_issues as bi');
 							$this->db->join('book as b', 'b.id = bi.book_id', 'left');
 							$this->db->join('book_category as c', 'c.id = b.category_id', 'left');
-							$this->db->where('bi.session_id', get_session_id());
+							$this->db->where('bi.session_id', $sessionID);
 							$this->db->where('bi.user_id', get_loggedin_user_id());
 							$this->db->where('bi.role_id', loggedin_role_id());
 							$this->db->order_by('bi.id', 'desc');

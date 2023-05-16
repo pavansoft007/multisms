@@ -130,7 +130,6 @@ function studentQuickView(id) {
             $('#quick_date_of_birth').html(res.birthday);
             $('#quick_blood_group').html(res.blood_group);
             $('#quick_religion').html(res.religion);
-            $('#quick_email').html(res.email);
             $('#quick_mobile_no').html(res.mobileno);
             $('#quick_state').html(res.state);
             $('#quick_address').html(res.address);

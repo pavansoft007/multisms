@@ -869,10 +869,11 @@ class Student extends Admin_Controller
     public function quickDetails()
     {
         $id = $this->input->post('student_id');
-        $this->db->select('student.*,enroll.student_id,enroll.roll,student_category.name as cname');
+        $this->db->select('student.*,enroll.student_id,enroll.roll,student_category.name as cname,parent.mobileno as pnumber');
         $this->db->from('enroll');
         $this->db->join('student', 'student.id = enroll.student_id', 'inner');
         $this->db->join('student_category', 'student_category.id = student.category_id', 'inner');
+        $this->db->join('parent', 'parent.id = student.parent_id', 'inner');
         $this->db->where('enroll.id', $id);
         $row = $this->db->get()->row();
         $data['photo'] = get_image_url('student', $row->photo);
@@ -884,8 +885,7 @@ class Student extends Admin_Controller
         $data['birthday'] = empty($row->birthday) ? "N/A" : _d($row->birthday);
         $data['blood_group'] = empty($row->blood_group) ? "N/A" : $row->blood_group;
         $data['religion'] = empty($row->religion) ? "N/A" : $row->religion;
-        $data['email'] = $row->email;
-        $data['mobileno'] = empty($row->mobileno) ? "N/A" : $row->mobileno;
+        $data['mobileno'] = empty($row->pnumber) ? "N/A" : $row->pnumber;
         $data['state'] = empty($row->state) ? "N/A" : $row->state;
         $data['address'] = empty($row->current_address) ? "N/A" : $row->current_address;
         echo json_encode($data);

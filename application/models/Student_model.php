@@ -203,10 +203,10 @@ class Student_model extends MY_Model
     public function getStudentList($classID = '', $sectionID = '', $branchID = '', $deactivate = false)
     {
         $sessionID = get_session_id();
-        $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,l.active,c.name as class_name,se.name as section_name');
+        $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,c.name as class_name,se.name as section_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'inner');
-        $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
+        // $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
         $this->db->where('e.class_id', $classID);
@@ -216,9 +216,9 @@ class Student_model extends MY_Model
         if ($sectionID != 'all') {
             $this->db->where('e.section_id', $sectionID);
         }
-        if ($deactivate == true) {
-            $this->db->where('l.active', 0);
-        }
+        // if ($deactivate == true) {
+        //     $this->db->where('l.active', 0);
+        // }
         return $this->db->get();
     }
 
@@ -288,9 +288,9 @@ class Student_model extends MY_Model
             $this->db->where('e.branch_id', get_loggedin_branch_id());
         }
         $query = $this->db->get();
-        if ($query->num_rows() == 0) {
-            show_404();
-        }
+        // if ($query->num_rows() == 0) {
+        //     show_404();
+        // }
         $id = $query->num_rows();
         if (!empty($id)) {
             $maxNum = str_pad($id + 1, 5, '0', STR_PAD_LEFT);

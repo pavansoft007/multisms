@@ -65,7 +65,9 @@
 										<thead>
 											<tr>
 												<th>#</th>
+												<?php if (is_superadmin_loggedin()) { ?>
 												<th><?=translate('branch')?></th>
+												<?php } ?>
 												<th><?=translate('section_name')?></th>
 												<th><?=translate('capacity ')?></th>
 												<th><?=translate('action')?></th>
@@ -79,7 +81,9 @@
 											?>
 											<tr>
 												<td><?php echo $count++;?></td>
-												<td><?php echo $row['branch_name'];?></td>
+												<?php if (is_superadmin_loggedin()) { ?>
+													<td><?php echo $row['branch_name'];?></td>
+												<?php } ?>
 												<td><?php echo $row['name'];?></td>
 												<td><?php echo $row['capacity'];?></td>
 												<td>
