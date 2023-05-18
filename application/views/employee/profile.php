@@ -375,7 +375,7 @@
 								<tr>
 									<th>#</th>
 									<th><?=translate('bank_name')?></th>
-									<th><?=translate('account_name')?></th>
+									<th><?=translate('holder_name')?></th>
 									<th><?=translate('branch')?></th>
 									<th><?=translate('bank_address')?></th>
 									<th><?=translate('ifsc_code')?></th>

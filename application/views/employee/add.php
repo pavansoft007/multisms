@@ -290,8 +290,8 @@
 							<div class="col-md-4 mb-sm">
 								<div class="form-group">
 									<label class="control-label"><?=translate('account_name')?> <span class="required">*</span></label>
-									<input type="text" class="form-control" name="account_name" value="<?=set_value('account_name')?>" />
-									<span class="error"><?php echo form_error('account_name'); ?></span>
+									<input type="text" class="form-control" name="holder_name" value="<?=set_value('holder_name')?>" />
+									<span class="error"><?php echo form_error('holder_name'); ?></span>
 								</div>
 							</div>
 							<div class="col-md-4 mb-sm">
