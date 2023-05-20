@@ -11,6 +11,7 @@
 		<div class="tab-content">
 			<div id="edit" class="tab-pane active">
 				<?php echo form_open('subject/save', array('class' => 'form-horizontal form-bordered frm-submit'));?>
+				<input type="hidden" name="subject_id" id="subject_id" value="<?=$subject['id']?>">
 					<?php if (is_superadmin_loggedin()): ?>
 						<div class="form-group">
 							<label class="control-label col-md-3"><?=translate('branch')?> <span class="required">*</span></label>
