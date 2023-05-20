@@ -23,7 +23,6 @@ class Parents_model extends MY_Model
             'occupation' => $data['occupation'],
             'income' => $data['income'],
             'education' => $data['education'],
-            'email' => $data['email'],
             'mobileno' => $data['mobileno'],
             'address' => $data['address'],
             'city' => $data['city'],
