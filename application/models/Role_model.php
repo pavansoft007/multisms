@@ -46,4 +46,12 @@ class Role_model extends MY_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
+
+    // Get all roles for dropdown
+    public function getAllRoles()
+    {
+        $this->db->select('id, name');
+        $this->db->order_by('name', 'ASC');
+        return $this->db->get('roles')->result_array();
+    }
 }

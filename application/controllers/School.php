@@ -19,6 +19,7 @@ class School extends Admin_Controller
         parent::__construct();
         $this->load->model('master_school_model');
         $this->load->model('employee_model');
+        $this->load->model('role_model');
     }
 
     /* branch all data are prepared and stored in the database here */
@@ -28,12 +29,12 @@ class School extends Admin_Controller
             if ($this->input->post('submit') == 'save') {
                 $this->form_validation->set_rules('branch_name', translate('branch_name'), 'required|callback_unique_name');
                 $this->form_validation->set_rules('school_name', translate('school_name'), 'required');
-                $this->form_validation->set_rules('person_name', translate('person_name'), 'required');
                 $this->form_validation->set_rules('joining_date', translate('joining_date'), 'trim|required');
                 $this->form_validation->set_rules('email', translate('email'), 'required|valid_email');
                 $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'required');
                 $this->form_validation->set_rules('currency', translate('currency'), 'required');
                 $this->form_validation->set_rules('currency_symbol', translate('currency_symbol'), 'required');
+                $this->form_validation->set_rules('role_id', translate('role'), 'required');
                 if (!isset($_POST['staff_id'])) {
                     $this->form_validation->set_rules('password', translate('password'), 'trim|required|min_length[4]');
                     $this->form_validation->set_rules('retype_password', translate('retype_password'), 'trim|required|matches[password]');
@@ -53,6 +54,7 @@ class School extends Admin_Controller
             $this->data['title'] = translate('school');
             $this->data['sub_page'] = 'school/add';
             $this->data['main_menu'] = 'school';
+            $this->data['roles'] = $this->role_model->getAllRoles();
             $this->load->view('layout/index', $this->data);
         } else {
             $this->session->set_userdata('last_page', current_url());
@@ -67,17 +69,17 @@ class School extends Admin_Controller
             if ($this->input->post('submit') == 'save') {
                 $this->form_validation->set_rules('branch_name', translate('branch_name'), 'required|callback_unique_name');
                 $this->form_validation->set_rules('school_name', translate('school_name'), 'required');
-                $this->form_validation->set_rules('person_name', translate('person_name'), 'required');
                 $this->form_validation->set_rules('joining_date', translate('joining_date'), 'trim|required');
                 $this->form_validation->set_rules('email', translate('email'), 'required|valid_email');
                 $this->form_validation->set_rules('mobileno', translate('mobile_no'), 'required');
                 $this->form_validation->set_rules('currency', translate('currency'), 'required');
                 $this->form_validation->set_rules('currency_symbol', translate('currency_symbol'), 'required');
-                $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email|callback_unique_username');   
-                if (!isset($_POST['staff_id'])) {
-                    $this->form_validation->set_rules('password', translate('password'), 'trim|required|min_length[4]');
-                    $this->form_validation->set_rules('retype_password', translate('retype_password'), 'trim|required|matches[password]');
-                }
+                $this->form_validation->set_rules('role_id', translate('role'), 'required');
+                $this->form_validation->set_rules('email', translate('email'), 'trim|required|valid_email');   
+                // if (!isset($_POST['staff_id'])) {
+                //     $this->form_validation->set_rules('password', translate('password'), 'trim|required|min_length[4]');
+                //     $this->form_validation->set_rules('retype_password', translate('retype_password'), 'trim|required|matches[password]');
+                // }
                 if ($this->form_validation->run() == true) {
                     $post = $this->input->post();
                     $response = $this->master_school_model->save($post, $id);
@@ -92,6 +94,7 @@ class School extends Admin_Controller
             $this->data['title'] = translate('school');
             $this->data['sub_page'] = 'school/edit';
             $this->data['main_menu'] = 'school';
+            $this->data['roles'] = $this->role_model->getAllRoles();
             $this->load->view('layout/index', $this->data);
         } else {
             $this->session->set_userdata('last_page', current_url());
