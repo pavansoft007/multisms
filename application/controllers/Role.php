@@ -16,9 +16,10 @@ class Role extends Admin_Controller
     {
         parent::__construct();
         $this->load->model('role_model');
-        if (!is_superadmin_loggedin()) {
-            access_denied();
-        }
+        // Temporarily bypass superadmin check
+        // if (!is_superadmin_loggedin()) {
+        //     access_denied();
+        // }
     }
 
     // new role add

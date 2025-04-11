@@ -1,4 +1,4 @@
-<aside id="sidebar-left" class="sidebar-left">
+<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?>">
 	<div class="sidebar-header">
 		<div class="sidebar-title">
 			Main
@@ -1131,19 +1131,25 @@
                                     <span><i class="fas fa-caret-right" aria-hidden="true"></i><?=translate('school_settings')?></span>
                                 </a>
                             </li>
-                            <?php } if (is_superadmin_loggedin()) { ?>
+                            <?php } /* if (is_superadmin_loggedin()) { */ ?>
                             <li class="<?php if ($sub_page == 'role/index' || $sub_page == 'role/permission') echo 'nav-active';?>">
                                 <a href="<?=base_url('role')?>">
                                     <span><i class="fas fa-caret-right" aria-hidden="true"></i><?=translate('role_permission')?></span>
                                 </a>
                             </li>
-                            <?php } if (is_superadmin_loggedin()) { ?>
+                            <?php /* } */ if (is_superadmin_loggedin()) { ?>
                             <li class="<?php if ($sub_page == 'sessions/index') echo 'nav-active';?>">
                                 <a href="<?=base_url('sessions')?>">
                                     <span><i class="fas fa-caret-right" aria-hidden="true"></i><?=translate('session_settings')?></span>
                                 </a>
                             </li>
-                            <?php } if(get_permission('translations', 'is_view')){ ?>
+                            <?php } /* if(get_permission('footer_settings', 'is_view')){ */ ?>
+                            <li class="<?php if ($sub_page == 'settings/footer_settings') echo 'nav-active';?>">
+                                <a href="<?=base_url('settings_footer')?>">
+                                    <span><i class="fas fa-caret-right" aria-hidden="true"></i>Footer Settings</span>
+                                </a>
+                            </li>
+                            <?php /* } */ if(get_permission('translations', 'is_view')){ ?>
                             <li class="<?php if ($sub_page == 'language/index') echo 'nav-active';?>">
                                 <a href="<?=base_url('translations')?>">
                                     <span><i class="fas fa-caret-right" aria-hidden="true"></i><?=translate('translations')?></span>

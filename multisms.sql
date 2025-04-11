@@ -3610,6 +3610,7 @@ CREATE TABLE `theme_settings` (
   `branch_id` int(11) NOT NULL,
   `border_mode` varchar(200) NOT NULL,
   `dark_skin` varchar(200) NOT NULL,
+  `sidebar_color` varchar(50) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

@@ -28,6 +28,7 @@
 <script src="<?php echo base_url('assets/js/plug.init.js');?>"></script>
 <script src="<?php echo base_url('assets/js/app.js')?>"></script>
 <script src="<?php echo base_url('assets/js/app.fn.js')?>"></script>
+<script src="<?php echo base_url('assets/js/mobile-footer.js')?>"></script>
 
 <script type="text/javascript">
 	jQuery.extend(jQuery.validator.messages, {

@@ -78,10 +78,15 @@ class Settings extends Admin_Controller
             }
         }
 
-        if ($this->input->post('submit') == 'theme') {
+        if ($this->input->post('submit') == 'theme' || $this->input->post('submit') == 'sidebar') {
             foreach ($this->input->post() as $input => $value) {
                 if ($input == 'submit') {
                     continue;
+                }
+                // Validate sidebar color value
+                if ($input == 'sidebar_color' && !in_array($value, ['default', 'blue', 'green', 'purple'])) {
+                    set_alert('error', 'Invalid sidebar color selection');
+                    redirect(current_url());
                 }
                 $config[$input] = $value;
             }
@@ -94,10 +99,18 @@ class Settings extends Admin_Controller
                 ))->get('theme_settings')->num_rows();
                 if($select_theme_settings == 1){
                     $this->db->where('branch_id', $branchID);
-                    $this->db->update('theme_settings', $config);
-                    set_alert('success', translate('the_configuration_has_been_updated'));
-                    $this->session->set_flashdata('active', 2);
-                    redirect(current_url());
+                    if ($this->db->update('theme_settings', $config)) {
+                        // Clear all caches
+                        $this->session->unset_userdata('theme_config');
+                        $this->cache->delete('theme_config');
+                        set_alert('success', translate('the_configuration_has_been_updated'));
+                        $active_tab = ($this->input->post('submit') == 'sidebar') ? 4 : 2;
+                        $this->session->set_flashdata('active', $active_tab);
+                        redirect(current_url());
+                    } else {
+                        set_alert('error', 'Failed to update settings');
+                        redirect(current_url());
+                    }
                 }else{
                     $this->db->insert('theme_settings', $config);
                 }
@@ -107,11 +120,19 @@ class Settings extends Admin_Controller
                     'branch_id' => '0',
                 ))->get('theme_settings')->num_rows();
                 if($select_theme_settings == 1){
-                    $this->db->where('id', 1);
-                    $this->db->update('theme_settings', $config);
-                    set_alert('success', translate('the_configuration_has_been_updated'));
-                    $this->session->set_flashdata('active', 2);
-                    redirect(current_url());
+                    $this->db->where('branch_id', '0');
+                    if ($this->db->update('theme_settings', $config)) {
+                        // Clear all caches
+                        $this->session->unset_userdata('theme_config');
+                        $this->cache->delete('theme_config');
+                        set_alert('success', translate('the_configuration_has_been_updated'));
+                        $active_tab = ($this->input->post('submit') == 'sidebar') ? 4 : 2;
+                        $this->session->set_flashdata('active', $active_tab);
+                        redirect(current_url());
+                    } else {
+                        set_alert('error', 'Failed to update settings');
+                        redirect(current_url());
+                    }
                 }else{
                     $this->db->insert('theme_settings', $config);
                 }

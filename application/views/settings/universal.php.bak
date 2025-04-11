@@ -13,12 +13,7 @@
 				   <i class="fas fa-paint-roller"></i>
 				   <span class="hidden-xs"> <?=translate('theme_settings')?></span>
 				</a>
-			</li>
-			<li <?=($this->session->flashdata('active') == 4 ? 'class="active"' : '');?>>
-				<a href="#sidebar" data-toggle="tab">
-				   <i class="fas fa-columns"></i>
-				   <span class="hidden-xs"> Sidebar Settings</span>
-				</a>
+			
 			</li>
 			<li <?=($this->session->flashdata('active') == 3 ? 'class="active"' : '');?>>
 				<a href="#upload" data-toggle="tab">
@@ -252,64 +247,6 @@
 				</footer>
 				<?php echo form_close(); ?>
 			</div>
-
-			<!-- Sidebar Settings Tab -->
-			<div class="tab-pane box <?=($this->session->flashdata('active') == 4 ? 'active' : '');?>" id="sidebar">
-				<?php
-					echo form_open($this->uri->uri_string(), array(
-						'method'	=> 'post',
-						'class' 	=> 'validate form-horizontal form-bordered'
-					));
-				?>
-				<div class="form-group">
-					<label class="col-md-2 control-label">Sidebar Color</label>
-					<div class="col-md-8">
-						<ul class="list-unstyled thememenu-sy">
-							<li>
-								<div class="theme-box">
-									<label> 
-										<input name="sidebar_color" value="default" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'default' ? 'checked' : (!isset($theme_config['sidebar_color']) ? 'checked' : ''));?>>
-										<div class="theme-img" style="background-color: #FFF; height: 80px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: bold;">
-											Default White
-										</div>
-									</label>
-								</div>
-							</li>
-							<li>
-								<div class="theme-box">
-									<label> 
-										<input name="sidebar_color" value="blue" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'blue' ? 'checked' : '');?>>
-										<div class="theme-img" style="background-color: #3A3978; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
-											Blue
-										</div>
-									</label>
-								</div>
-							</li>
-							<li>
-								<div class="theme-box">
-									<label> 
-										<input name="sidebar_color" value="green" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'green' ? 'checked' : '');?>>
-										<div class="theme-img" style="background-color: #28a745; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
-											Green
-										</div>
-									</label>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-2 col-sm-offset-3">
-							<button type="submit" class="btn btn btn-default btn-block" name="submit" value="sidebar">
-								<i class="fas fa-plus-circle"></i> <?=translate('save');?>
-							</button>
-						</div>
-					</div>
-				</footer>
-				<?php echo form_close(); ?>
-			</div>
-
 			<div class="tab-pane box <?=($this->session->flashdata('active') == 3 ? 'active' : '');?>" id="upload">
 				<?php
 					echo form_open_multipart($this->uri->uri_string(), array('class' 	=> 'validate'));

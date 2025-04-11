@@ -51,34 +51,8 @@
 				$role_id = 1; // Superadmin role ID
 			}
 			
-			// Get footer menu items for this role
-			$CI =& get_instance();
-			$footer_items = $CI->db->where('role_id', $role_id)
-								->where('status', 1)
-								->get('footer_menu_config')->result_array();
-			
-			$menu_items = array();
-			foreach ($footer_items as $item) {
-				$menu_items[] = $item['menu_item'];
-			}
-			
-			// If no custom configuration, show default items
-			if (empty($menu_items)) {
-				// Always show dashboard
-				$menu_items = array('dashboard');
-				
-				if (is_student_loggedin() || (is_parent_loggedin() && !empty(get_activeChildren_id()))) {
-					$menu_items[] = 'homework';
-					$menu_items[] = 'attendance';
-					$menu_items[] = 'fees';
-				} else {
-					$menu_items[] = 'students';
-					$menu_items[] = 'payments';
-					$menu_items[] = 'attendance';
-				}
-				
-				$menu_items[] = 'message';
-			}
+			// Get menu items using the helper function
+			$menu_items = get_footer_menu_items($role_id);
 			
 			// Display menu items
 			foreach ($menu_items as $item) {

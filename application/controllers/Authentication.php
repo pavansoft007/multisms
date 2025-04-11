@@ -95,7 +95,34 @@ class Authentication extends Authentication_Controller
 
             }
         }
-        $this->load->view('authentication/login', $this->data);
+        
+        // Check if the request is coming from a mobile device
+        $is_mobile = $this->is_mobile_device();
+        
+        if ($is_mobile) {
+            $this->load->view('authentication/mobile_login', $this->data);
+        } else {
+            $this->load->view('authentication/login', $this->data);
+        }
+    }
+    
+    // Function to detect if the request is coming from a mobile device
+    private function is_mobile_device() {
+        $user_agent = $this->input->server('HTTP_USER_AGENT');
+        $mobile_agents = array('Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone');
+        
+        foreach ($mobile_agents as $agent) {
+            if (stripos($user_agent, $agent) !== false) {
+                return true;
+            }
+        }
+        
+        // Also check screen width via a cookie that might be set by JavaScript
+        if ($this->input->cookie('is_mobile') === 'true') {
+            return true;
+        }
+        
+        return false;
     }
 
     // forgot password

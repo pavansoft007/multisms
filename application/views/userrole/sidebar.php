@@ -1,4 +1,4 @@
-<aside id="sidebar-left" class="sidebar-left">
+<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?>">
 	<div class="sidebar-header">
 		<div class="sidebar-title">
 			Main

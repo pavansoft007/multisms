@@ -1,0 +1,115 @@
+/* Sidebar Color Options */
+
+/* Default White - No additional CSS needed */
+
+/* Blue Sidebar */
+html .sidebar-left.sidebar-color-blue {
+    background-color: #3A3978 !important;
+}
+
+html .sidebar-left.sidebar-color-blue .sidebar-header {
+    background-color: #2d2d5e;
+}
+
+html .sidebar-left.sidebar-color-blue .nano-content > .nav-main > li.nav-active > a {
+    background: #2d2d5e;
+}
+
+html .sidebar-left.sidebar-color-blue .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a {
+    background: #2d2d5e;
+}
+
+html .sidebar-left.sidebar-color-blue .nano-content > .nav-main > li > a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-blue .nano-content > .nav-main li .nav-children li a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-blue .sidebar-title {
+    color: #fff;
+}
+
+/* Green Sidebar */
+html .sidebar-left.sidebar-color-green {
+    background-color: #28a745 !important;
+}
+
+html .sidebar-left.sidebar-color-green .sidebar-header {
+    background-color: #218838;
+}
+
+html .sidebar-left.sidebar-color-green .nano-content > .nav-main > li.nav-active > a {
+    background: #218838;
+}
+
+html .sidebar-left.sidebar-color-green .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a {
+    background: #218838;
+}
+
+html .sidebar-left.sidebar-color-green .nano-content > .nav-main > li > a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-green .nano-content > .nav-main li .nav-children li a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-green .sidebar-title {
+    color: #fff;
+}
+
+/* Purple Sidebar */
+html .sidebar-left.sidebar-color-purple {
+    background-color: #6f42c1 !important;
+}
+
+html .sidebar-left.sidebar-color-purple .sidebar-header {
+    background-color: #5e35a1;
+}
+
+html .sidebar-left.sidebar-color-purple .nano-content > .nav-main > li.nav-active > a {
+    background: #5e35a1;
+}
+
+html .sidebar-left.sidebar-color-purple .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a {
+    background: #5e35a1;
+}
+
+html .sidebar-left.sidebar-color-purple .nano-content > .nav-main > li > a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-purple .nano-content > .nav-main li .nav-children li a {
+    color: #fff;
+}
+
+html .sidebar-left.sidebar-color-purple .sidebar-title {
+    color: #fff;
+}
+
+/* Dark Mode Compatibility */
+html.dark .sidebar-left.sidebar-color-blue,
+html.dark .sidebar-left.sidebar-color-green,
+html.dark .sidebar-left.sidebar-color-purple {
+    background-color: inherit !important;
+}
+
+html.dark .sidebar-left.sidebar-color-blue .sidebar-header,
+html.dark .sidebar-left.sidebar-color-green .sidebar-header,
+html.dark .sidebar-left.sidebar-color-purple .sidebar-header {
+    background-color: inherit;
+}
+
+html.dark .sidebar-left.sidebar-color-blue .nano-content > .nav-main > li.nav-active > a,
+html.dark .sidebar-left.sidebar-color-green .nano-content > .nav-main > li.nav-active > a,
+html.dark .sidebar-left.sidebar-color-purple .nano-content > .nav-main > li.nav-active > a {
+    background: inherit;
+}
+
+html.dark .sidebar-left.sidebar-color-blue .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a,
+html.dark .sidebar-left.sidebar-color-green .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a,
+html.dark .sidebar-left.sidebar-color-purple .nano-content > .nav-main li .nav-children li.nav-active:not(.nav-parent) > a {
+    background: inherit;
+}

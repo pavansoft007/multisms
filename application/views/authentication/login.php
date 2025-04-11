@@ -24,8 +24,15 @@
 	<script type="text/javascript">
 		var base_url = '<?php echo base_url() ?>';
 	</script>
+	<script src="<?php echo base_url('assets/js/mobile-detector.js');?>"></script>
 </head>
 	<body>
+        <div class="top-nav">
+            <div class="container">
+                <img src="<?php echo base_url('uploads/app_image/system_logo/'.$global_images['system_logo'].'');?>" height="30" alt="">
+                <span class="hidden-xs"><?php echo $global_config['institute_name'];?></span>
+            </div>
+        </div>
         <div class="auth-main">
             <div class="container">
                 <div class="slideIn">

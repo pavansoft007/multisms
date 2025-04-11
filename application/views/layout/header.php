@@ -10,6 +10,9 @@
 	<!-- include stylesheet -->
 	<?php include 'stylesheet.php';?>
 
+	<!-- sidebar colors css -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/sidebar-colors.css');?>">
+
 	<?php
 	if(isset($headerelements)) {
 		foreach ($headerelements as $type => $element) {
@@ -31,6 +34,8 @@
 	?>
 	<!-- ramom css -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/ramom.css');?>">
+	<!-- mobile footer css -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/mobile-footer.css');?>">
 	<?php if ($theme_config["border_mode"] == 'false'): ?>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/skins/square-borders.css');?>">
 	<?php endif; ?>

@@ -53,13 +53,15 @@
 			
 			// Get footer menu items for this role
 			$CI =& get_instance();
-			$footer_items = $CI->db->where('role_id', $role_id)
-								->where('status', 1)
-								->get('footer_menu_config')->result_array();
+			$CI->db->where('role_id', $role_id);
+			$CI->db->where('status', 1);
+			$footer_items = $CI->db->get('footer_menu_config')->result_array();
 			
 			$menu_items = array();
-			foreach ($footer_items as $item) {
-				$menu_items[] = $item['menu_item'];
+			if (!empty($footer_items)) {
+				foreach ($footer_items as $item) {
+					$menu_items[] = $item['menu_item'];
+				}
 			}
 			
 			// If no custom configuration, show default items

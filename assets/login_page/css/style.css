@@ -5,6 +5,19 @@ body {
 	line-height: 22px;
 	font-size: 14px;
 	width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.top-nav {
+    background: #212121;
+    padding: 15px 0;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
 }
 
 .auth-main{
@@ -12,7 +25,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	padding: 25px 10px;
+	padding: 60px 10px 25px;
 }
 
 input.form-control {
@@ -172,13 +185,19 @@ a:hover, a:focus {
     position: relative;
     color: #fff;
     width: 100%;
-    height: 566px;
+    min-height: 566px;
     -webkit-border-top-right-radius: 12px;
     -webkit-border-bottom-right-radius: 12px;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    padding: 3.5em 6em;
+    padding: 2em;
     margin-top: 17px;
+}
+
+@media (min-width: 768px) {
+    .sign-area {
+        padding: 3.5em 6em;
+    }
 }
 
 .sign-area::before {
@@ -497,22 +516,63 @@ span.error {
 /* media queries */
 @media(max-width:991px) {
     .sign-area {
-        -webkit-border-radius: 12px;
-        -moz-border-radius: 12px;
+        padding: 2em;
+        height: auto;
+        min-height: 500px;
         border-radius: 12px;
+        margin-top: 20px;
     }
+    .sign-area::before {
+        display: none;
+    }
+    .image-area {
+        height: auto;
+        min-height: 300px;
+        margin-bottom: 20px;
+    }
+    .image-area .content {
+        padding: 50px 0;
+    }
+    .auth-main {
+        padding: 15px;
+    }
+    .sign-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #212121;
+        padding: 10px;
+        text-align: center;
+        z-index: 1000;
+    }
+    .sign-footer p {
+        margin: 0;
+        color: #fff;
+        font-size: 12px;
+    }
+}
 
-	.sign-area::before {
-	    display: none;
-	}
-
-	.sign-area {
-	    padding: 3.5em 2em;
-	}
-
-	.w-full {
-	    padding: 8px 5px;
-	}
+@media(max-width:767px) {
+    .sign-area {
+        padding: 1.5em;
+    }
+    .image-area {
+        min-height: 250px;
+    }
+    .image-area .content {
+        padding: 30px 0;
+    }
+    .sign-hader {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .sign-hader img {
+        height: 40px;
+    }
+    .sign-hader h2 {
+        font-size: 18px;
+    }
 }
 
 @media(max-width:1199px) {
