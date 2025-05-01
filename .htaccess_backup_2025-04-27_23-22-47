@@ -1,0 +1,48 @@
+<IfModule mod_rewrite.c>
+    # Enable URL rewriting
+    RewriteEngine On
+    
+    # Set the base directory for rewrites
+    # RewriteBase /multisms/
+    
+    # Redirect root to mobile_redirect.php
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^$ mobile_redirect.php [L]
+    
+    # Handle direct access to mobilemain (without .php extension)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^mobilemain$ index.php/mobilemain?force_mobile=1 [L]
+    
+    # Handle direct access to other controllers
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9_-]+)$ index.php/$1 [L]
+    
+    # Standard CodeIgniter routing - handle segments
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>
+
+# PHP settings
+<IfModule mod_php7.c>
+    php_value display_errors 1
+    php_value display_startup_errors 1
+    php_value error_reporting E_ALL
+</IfModule>
+
+<IfModule mod_php8.c>
+    php_value display_errors 1
+    php_value display_startup_errors 1
+    php_value error_reporting E_ALL
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Set default character set
+AddDefaultCharset UTF-8
+
+# Disable server signature
+ServerSignature Off

@@ -3,7 +3,13 @@
 <!-- html header -->
 <?php $this->load->view('layout/header.php');?>
 
-<body class="loading-overlay-showing" data-loading-overlay>
+<body class="loading-overlay-showing <?php 
+	echo isset($theme_config['menu_text_color']) ? 'menu-text-' . $theme_config['menu_text_color'] : ''; 
+	echo isset($theme_config['menu_bg_color']) && $theme_config['menu_bg_color'] != 'default' ? ' menu-bg-' . $theme_config['menu_bg_color'] : '';
+	echo isset($theme_config['active_menu_text_color']) ? ' active-menu-text-' . $theme_config['active_menu_text_color'] : '';
+	echo isset($theme_config['active_menu_bg']) && $theme_config['active_menu_bg'] != 'default' ? ' active-menu-bg-' . $theme_config['active_menu_bg'] : '';
+	echo isset($theme_config['menu_hover_style']) && $theme_config['menu_hover_style'] != 'default' ? ' menu-hover-' . $theme_config['menu_hover_style'] : '';
+?>" data-loading-overlay>
 	<!-- page preloader -->
 	<div class="loading-overlay dark">
 		<div class="ring-loader">
@@ -51,16 +57,8 @@
 				$role_id = 1; // Superadmin role ID
 			}
 			
-			// Get footer menu items for this role
-			$CI =& get_instance();
-			$footer_items = $CI->db->where('role_id', $role_id)
-								->where('status', 1)
-								->get('footer_menu_config')->result_array();
-			
-			$menu_items = array();
-			foreach ($footer_items as $item) {
-				$menu_items[] = $item['menu_item'];
-			}
+			// Get footer menu items for this role using the helper function
+			$menu_items = get_footer_menu_items($role_id);
 			
 			// If no custom configuration, show default items
 			if (empty($menu_items)) {

@@ -13,6 +13,7 @@
 				   <i class="fas fa-paint-roller"></i>
 				   <span class="hidden-xs"> <?=translate('theme_settings')?></span>
 				</a>
+			
 			</li>
 			<li <?=($this->session->flashdata('active') == 4 ? 'class="active"' : '');?>>
 				<a href="#sidebar" data-toggle="tab">
@@ -253,7 +254,7 @@
 				<?php echo form_close(); ?>
 			</div>
 
-			<!-- Sidebar Settings Tab -->
+			<!-- New Sidebar Settings Tab -->
 			<div class="tab-pane box <?=($this->session->flashdata('active') == 4 ? 'active' : '');?>" id="sidebar">
 				<?php
 					echo form_open($this->uri->uri_string(), array(
@@ -291,6 +292,16 @@
 										<input name="sidebar_color" value="green" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'green' ? 'checked' : '');?>>
 										<div class="theme-img" style="background-color: #28a745; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
 											Green
+										</div>
+									</label>
+								</div>
+							</li>
+							<li>
+								<div class="theme-box">
+									<label> 
+										<input name="sidebar_color" value="purple" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'purple' ? 'checked' : '');?>>
+										<div class="theme-img" style="background-color: #6f42c1; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+											Purple
 										</div>
 									</label>
 								</div>

@@ -25,6 +25,8 @@
 		var base_url = '<?php echo base_url() ?>';
 	</script>
 	<script src="<?php echo base_url('assets/js/mobile-detector.js');?>"></script>
+<link rel="stylesheet" href="<?php echo base_url('assets/css/mobile-footer.css');?>">
+<script src="<?php echo base_url('assets/js/mobile-footer.js');?>"></script>
 </head>
 	<body>
         <div class="top-nav">
@@ -149,5 +151,23 @@
 				})
 			</script>
 		<?php endif; ?>
-	</body>
+	<?php if(isset($is_mobile) && $is_mobile): ?>
+    <div class="mobile-footer">
+        <ul class="mobile-footer-menu">
+            <li>
+                <a href="<?php echo base_url('authentication'); ?>">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span><?php echo translate('login'); ?></span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('authentication/forgot'); ?>">
+                    <i class="fas fa-key"></i>
+                    <span><?php echo translate('forgot_password'); ?></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>
+</body>
 </html>

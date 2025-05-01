@@ -1,0 +1,239 @@
+/**
+ * Mobile Cards CSS
+ * Styling for mobile cards and mobile footer
+ */
+
+/* Mobile Cards Grid */
+.mobile-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+@media (min-width: 576px) {
+    .mobile-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-cards-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Mobile Card Item */
+.mobile-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    color: #333333;
+}
+
+.mobile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-card .card-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.mobile-card .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Card Colors - White background with different colored icons and text */
+.mobile-card {
+    background-color: #ffffff;
+}
+
+/* Students - Blue */
+.mobile-card.students .card-icon {
+    color: #4285F4;
+}
+.mobile-card.students .card-title {
+    color: #4285F4;
+}
+
+/* Attendance - Green */
+.mobile-card.attendance .card-icon {
+    color: #34A853;
+}
+.mobile-card.attendance .card-title {
+    color: #34A853;
+}
+
+/* Fees - Yellow/Gold */
+.mobile-card.fees .card-icon {
+    color: #FBBC05;
+}
+.mobile-card.fees .card-title {
+    color: #FBBC05;
+}
+
+/* Classes - Red */
+.mobile-card.classes .card-icon {
+    color: #EA4335;
+}
+.mobile-card.classes .card-title {
+    color: #EA4335;
+}
+
+/* Homework - Purple */
+.mobile-card.homeworks .card-icon {
+    color: #8E44AD;
+}
+.mobile-card.homeworks .card-title {
+    color: #8E44AD;
+}
+
+/* Marks - Teal */
+.mobile-card.marks .card-icon {
+    color: #16A085;
+}
+.mobile-card.marks .card-title {
+    color: #16A085;
+}
+
+/* Events - Orange */
+.mobile-card.events .card-icon {
+    color: #F39C12;
+}
+.mobile-card.events .card-title {
+    color: #F39C12;
+}
+
+/* Reports - Dark Green */
+.mobile-card.reports .card-icon {
+    color: #27AE60;
+}
+.mobile-card.reports .card-title {
+    color: #27AE60;
+}
+
+/* Profile - Light Blue */
+.mobile-card.profile .card-icon {
+    color: #3498DB;
+}
+.mobile-card.profile .card-title {
+    color: #3498DB;
+}
+
+/* Settings - Gray */
+.mobile-card.settings .card-icon {
+    color: #7F8C8D;
+}
+.mobile-card.settings .card-title {
+    color: #7F8C8D;
+}
+
+/* Mobile Footer */
+.mobile-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 8px 0;
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .mobile-footer {
+        display: block;
+    }
+    
+    body {
+        padding-bottom: 60px;
+    }
+}
+
+.mobile-footer nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mobile-footer .footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    font-size: 12px;
+    padding: 4px 0;
+}
+
+.mobile-footer .footer-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.mobile-footer .footer-item.active {
+    color: var(--primary-color, #0091cd);
+}
+
+/* Dark Theme */
+.mobile-footer.dark-theme {
+    background-color: #333;
+}
+
+.mobile-footer.dark-theme .footer-item {
+    color: #ccc;
+}
+
+.mobile-footer.dark-theme .footer-item.active {
+    color: var(--primary-color, #0091cd);
+}
+
+/* Footer Hidden (for landscape mode) */
+.mobile-footer.footer-hidden {
+    display: none;
+}
+
+/* Mobile Cards Settings Page */
+#sortable-cards {
+    margin-top: 15px;
+}
+
+.card-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.card-item:hover {
+    background-color: #f5f5f5;
+}
+
+.card-item .fa-arrows-alt {
+    cursor: move;
+}
+
+.ui-sortable-helper {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ui-sortable-placeholder {
+    visibility: visible !important;
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+}

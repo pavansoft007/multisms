@@ -1,7 +1,15 @@
 <header class="header">
 	<div class="logo-env">
 		<a href="<?php echo base_url('dashboard');?>" class="logo">
-			<img src="<?=($global_images['branch_id']==''||$global_images['text_logo']=='logo-small.png')?base_url('uploads/app_image/logo-small.png'):base_url('uploads/app_image/text_logo/'.$global_images['text_logo'].'')?>?>" height="40">
+			<img src="<?php 
+				if(isset($global_images) && is_array($global_images) && isset($global_images['branch_id']) && isset($global_images['text_logo'])) {
+					echo ($global_images['branch_id']==''||$global_images['text_logo']=='logo-small.png') ? 
+						base_url('uploads/app_image/logo-small.png') : 
+						base_url('uploads/app_image/text_logo/'.$global_images['text_logo']);
+				} else {
+					echo base_url('uploads/app_image/logo-small.png');
+				}
+				?>" height="40">
 		</a>
 
 		<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">

@@ -52,3 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'install';
 $route['404_override'] = 'errors';
 $route['translate_uri_dashes'] = FALSE;
+
+// Custom routes for settings
+$route['settings/universal'] = 'settings/universal';
+$route['settings/sidebar'] = 'settings/sidebar';

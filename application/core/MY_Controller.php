@@ -26,7 +26,12 @@ class MY_Controller extends CI_Controller {
         $this->data['global_config'] = $get_config;
 		$this->data['theme_config'] = $get_theme_config;
         $this->data['global_images'] = $get_global_images;
-		date_default_timezone_set($get_config['timezone']);
+		// Set timezone with fallback to prevent errors
+			if (!empty($get_config) && isset($get_config['timezone']) && !empty($get_config['timezone'])) {
+				date_default_timezone_set($get_config['timezone']);
+			} else {
+				date_default_timezone_set('UTC'); // Default to UTC if no timezone is set
+			}
 	}
 
     public function get_payment_config() {

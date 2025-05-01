@@ -7,11 +7,40 @@
 	<title><?php echo html_escape($title);?></title>
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.png');?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<!-- Material Design Fonts -->
+	<link href="<?php echo is_secure('fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');?>" rel="stylesheet">
+	<!-- Material Icons -->
+	<link href="<?php echo is_secure('fonts.googleapis.com/icon?family=Material+Icons');?>" rel="stylesheet">
+	<!-- Debug theme config -->
+	<script>
+		console.log('Theme Config:', <?php echo json_encode($theme_config); ?>);
+	</script>
+	<?php if (isset($theme_config['sidebar_text_color'])): ?>
+	<meta name="sidebar-text-color" content="<?php echo $theme_config['sidebar_text_color']; ?>">
+	<?php endif; ?>
+	<?php if (isset($theme_config['menu_text_color'])): ?>
+	<meta name="menu-text-color" content="<?php echo $theme_config['menu_text_color']; ?>">
+	<?php endif; ?>
+	<?php if (isset($theme_config['menu_bg_color'])): ?>
+	<meta name="menu-bg-color" content="<?php echo $theme_config['menu_bg_color']; ?>">
+	<?php endif; ?>
+	<?php if (isset($theme_config['active_menu_text_color'])): ?>
+	<meta name="active-menu-text-color" content="<?php echo $theme_config['active_menu_text_color']; ?>">
+	<?php endif; ?>
+	<?php if (isset($theme_config['active_menu_bg'])): ?>
+	<meta name="active-menu-bg" content="<?php echo $theme_config['active_menu_bg']; ?>">
+	<?php endif; ?>
+	<?php if (isset($theme_config['menu_hover_style'])): ?>
+	<meta name="menu-hover-style" content="<?php echo $theme_config['menu_hover_style']; ?>">
+	<?php endif; ?>
 	<!-- include stylesheet -->
 	<?php include 'stylesheet.php';?>
 
 	<!-- sidebar colors css -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/sidebar-colors.css');?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/menu-colors-fix.css');?>?v=<?php echo time(); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/sidebar-custom.css');?>?v=<?php echo time(); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/mobile-cards.css');?>?v=<?php echo time(); ?>">
 
 	<?php
 	if(isset($headerelements)) {
@@ -36,6 +65,10 @@
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/ramom.css');?>">
 	<!-- mobile footer css -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/mobile-footer.css');?>">
+	<!-- Footer Fix CSS -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/footer-fix.css');?>?v=<?php echo time(); ?>">
+	<!-- Material Design 3 Mobile CSS -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/material-design-mobile.css');?>?v=<?php echo time(); ?>">
 	<?php if ($theme_config["border_mode"] == 'false'): ?>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/skins/square-borders.css');?>">
 	<?php endif; ?>
