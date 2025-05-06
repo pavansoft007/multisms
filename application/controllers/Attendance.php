@@ -23,7 +23,7 @@ class Attendance extends Admin_Controller
     public function index()
     {
         if (get_loggedin_id()) {
-            redirect(base_url('dashboard'), 'refresh');
+            redirect(base_url('mainmenu'), 'refresh');
         } else {
             redirect(base_url(), 'refresh');
         }

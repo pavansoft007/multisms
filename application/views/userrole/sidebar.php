@@ -1,4 +1,4 @@
-<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?>">
+<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?> <?php echo isset($theme_config['sidebar_text_color']) ? 'sidebar-text-' . $theme_config['sidebar_text_color'] : 'sidebar-text-light'; ?>">
 	<div class="sidebar-header">
 		<div class="sidebar-title">
 			Main

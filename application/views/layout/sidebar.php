@@ -1,4 +1,4 @@
-<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?>">
+<aside id="sidebar-left" class="sidebar-left <?php echo isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] != 'default' ? 'sidebar-color-' . $theme_config['sidebar_color'] : ''; ?> <?php echo isset($theme_config['sidebar_text_color']) ? 'sidebar-text-' . $theme_config['sidebar_text_color'] : 'sidebar-text-light'; ?> <?php echo isset($theme_config['menu_text_color']) ? 'menu-text-' . $theme_config['menu_text_color'] : ''; ?> <?php echo isset($theme_config['menu_bg_color']) && $theme_config['menu_bg_color'] != 'default' ? 'menu-bg-' . $theme_config['menu_bg_color'] : ''; ?> <?php echo isset($theme_config['active_menu_text_color']) ? 'active-menu-text-' . $theme_config['active_menu_text_color'] : ''; ?> <?php echo isset($theme_config['active_menu_bg']) && $theme_config['active_menu_bg'] != 'default' ? 'active-menu-bg-' . $theme_config['active_menu_bg'] : ''; ?> <?php echo isset($theme_config['menu_hover_style']) && $theme_config['menu_hover_style'] != 'default' ? 'menu-hover-' . $theme_config['menu_hover_style'] : ''; ?>">
 	<div class="sidebar-header">
 		<div class="sidebar-title">
 			Main
@@ -1120,9 +1120,19 @@
                         </a>
                         <ul class="nav nav-children">
                             <?php if(get_permission('global_settings', 'is_view')){ ?>
-                            <li class="<?php if($sub_page == 'settings/universal') echo 'nav-active';?>">
+                            <li class="<?php if($sub_page == 'universal_settings/index' || $sub_page == 'settings/universal') echo 'nav-active';?>">
                                 <a href="<?=base_url('settings/universal')?>">
                                     <span><i class="fas fa-caret-right" aria-hidden="true"></i><?=translate('global_settings')?></span>
+                                </a>
+                            </li>
+                            <li class="<?php if($sub_page == 'theme_settings/index') echo 'nav-active';?>">
+                                <a href="<?=base_url('theme_settings')?>">
+                                    <span><i class="fas fa-caret-right" aria-hidden="true"></i>Theme Settings</span>
+                                </a>
+                            </li>
+                            <li class="<?php if($sub_page == 'settings/sidebar') echo 'nav-active';?>">
+                                <a href="<?=base_url('settings/sidebar')?>">
+                                    <span><i class="fas fa-caret-right" aria-hidden="true"></i>Sidebar Settings</span>
                                 </a>
                             </li>
                             <?php } if($schoolSettings == true){ ?>

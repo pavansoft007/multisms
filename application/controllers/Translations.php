@@ -48,7 +48,7 @@ class Translations extends Admin_Controller
             if (!empty($_SERVER['HTTP_REFERER'])) {
                 redirect($_SERVER['HTTP_REFERER']);
             } else {
-                redirect(base_url('dashboard'), 'refresh');
+                redirect(base_url('mainmenu'), 'refresh');
             }
         } else {
             redirect(base_url(), 'refresh');

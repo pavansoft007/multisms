@@ -277,7 +277,7 @@ class Parents extends Admin_Controller
     {
         if (is_parent_loggedin()) {
             $this->session->set_userdata('myChildren_id', '');
-            redirect(base_url('dashboard'));
+            redirect(base_url('mainmenu'));
         } else {
             $this->session->set_userdata('last_page', current_url());
             redirect(base_url(), 'refresh');

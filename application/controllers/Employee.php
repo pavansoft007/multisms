@@ -25,7 +25,7 @@ class Employee extends Admin_Controller
 
     public function index()
     {
-        redirect(base_url('dashboard'));
+        redirect(base_url('mainmenu'));
     }
 
     /* staff form validation rules */

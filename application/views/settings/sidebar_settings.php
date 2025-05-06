@@ -1,0 +1,95 @@
+<div class="form-group">
+	<label class="col-md-2 control-label">Sidebar Color</label>
+	<div class="col-md-8">
+		<ul class="list-unstyled thememenu-sy">
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="default" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'default' ? 'checked' : (!isset($theme_config['sidebar_color']) ? 'checked' : ''));?>>
+						<div class="theme-img" style="background-color: #FFF; height: 80px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: bold;">
+							Default White
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="blue" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'blue' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #3A3978; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Blue
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="green" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'green' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #28a745; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Green
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="purple" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'purple' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #6f42c1; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Purple
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="red" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'red' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #dc3545; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Red
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_color" value="dark" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'dark' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #343a40; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Dark
+						</div>
+					</label>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-2 control-label">Sidebar Text Color</label>
+	<div class="col-md-8">
+		<ul class="list-unstyled thememenu-sy">
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_text_color" value="light" type="radio" <?=(isset($theme_config['sidebar_text_color']) && $theme_config['sidebar_text_color'] == 'light' ? 'checked' : (!isset($theme_config['sidebar_text_color']) ? 'checked' : ''));?>>
+						<div class="theme-img" style="background-color: #333; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+							Light Text
+						</div>
+					</label>
+				</div>
+			</li>
+			<li>
+				<div class="theme-box">
+					<label> 
+						<input name="sidebar_text_color" value="dark" type="radio" <?=(isset($theme_config['sidebar_text_color']) && $theme_config['sidebar_text_color'] == 'dark' ? 'checked' : '');?>>
+						<div class="theme-img" style="background-color: #f8f9fa; height: 80px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: bold;">
+							Dark Text
+						</div>
+					</label>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

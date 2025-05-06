@@ -29,6 +29,43 @@
 <script src="<?php echo base_url('assets/js/app.js')?>"></script>
 <script src="<?php echo base_url('assets/js/app.fn.js')?>"></script>
 <script src="<?php echo base_url('assets/js/mobile-footer.js')?>"></script>
+<script src="<?php echo base_url('assets/js/mobile-footer-refresh.js')?>?v=<?php echo isset($_SESSION['cache_timestamp']) ? $_SESSION['cache_timestamp'] : time(); ?>"></script>
+<script src="<?php echo base_url('assets/js/sidebar-menu-colors.js')?>?v=<?php echo time(); ?>"></script>
+<!-- Material Design 3 Mobile JS -->
+<script src="<?php echo base_url('assets/js/material-design-mobile.js')?>?v=<?php echo time(); ?>"></script>
+<!-- Mobile More Menu JS -->
+<script src="<?php echo base_url('assets/js/mobile-more-menu.js')?>?v=<?php echo time(); ?>"></script>
+<!-- Mobile Profile Menu JS -->
+<script src="<?php echo base_url('assets/js/mobile-profile-menu.js')?>?v=<?php echo time(); ?>"></script>
+
+<script type="text/javascript">
+    // Define translation object for mobile footer
+    var translate = {
+        dashboard: "<?php echo translate('dashboard'); ?>",
+        homework: "<?php echo translate('homework'); ?>",
+        attendance: "<?php echo translate('attendance'); ?>",
+        fees: "<?php echo translate('fees'); ?>",
+        students: "<?php echo translate('students'); ?>",
+        payments: "<?php echo translate('payments'); ?>",
+        message: "<?php echo translate('message'); ?>"
+    };
+    
+    // Define base URL for AJAX requests
+    var base_url = "<?php echo base_url(); ?>";
+    
+    // Define user type
+    var user_type = "<?php 
+        if (is_student_loggedin()) echo 'student';
+        elseif (is_parent_loggedin()) echo 'parent';
+        elseif (is_teacher_loggedin()) echo 'teacher';
+        elseif (is_admin_loggedin()) echo 'admin';
+        elseif (is_superadmin_loggedin()) echo 'superadmin';
+        else echo '';
+    ?>";
+    
+    // Define logged in role ID for footer menu
+    var loggedin_role_id = <?php echo isset($_SESSION['loggedin_role_id']) ? $_SESSION['loggedin_role_id'] : 0; ?>;
+</script>
 
 <script type="text/javascript">
 	jQuery.extend(jQuery.validator.messages, {

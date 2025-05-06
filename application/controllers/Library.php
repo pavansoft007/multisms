@@ -23,7 +23,7 @@ class Library extends Admin_Controller
     public function index()
     {
         if (is_loggedin()) {
-            redirect(base_url('dashboard'));
+            redirect(base_url('mainmenu'));
         } else {
             redirect(base_url(), 'refresh');
         }

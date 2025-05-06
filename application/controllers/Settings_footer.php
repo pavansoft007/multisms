@@ -51,15 +51,29 @@ class Settings_footer extends Admin_Controller
                     error_log('No menu items selected for role ID: ' . $role_id);
                 }
                 
-                // Clear cache if any
+                // Load cache driver if not loaded
+                if (!isset($this->cache)) {
+                    $this->load->driver('cache', array('adapter' => 'file'));
+                }
+                
+                // Clear specific cache for this role
+                $cache_key = 'footer_menu_' . $role_id;
+                $this->cache->delete($cache_key);
+                
+                // Also clear any other related caches
                 $this->cache->clean();
+                
+                // Force browser cache refresh by adding timestamp to CSS/JS files
+                $this->session->set_userdata('cache_timestamp', time());
                 
                 set_alert('success', translate('the_configuration_has_been_updated'));
                 redirect(current_url());
             }
         }
 
-        $this->data['roles'] = $this->role_model->getRoleList();
+        // Get all roles for footer settings (including parent and student roles)
+        $this->db->select('*');
+        $this->data['roles'] = $this->db->get('roles')->result_array();
         $this->data['title'] = 'Footer Settings';
         $this->data['sub_page'] = 'settings/footer_settings';
         $this->data['main_menu'] = 'settings';
@@ -82,21 +96,48 @@ class Settings_footer extends Admin_Controller
                 'message' => translate('message')
             );
             
-            // Get selected menu items for this role
-            $selected_items = array();
-            $query = $this->db->where('role_id', $role_id)
-                            ->where('status', 1)
-                            ->get('footer_menu_config');
-            
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $row) {
-                    $selected_items[] = $row->menu_item;
-                }
-            }
+            // Get selected menu items for this role using the helper function
+            $selected_items = get_footer_menu_items($role_id);
             
             $data = array(
                 'all_items' => $all_menu_items,
                 'selected_items' => $selected_items
+            );
+            
+            echo json_encode($data);
+        }
+    }
+    
+    /**
+     * AJAX endpoint to refresh the footer menu
+     */
+    public function refresh_footer()
+    {
+        if ($_POST) {
+            $role_id = $this->input->post('role_id');
+            
+            // Load cache driver if not loaded
+            if (!isset($this->cache)) {
+                $this->load->driver('cache', array('adapter' => 'file'));
+            }
+            
+            // Clear cache for this role
+            $cache_key = 'footer_menu_' . $role_id;
+            $this->cache->delete($cache_key);
+            
+            // Get fresh menu items
+            $menu_items = get_footer_menu_items($role_id);
+            
+            $data = array(
+                'success' => true,
+                'menu_items' => $menu_items
+            );
+            
+            echo json_encode($data);
+        } else {
+            $data = array(
+                'success' => false,
+                'message' => 'Invalid request method'
             );
             
             echo json_encode($data);
@@ -114,6 +155,45 @@ class Settings_footer extends Admin_Controller
         $this->data['sub_page'] = 'settings/footer_debug';
         $this->data['main_menu'] = 'settings';
         $this->load->view('layout/index', $this->data);
+    }
+    
+    public function check_database()
+    {
+        $result = array(
+            'tables' => array(),
+            'roles' => array(),
+            'footer_menu' => array()
+        );
+        
+        // Check if tables exist
+        $result['tables']['roles'] = $this->db->table_exists('roles');
+        $result['tables']['footer_menu_config'] = $this->db->table_exists('footer_menu_config');
+        
+        // Get roles
+        if ($result['tables']['roles']) {
+            $roles = $this->db->get('roles')->result_array();
+            $result['roles']['count'] = count($roles);
+            $result['roles']['data'] = $roles;
+        }
+        
+        // Get footer menu config
+        if ($result['tables']['footer_menu_config']) {
+            $footer_menu = $this->db->get('footer_menu_config')->result_array();
+            $result['footer_menu']['count'] = count($footer_menu);
+            $result['footer_menu']['data'] = $footer_menu;
+            
+            // Group by role
+            $by_role = array();
+            foreach ($footer_menu as $item) {
+                if (!isset($by_role[$item['role_id']])) {
+                    $by_role[$item['role_id']] = array();
+                }
+                $by_role[$item['role_id']][] = $item['menu_item'];
+            }
+            $result['footer_menu']['by_role'] = $by_role;
+        }
+        
+        echo json_encode($result);
     }
     
     public function test_helper()
@@ -149,6 +229,14 @@ class Settings_footer extends Admin_Controller
     
     public function fix_database()
     {
+        // Load cache driver if not loaded
+        if (!isset($this->cache)) {
+            $this->load->driver('cache', array('adapter' => 'file'));
+        }
+        
+        // Clear all cache
+        $this->cache->clean();
+        
         // Check if table exists
         $table_exists = $this->db->table_exists('footer_menu_config');
         
@@ -212,7 +300,8 @@ class Settings_footer extends Admin_Controller
             if ($role->id == 7 || $role->id == 6) { // Student or Parent
                 $menu_items = array_merge($menu_items, array('homework', 'attendance', 'fees'));
             } else {
-                $menu_items = array_merge($menu_items, array('students', 'payments', 'attendance'));
+                // For admin roles, include all menu items
+                $menu_items = array_merge($menu_items, array('students', 'payments', 'attendance', 'homework', 'fees'));
             }
             
             // Insert default configuration
