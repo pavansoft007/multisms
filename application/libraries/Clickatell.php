@@ -20,6 +20,10 @@ class Clickatell
     // public vars
     public $error = SELF::ERR_NONE;
     public $error_message = '';
+    public $username;
+    public $password;
+    public $api_id;
+    public $from_no;
 
     // private vars
     private $ci;
@@ -32,17 +36,25 @@ class Clickatell
      */
     public function __construct()
     {
-        $ci 		= & get_instance();
+        $ci = & get_instance();
         if (is_superadmin_loggedin()) {
             $branchID = $ci->input->post('branch_id');
         } else {
             $branchID = get_loggedin_branch_id();
         }
         $clickatell = $ci->db->get_where('sms_credential', array('id' => 2, 'branch_id' => $branchID))->row_array();
-        $this->username = $clickatell['field_one'];
-        $this->password = $clickatell['field_two'];
-        $this->api_id   = $clickatell['field_three'];
-        $this->from_no  = $clickatell['field_four'];
+        
+        if ($clickatell) {
+            $this->username = $clickatell['field_one'] ?? '';
+            $this->password = $clickatell['field_two'] ?? '';
+            $this->api_id   = $clickatell['field_three'] ?? '';
+            $this->from_no  = $clickatell['field_four'] ?? '';
+        } else {
+            $this->username = '';
+            $this->password = '';
+            $this->api_id   = '';
+            $this->from_no  = '';
+        }
     }
 
     /**

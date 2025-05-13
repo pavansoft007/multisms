@@ -43,6 +43,9 @@ class Csvimport {
         // Raise memory limit (for big files)
         ini_set('memory_limit', '20M');
         
+        // Initialize result array
+        $result = array();
+        
         // File path
         if(! $filepath)
         {
@@ -54,10 +57,10 @@ class Csvimport {
             $this->_set_filepath($filepath);
         }
 
-        // If file doesn't exists, return false
+        // If file doesn't exists, return empty array
         if(! file_exists($filepath))
         {
-            return FALSE;            
+            return $result;            
         }
 
         // auto detect row endings
@@ -113,6 +116,7 @@ class Csvimport {
         $this->_get_handle();
         
         $row = 0;
+        $column_headers = array();
 
         while (($data = fgetcsv($this->handle, 0, $this->delimiter)) !== FALSE) 
         {     
@@ -148,7 +152,9 @@ class Csvimport {
                     $new_row = $row - $this->initial_line - 1; // needed so that the returned array starts at 0 instead of 1
                     foreach($column_headers as $key => $value) // assumes there are as many columns as their are title columns
                     {
-                    $result[$new_row][$value] = utf8_encode(trim($data[$key]));
+                        if (isset($data[$key])) {
+                            $result[$new_row][$value] = mb_convert_encoding(trim($data[$key]), 'UTF-8', 'ISO-8859-1');
+                        }
                     }
                 }
             

@@ -32,6 +32,17 @@ class MY_Controller extends CI_Controller {
 			} else {
 				date_default_timezone_set('UTC'); // Default to UTC if no timezone is set
 			}
+		$this->load->helper('security');
+		$this->load->helper('language');
+		$this->load->helper('url');
+		$this->load->helper('form');
+		$this->load->helper('date');
+		$this->load->helper('file');
+		$this->load->helper('directory');
+		$this->load->helper('number');
+		$this->load->helper('download');
+		$this->load->helper('string');
+		$this->load->helper('html');
 	}
 
     public function get_payment_config() {

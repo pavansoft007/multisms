@@ -16,11 +16,13 @@
         
         // Set cookie for server-side detection
         document.cookie = "is_mobile=" + isMobile + "; path=/; max-age=3600";
+        document.cookie = "screen_width=" + window.innerWidth + "; path=/; max-age=3600";
         
         // Add classes to the body for CSS targeting
         if (isMobile) {
             document.body.classList.add('mobile-device');
             document.body.classList.add('md-body'); // Material Design body class
+            document.body.classList.add('has-mobile-footer'); // Add class for mobile footer
             
             // Check if we're on Android
             if (/android/i.test(userAgent)) {
@@ -64,6 +66,24 @@
                 document.head.appendChild(metaViewport);
             }
             
+            // Ensure mobile footer is visible
+            var mobileFooter = document.querySelector('.mobile-footer');
+            if (mobileFooter) {
+                mobileFooter.style.display = 'block';
+                
+                // Add padding to body to account for mobile footer
+                document.body.style.paddingBottom = '80px';
+                
+                // Initialize mobile footer if jQuery is available
+                if (typeof jQuery !== 'undefined' && typeof jQuery.fn.ready === 'function') {
+                    jQuery(document).ready(function($) {
+                        if (typeof reloadMobileFooter === 'function') {
+                            reloadMobileFooter();
+                        }
+                    });
+                }
+            }
+            
             // Add Material Design touch feedback to interactive elements
             addMaterialRipple();
         } else {
@@ -71,6 +91,16 @@
             document.body.classList.remove('md-body');
             document.body.classList.remove('android-device');
             document.body.classList.remove('ios-device');
+            document.body.classList.remove('has-mobile-footer');
+            
+            // Hide mobile footer
+            var mobileFooter = document.querySelector('.mobile-footer');
+            if (mobileFooter) {
+                mobileFooter.style.display = 'none';
+            }
+            
+            // Reset body padding
+            document.body.style.paddingBottom = '';
         }
         
         return isMobile;

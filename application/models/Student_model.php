@@ -107,66 +107,73 @@ class Student_model extends MY_Model
 
     public function csvImport($row, $classID, $sectionID, $branchID)
     {
+        if (!is_array($row)) {
+            return false;
+        }
+
         $getParent = $this->db->select('id')->where(array('branch_id' => $branchID, 'email' => $row['GuardianEmail']))->get('parent')->row_array();
-        if (sizeof($getParent)) {
+        if ($getParent && is_array($getParent)) {
             $parentID = $getParent['id'];
         } else {
             // add new guardian all information in db
             $arrayParent = array(
-                'name' => $row['GuardianName'],
-                'relation' => $row['GuardianRelation'],
-                'father_name' => $row['FatherName'],
-                'mother_name' => $row['MotherName'],
-                'occupation' => $row['GuardianOccupation'],
-                'mobileno' => $row['GuardianMobileNo'],
-                'address' => $row['GuardianAddress'],
-                'email' => $row['GuardianEmail'],
+                'name' => $row['GuardianName'] ?? '',
+                'relation' => $row['GuardianRelation'] ?? '',
+                'father_name' => $row['FatherName'] ?? '',
+                'mother_name' => $row['MotherName'] ?? '',
+                'occupation' => $row['GuardianOccupation'] ?? '',
+                'mobileno' => $row['GuardianMobileNo'] ?? '',
+                'address' => $row['GuardianAddress'] ?? '',
+                'email' => $row['GuardianEmail'] ?? '',
                 'branch_id' => $branchID,
                 'photo' => 'defualt.png',
             );
             $this->db->insert('parent', $arrayParent);
             $parentID = $this->db->insert_id();
             $parent_credential = array(
-                'username' => $row["GuardianEmail"],
+                'username' => $row["GuardianEmail"] ?? '',
                 'role' => 6,
                 'user_id' => $parentID,
-                'password' => $this->app_lib->pass_hashed($row["GuardianPassword"]),
+                'password' => $this->app_lib->pass_hashed($row["GuardianPassword"] ?? ''),
             );
             $this->db->insert('login_credential', $parent_credential);
         }
 
         $inser_data1 = array(
-            'first_name' => $row['FirstName'],
-            'last_name' => $row['LastName'],
-            'blood_group' => $row['BloodGroup'],
-            'gender' => $row['Gender'],
-            'birthday' => date("Y-m-d", strtotime($row['Birthday'])),
-            'mother_tongue' => $row['MotherTongue'],
-            'religion' => $row['Religion'],
+            'first_name' => $row['FirstName'] ?? '',
+            'last_name' => $row['LastName'] ?? '',
+            'blood_group' => $row['BloodGroup'] ?? '',
+            'gender' => $row['Gender'] ?? '',
+            'birthday' => date("Y-m-d", strtotime($row['Birthday'] ?? date('Y-m-d'))),
+            'mother_tongue' => $row['MotherTongue'] ?? '',
+            'religion' => $row['Religion'] ?? '',
             'parent_id' => $parentID,
-            'caste' => $row['Caste'],
-            'mobileno' => $row['Phone'],
-            'city' => $row['City'],
-            'state' => $row['State'],
-            'current_address' => $row['PresentAddress'],
-            'permanent_address' => $row['PermanentAddress'],
-            'category_id' => $row['CategoryID'],
-            'admission_date' => date("Y-m-d", strtotime($row['AdmissionDate'])),
+            'caste' => $row['Caste'] ?? '',
+            'mobileno' => $row['Phone'] ?? '',
+            'city' => $row['City'] ?? '',
+            'state' => $row['State'] ?? '',
+            'current_address' => $row['PresentAddress'] ?? '',
+            'permanent_address' => $row['PermanentAddress'] ?? '',
+            'category_id' => $row['CategoryID'] ?? '',
+            'admission_date' => date("Y-m-d", strtotime($row['AdmissionDate'] ?? date('Y-m-d'))),
             'register_no' => substr(app_generate_hash(), 4, 7),
             'photo' => 'defualt.png',
-            'email' => $row['StudentEmail'],
+            'email' => $row['StudentEmail'] ?? '',
         );
         //save all student information in the database file
         $this->db->insert('student', $inser_data1);
         $studentID = $this->db->insert_id();
         //save student login credential
         $inser_data2 = array(
-            'username' => $row["StudentEmail"],
+            'username' => $row["StudentEmail"] ?? '',
             'role' => 7,
             'user_id' => $studentID,
-            'password' => $this->app_lib->pass_hashed($row["StudentPassword"]),
+            'password' => $this->app_lib->pass_hashed($row["StudentPassword"] ?? ''),
         );
         $this->db->insert('login_credential', $inser_data2);
+
+        // Use current year as session ID since session table doesn't exist
+        $session_id = date('Y');
 
         //save student enroll information in the database file
         $arrayEnroll = array(
@@ -174,8 +181,8 @@ class Student_model extends MY_Model
             'class_id' => $classID,
             'section_id' => $sectionID,
             'branch_id' => $branchID,
-            'roll' => $row['Roll'],
-            'session_id' => get_session_id(),
+            'roll' => $row['Roll'] ?? '',
+            'session_id' => $session_id,
         );
         $this->db->insert('enroll', $arrayEnroll);
     }
@@ -206,20 +213,28 @@ class Student_model extends MY_Model
         $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,c.name as class_name,se.name as section_name');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'inner');
-        // $this->db->join('login_credential as l', 'l.user_id = s.id and l.role = 7', 'inner');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
         $this->db->join('section as se', 'e.section_id=se.id', 'left');
-        $this->db->where('e.class_id', $classID);
-        $this->db->where('e.branch_id', $branchID);
-        $this->db->where('e.session_id', $sessionID);
+        
+        if (!empty($classID)) {
+            $this->db->where('e.class_id', $classID);
+        }
+        
+        if (!empty($branchID)) {
+            $this->db->where('e.branch_id', $branchID);
+        }
+        
+        if (!empty($sessionID)) {
+            $this->db->where('e.session_id', $sessionID);
+        }
+        
         $this->db->order_by('s.id', 'ASC');
-        if ($sectionID != 'all') {
+        
+        if (!empty($sectionID) && $sectionID != 'all') {
             $this->db->where('e.section_id', $sectionID);
         }
-        // if ($deactivate == true) {
-        //     $this->db->where('l.active', 0);
-        // }
-        return $this->db->get();
+        
+        return $this->db->get()->result_array();
     }
 
     public function getSearchStudentList($search_text)
@@ -277,8 +292,9 @@ class Student_model extends MY_Model
         }else{
             $config = $this->db->select('institution_code,reg_prefix')->where(array('id' => 1))->get('global_settings')->row();
         }
-        if ($config->reg_prefix == 'on') {
-            $prefix = $config->institution_code;
+        
+        if ($config && $config->reg_prefix == 'on') {
+            $prefix = $config->institution_code ?? '';
         }
 
         $this->db->select('s.id');
@@ -288,9 +304,6 @@ class Student_model extends MY_Model
             $this->db->where('e.branch_id', get_loggedin_branch_id());
         }
         $query = $this->db->get();
-        // if ($query->num_rows() == 0) {
-        //     show_404();
-        // }
         $id = $query->num_rows();
         if (!empty($id)) {
             $maxNum = str_pad($id + 1, 5, '0', STR_PAD_LEFT);

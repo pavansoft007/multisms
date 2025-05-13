@@ -62,12 +62,8 @@
 	?>
 	<!-- ramom css -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/ramom.css');?>">
-	<!-- mobile footer css -->
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/mobile-footer.css');?>">
-	<!-- Footer Fix CSS -->
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/footer-fix.css');?>?v=<?php echo time(); ?>">
-	<!-- Material Design 3 Mobile CSS -->
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/material-design-mobile.css');?>?v=<?php echo time(); ?>">
+	<!-- Material Design 3 CSS -->
+	<link href="<?php echo base_url('assets/css/material-design-3.css'); ?>" rel="stylesheet">
 	<?php if ($theme_config["border_mode"] == 'false'): ?>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/skins/square-borders.css');?>">
 	<?php endif; ?>
@@ -82,4 +78,6 @@
 			});
 		});
 	</script>
+	<!-- Mobile Detector Script -->
+	<script src="<?php echo base_url('assets/js/mobile-detector.js'); ?>"></script>
 </head>

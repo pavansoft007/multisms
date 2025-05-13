@@ -39,8 +39,7 @@ class Textlocal
 	 */
 	function __construct()
 	{
-		 
-        $ci = & get_instance();
+		$ci = & get_instance();
         $apiKey = false;
         if (is_superadmin_loggedin()) {
             $branchID = $ci->input->post('branch_id');
@@ -49,11 +48,9 @@ class Textlocal
         }
         $textlocal = $ci->db->get_where('sms_credential', array('id' => 5, 'branch_id' => $branchID))->row_array();
 
-		//$username, $hash, $apiKey = false
-		$this->username 		= $textlocal['field_one'];
-		$this->hash 			= $textlocal['field_three'];
-		$this->sender_number 	= $textlocal['field_two'];
-
+		$this->username = $textlocal['field_one'] ?? '';
+		$this->hash = $textlocal['field_three'] ?? '';
+		$this->sender_number = $textlocal['field_two'] ?? '';
 
 		if ($apiKey) {
 			$this->apiKey = $apiKey;

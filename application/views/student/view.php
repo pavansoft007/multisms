@@ -53,7 +53,7 @@
 		</section>
 
 		<?php if (isset($students)):?>
-		<section class="panel appear-animation" data-appear-animation="<?=$global_config['animations'] ?>" data-appear-animation-delay="100">
+		<section class="panel appear-animation" data-appear-animation="<?=isset($global_config['animations']) ? $global_config['animations'] : 0?>" data-appear-animation-delay="100">
 			<header class="panel-heading">
 				<div class="panel-btn">
 					<button class="btn btn-default btn-circle" id="student_bulk_delete" data-loading-text="<i class='fas fa-spinner fa-spin'></i> Processing">

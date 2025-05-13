@@ -31,21 +31,23 @@
 
 		function __construct()
 		{
-			$ci 	= & get_instance();
-            if (is_superadmin_loggedin()) {
-                $branchID = $ci->input->post('branch_id');
-            } else {
-                $branchID = get_loggedin_branch_id();
-            }
+			$ci = & get_instance();
+			if (is_superadmin_loggedin()) {
+				$branchID = $ci->input->post('branch_id');
+			} else {
+				$branchID = get_loggedin_branch_id();
+			}
 			$twilio = $ci->db->get_where('sms_credential', array('id' => 1, 'branch_id' => $branchID))->row_array();
-            $this->mode        = 'prod';
-            $this->api_version = '2010-04-01';
-            $this->account_sid = $twilio['field_one'];
-            $this->auth_token  = $twilio['field_two'];
-            $this->number      = $twilio['field_three'];
+			$this->mode        = 'prod';
+			$this->api_version = '2010-04-01';
+			$this->account_sid = $twilio['field_one'] ?? '';
+			$this->auth_token  = $twilio['field_two'] ?? '';
+			$this->number      = $twilio['field_three'] ?? '';
 
 			//initialize the client
-			$this->_twilio = new TwilioRestClient($this->account_sid, $this->auth_token);
+			if (!empty($this->account_sid) && !empty($this->auth_token)) {
+				$this->_twilio = new TwilioRestClient($this->account_sid, $this->auth_token);
+			}
 		}
 
         public function get_twilio() {

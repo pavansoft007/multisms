@@ -368,14 +368,34 @@ class Student extends Admin_Controller
         }
 
         $branchID = $this->application_model->get_branch_id();
+        
+        // Get global configuration with default values first
+        $global_config = $this->db->get_where('global_settings', array('branch_id' => $branchID))->row_array();
+        $this->data['global_config'] = array(
+            'animations' => isset($global_config['animations']) ? $global_config['animations'] : 0,
+            'branch_id' => $branchID
+        );
+
+        // Load students based on search or show all
         if (isset($_POST['search'])) {
             $classID = $this->input->post('class_id');
             $sectionID = $this->input->post('section_id');
-            $this->data['students'] = $this->application_model->getStudentListByClassSection($classID, $sectionID, $branchID, false, true);
+            if (!empty($classID) && !empty($sectionID)) {
+                $this->data['students'] = $this->application_model->getStudentListByClassSection($classID, $sectionID, $branchID, false, true);
+            } else {
+                // If search parameters are empty, show all students
+                $this->data['students'] = $this->student_model->getStudentList('', '', $branchID);
+            }
+        } else {
+            // Show all students by default
+            $this->data['students'] = $this->student_model->getStudentList('', '', $branchID);
         }
-        // echo '<pre>';
-        // print_r($this->data['students']);
-        // exit;
+
+        // Ensure students is always an array
+        if (!is_array($this->data['students'])) {
+            $this->data['students'] = array();
+        }
+
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('student_list');
         $this->data['main_menu'] = 'student';

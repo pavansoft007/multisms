@@ -24,19 +24,12 @@
 <script src="<?php echo base_url('assets/vendor/magnific-popup/jquery.magnific-popup.js');?>"></script>
 <script src="<?php echo base_url('assets/vendor/screenfull/screenfull.min.js');?>"></script>
 <script src="<?php echo base_url('assets/vendor/sweetalert/sweetalert.min.js');?>"></script>
-<script src="<?php echo base_url('assets/js/custom.js');?>"></script>
+<script src="<?php echo base_url('assets/js/theme.js')?>"></script>
+<script src="<?php echo base_url('assets/js/custom.js')?>"></script>
 <script src="<?php echo base_url('assets/js/plug.init.js');?>"></script>
 <script src="<?php echo base_url('assets/js/app.js')?>"></script>
 <script src="<?php echo base_url('assets/js/app.fn.js')?>"></script>
-<script src="<?php echo base_url('assets/js/mobile-footer.js')?>"></script>
-<script src="<?php echo base_url('assets/js/mobile-footer-refresh.js')?>?v=<?php echo isset($_SESSION['cache_timestamp']) ? $_SESSION['cache_timestamp'] : time(); ?>"></script>
 <script src="<?php echo base_url('assets/js/sidebar-menu-colors.js')?>?v=<?php echo time(); ?>"></script>
-<!-- Material Design 3 Mobile JS -->
-<script src="<?php echo base_url('assets/js/material-design-mobile.js')?>?v=<?php echo time(); ?>"></script>
-<!-- Mobile More Menu JS -->
-<script src="<?php echo base_url('assets/js/mobile-more-menu.js')?>?v=<?php echo time(); ?>"></script>
-<!-- Mobile Profile Menu JS -->
-<script src="<?php echo base_url('assets/js/mobile-profile-menu.js')?>?v=<?php echo time(); ?>"></script>
 
 <script type="text/javascript">
     // Define translation object for mobile footer
