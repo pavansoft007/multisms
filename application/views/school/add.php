@@ -75,27 +75,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-3 control-label"><?=translate('person_name')?> <span class="required">*</span></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="person_name" value="<?=set_value('person_name')?>" />
-							<span class="error"><?=form_error('person_name') ?></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label"><?=translate('gender')?> <span class="required">*</span></label>
-						<div class="col-md-6">
-							<?php
-								$array = array(
-									"" => translate('select'),
-									"male" => translate('male'),
-									"female" => translate('female')
-								);
-								echo form_dropdown("sex", $array, set_value('sex'), "class='form-control' data-plugin-selectTwo data-width='100%'
-								data-minimum-results-for-search='Infinity'");
-							?>
-						</div>
-					</div>
-					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('email')?> <span class="required">*</span></label>
 						<div class="col-md-6">
 							<input type="text" class="form-control" name="email" value="<?=set_value('email')?>" />
@@ -148,6 +127,24 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('role')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<?php
+								// Debug roles data
+								echo "<!-- Roles Data: " . print_r($roles, true) . " -->";
+								
+								$array = array("" => translate('select'));
+								if (!empty($roles)) {
+									foreach($roles as $role) {
+										$array[$role['id']] = $role['name'];
+									}
+								}
+								echo form_dropdown("role_id", $array, set_value('role_id'), "class='form-control' data-plugin-selectTwo data-width='100%'");
+							?>
+							<span class="error"><?=form_error('role_id'); ?></span>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('city')?></label>
 						<div class="col-md-6">
 							<input type="text" class="form-control" name="city" value="<?=set_value('city')?>">
@@ -163,6 +160,27 @@
 						<label  class="col-md-3 control-label"><?=translate('address')?></label>
 						<div class="col-md-6 mb-md">
 							<textarea type="text" rows="3" class="form-control" name="address" ><?=set_value('address')?></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('contact_person_name')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" name="contact_person_name" value="<?=set_value('contact_person_name')?>" />
+							<span class="error"><?=form_error('contact_person_name') ?></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?=translate('contact_person_gender')?> <span class="required">*</span></label>
+						<div class="col-md-6">
+							<?php
+								$array = array(
+									"" => translate('select'),
+									"male" => translate('male'),
+									"female" => translate('female')
+								);
+								echo form_dropdown("contact_person_gender", $array, set_value('contact_person_gender'), "class='form-control' data-plugin-selectTwo data-width='100%'");
+							?>
+							<span class="error"><?=form_error('contact_person_gender') ?></span>
 						</div>
 					</div>
 					<footer class="panel-footer mt-lg">

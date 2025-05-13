@@ -127,4 +127,20 @@ class Userrole_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
+    // Get user role details
+    public function getUserRole($user_id)
+    {
+        $this->db->select('login_credential.*, roles.name as role_name');
+        $this->db->from('login_credential');
+        $this->db->join('roles', 'roles.id = login_credential.role', 'left');
+        $this->db->where('login_credential.user_id', $user_id);
+        return $this->db->get()->row_array();
+    }
+
+    // Update user role
+    public function updateUserRole($user_id, $role_id)
+    {
+        $this->db->where('user_id', $user_id);
+        return $this->db->update('login_credential', array('role' => $role_id));
+    }
 }

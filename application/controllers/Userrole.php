@@ -21,6 +21,7 @@ class Userrole extends User_Controller
         $this->load->model('leave_model');
         $this->load->model('fees_model');
         $this->load->model('exam_model');
+        $this->load->model('role_model');
     }
 
     public function index()
@@ -456,5 +457,44 @@ class Userrole extends User_Controller
             access_denied();
         }
         $this->load->view('userrole/livejoin', $this->data);
+    }
+
+    // Role management page
+    public function role_management()
+    {
+        if (!get_permission('role_management', 'is_view')) {
+            access_denied();
+        }
+        $this->data['title'] = translate('role_management');
+        $this->data['sub_page'] = 'userrole/role_management';
+        $this->data['main_menu'] = 'userrole';
+        $this->data['roles'] = $this->role_model->getAllRoles();
+        $this->load->view('layout/index', $this->data);
+    }
+
+    // Get user role details
+    public function get_user_role()
+    {
+        if ($_POST) {
+            $user_id = $this->input->post('user_id');
+            $result = $this->userrole_model->getUserRole($user_id);
+            echo json_encode($result);
+        }
+    }
+
+    // Update user role
+    public function update_role()
+    {
+        if ($_POST) {
+            if (!get_permission('role_management', 'is_edit')) {
+                ajax_access_denied();
+            }
+            $user_id = $this->input->post('user_id');
+            $role_id = $this->input->post('role_id');
+            $this->userrole_model->updateUserRole($user_id, $role_id);
+            $message = translate('the_role_has_been_updated_successfully');
+            $array = array('status' => 'success', 'message' => $message);
+            echo json_encode($array);
+        }
     }
 }

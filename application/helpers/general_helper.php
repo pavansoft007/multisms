@@ -173,7 +173,7 @@ function is_student_loggedin()
 function is_master_loggedin()
 {
     $CI = &get_instance();
-    if ($CI->session->userdata('loggedin_role_id') == 8) {
+    if ($CI->session->userdata('loggedin_role_id') == 2) {
         return true;
     }
     return false;
@@ -238,7 +238,7 @@ function get_loggedin_user_type()
 function get_loggedin_branch_id()
 {
     $CI = &get_instance();
-    return $CI->session->userdata('loggedin_branch');
+    return $CI->session->userdata('loggedin_userid');
 }
 
 // get parent selected active children Id
