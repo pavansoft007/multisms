@@ -13,9 +13,15 @@ class Master_school_model extends MY_Model
 
     public function save($data)
     {
-        // echo "<pre>";
-        // print_r($data);
-        // exit;
+        // Validate required fields
+        $requiredFields = ['branch_name', 'school_name', 'email', 'mobileno', 'currency', 'currency_symbol', 'joining_date', 'role_id', 'password'];
+        foreach ($requiredFields as $field) {
+            if (empty($data[$field])) {
+                error_log("Missing required field: $field");
+                return false;
+            }
+        }
+
         $arrayBranch = array(
             'name' => $data['branch_name'],
             'school_name' => $data['school_name'],
@@ -30,47 +36,44 @@ class Master_school_model extends MY_Model
             'contact_person_gender' => $data['contact_person_gender'],
             'contact_person_name' => $data['contact_person_name'],
         );
+
         if (!isset($data['branch_id'])) {
-            $this->db->insert('branch', $arrayBranch);
+            if (!$this->db->insert('branch', $arrayBranch)) {
+                error_log("Database insert error: " . $this->db->error()['message']);
+                return false;
+            }
             $branchID = $this->db->insert_id();
-            //staff details
-            // $inser_data1 = array(
-            // 'branch_id' => $branchID,
-            // 'name' => $data['person_name'],
-            // 'sex' => $data['sex'],
-            // 'mobileno' => $data['mobileno'],
-            // 'present_address' => $data['address'],
-            // 'permanent_address' => $data['address'],
-            // 'photo' => $this->uploadImage('staff'),
-            // 'joining_date' => date("Y-m-d", strtotime($data['joining_date'])),
-            // 'email' => $data['email']
-            // );
-            // RANDOM STAFF ID GENERATE
-            // $inser_data1['staff_id'] = substr(app_generate_hash(), 3, 7);
-            // SAVE EMPLOYEE INFORMATION IN THE DATABASE
-            // $sql = $this->db->insert('staff', $inser_data1);
-            // $employeeID = $this->db->insert_id();
-            // user account
-            $inser_data2['active'] = 1;
-            $inser_data2['role'] = $data['role_id'];
-            $inser_data2['user_id'] = $branchID;
-            $inser_data2['username'] = $data['email'];
-            $inser_data2['password'] = $this->app_lib->pass_hashed($data["password"]);
-            $this->db->insert('login_credential', $inser_data2);
+
+            $inser_data2 = array(
+                'active' => 1,
+                'role' => $data['role_id'],
+                'user_id' => $branchID,
+                'username' => $data['email'],
+                'password' => $this->app_lib->pass_hashed($data["password"]),
+            );
+
+            if (!$this->db->insert('login_credential', $inser_data2)) {
+                error_log("Database insert error for login_credential: " . $this->db->error()['message']);
+                return false;
+            }
         } else {
             $this->db->where('id', $data['branch_id']);
-            $this->db->update('branch', $arrayBranch);
-            //person details
-            // $this->db->where('id', $data['staff_id']);
-            // $this->db->update('staff', $inser_data1);
-            // user account
+            if (!$this->db->update('branch', $arrayBranch)) {
+                error_log("Database update error: " . $this->db->error()['message']);
+                return false;
+            }
+
             $this->db->where('username', $data['email']);
-            $this->db->update('login_credential', array('role' => $data['role_id']));
+            if (!$this->db->update('login_credential', array('role' => $data['role_id']))) {
+                error_log("Database update error for login_credential: " . $this->db->error()['message']);
+                return false;
+            }
         }
 
         if ($this->db->affected_rows() > 0) {
             return true;
         } else {
+            error_log("No rows affected during save operation.");
             return false;
         }
     }

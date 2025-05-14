@@ -20,13 +20,24 @@ class School extends Admin_Controller
         $this->load->model('master_school_model');
         $this->load->model('employee_model');
         $this->load->model('role_model');
+        $this->load->library('session');
+        $this->load->library('form_validation');
+        $this->load->database();
+        $this->load->helper('url');
+        $this->load->helper('form');
     }
 
     /* branch all data are prepared and stored in the database here */
     public function index()
     {
+        // Debugging: Log session data
+        error_log('Session Data: ' . print_r($this->session->userdata(), true));
+
         if (is_superadmin_loggedin() || is_master_loggedin()) {
             if ($this->input->post('submit') == 'save') {
+                // Debugging: Log form data
+                error_log('Form Data: ' . print_r($this->input->post(), true));
+
                 $this->form_validation->set_rules('branch_name', translate('branch_name'), 'required|callback_unique_name');
                 $this->form_validation->set_rules('school_name', translate('school_name'), 'required');
                 $this->form_validation->set_rules('joining_date', translate('joining_date'), 'trim|required');
@@ -45,10 +56,16 @@ class School extends Admin_Controller
                     $response = $this->master_school_model->save($post);
                     if ($response) {
                         set_alert('success', translate('information_has_been_saved_successfully'));
+                    } else {
+                        // Log error if save fails
+                        error_log('Failed to save school information.');
+                        set_alert('error', translate('failed_to_save_information'));
                     }
                     redirect(base_url('school'));
                 } else {
                     $this->data['validation_error'] = true;
+                    // Log validation errors for debugging
+                    error_log('Validation Errors: ' . print_r($this->form_validation->error_array(), true));
                 }
             }
             $this->data['title'] = translate('school');

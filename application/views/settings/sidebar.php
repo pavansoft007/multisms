@@ -49,7 +49,7 @@
 						<div class="theme-box">
 							<label> 
 								<input name="sidebar_color" value="purple" type="radio" <?=(isset($theme_config['sidebar_color']) && $theme_config['sidebar_color'] == 'purple' ? 'checked' : '');?>>
-								<div class="theme-img" style="background-color: #6f42c1; height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
+								<div class="theme-img" style="background-color:rgb(237, 233, 246); height: 80px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: bold;">
 									Purple
 								</div>
 							</label>

@@ -85,9 +85,9 @@
         
         // Define module categories and their modules
         $module_categories = array(
-          'Academic' => array('student', 'classes', 'subject', 'section', 'syllabus'),
+          'Academic' => array('student', 'classes', 'subject', 'sections', 'syllabus'),
           'Student Activities' => array('attendance', 'exam', 'mark', 'homework', 'promotion'),
-          'Finance' => array('fees', 'expense', 'income', 'accounting'),
+          'Finance' => array('fees', 'accounting/voucher_expense', 'income', 'accounting'),
           'Resources' => array('library', 'inventory', 'hostel', 'transport'),
           'Communication' => array('event', 'communication', 'sendsmsmail'),
           'Administration' => array('settings', 'reports', 'dashboard', 'leave', 'award'),
@@ -98,7 +98,7 @@
           'student' => array('icon' => 'fas fa-user-graduate', 'desc' => 'Manage student profiles, admissions, and records'),
           'classes' => array('icon' => 'fas fa-chalkboard', 'desc' => 'Manage classes, sections, and assignments'),
           'subject' => array('icon' => 'fas fa-book', 'desc' => 'Manage subjects and curriculum'),
-          'section' => array('icon' => 'fas fa-puzzle-piece', 'desc' => 'Organize classes into sections'),
+          'sections' => array('icon' => 'fas fa-puzzle-piece', 'desc' => 'Organize classes into sections'),
           'syllabus' => array('icon' => 'fas fa-list-alt', 'desc' => 'Manage course syllabi and content'),
           'attendance' => array('icon' => 'fas fa-check-double', 'desc' => 'Track student and staff attendance'),
           'exam' => array('icon' => 'fas fa-diagnoses', 'desc' => 'Manage exams, schedules, and halls'),
@@ -106,7 +106,7 @@
           'homework' => array('icon' => 'fas fa-tasks', 'desc' => 'Assign and track homework'),
           'promotion' => array('icon' => 'fas fa-arrow-circle-up', 'desc' => 'Manage student promotions'),
           'fees' => array('icon' => 'fas fa-money-bill-wave', 'desc' => 'Manage student fees and payments'),
-          'expense' => array('icon' => 'fas fa-minus-circle', 'desc' => 'Track and manage expenses'),
+          'accounting/voucher_expense' => array('icon' => 'fas fa-minus-circle', 'desc' => 'Track and manage expenses'),
           'income' => array('icon' => 'fas fa-plus-circle', 'desc' => 'Record and manage income'),
           'accounting' => array('icon' => 'fas fa-calculator', 'desc' => 'Financial accounting and reports'),
           'library' => array('icon' => 'fas fa-book-reader', 'desc' => 'Manage library books and resources'),

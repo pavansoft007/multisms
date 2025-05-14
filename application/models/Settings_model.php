@@ -40,6 +40,11 @@ class Settings_model extends MY_Model
     // Update theme settings
     public function update_theme_settings($data, $branch_id = 0)
     {
+        // Ensure branch_id is not null
+        if ($branch_id === null) {
+            $branch_id = 0;
+        }
+        
         $this->db->where('branch_id', $branch_id);
         $query = $this->db->get('theme_settings');
         if ($query->num_rows() > 0) {

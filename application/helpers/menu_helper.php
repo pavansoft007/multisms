@@ -166,7 +166,7 @@ function get_main_menu_items($role_id = 0) {
     if (get_permission('student_promotion', 'is_view')) {
         $menu_items[] = array(
             'name' => 'promotion',
-            'url' => 'student/promotion',
+            'url' => 'student/transfer',
             'icon' => 'fas fa-arrow-circle-up',
             'desc' => 'Manage student class promotions'
         );
@@ -206,7 +206,7 @@ function get_main_menu_items($role_id = 0) {
     if (get_permission('fees_type', 'is_view') || get_permission('fees_group', 'is_view') || get_permission('fees_invoice', 'is_view')) {
         $menu_items[] = array(
             'name' => 'fees',
-            'url' => 'fees',
+            'url' => 'fees/invoice_list',
             'icon' => 'fas fa-money-bill-wave',
             'desc' => 'Manage student fees and payments'
         );
@@ -329,7 +329,7 @@ function get_main_menu_items($role_id = 0) {
         get_permission('tabulation_sheet', 'is_view')) {
         $menu_items[] = array(
             'name' => 'reports',
-            'url' => 'reports',
+            'url' => 'fees/student_fees_report',
             'icon' => 'fas fa-chart-bar',
             'desc' => 'Generate and view reports'
         );

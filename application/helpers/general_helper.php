@@ -238,6 +238,16 @@ function get_loggedin_user_type()
 function get_loggedin_branch_id()
 {
     $CI = &get_instance();
+    // Ensure session and database libraries are loaded
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+
+    // Debugging: Log session data
+    error_log('Session Data: ' . print_r($CI->session->userdata(), true));
     return $CI->session->userdata('loggedin_userid');
 }
 

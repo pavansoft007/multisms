@@ -43,6 +43,16 @@ class MY_Controller extends CI_Controller {
 		$this->load->helper('download');
 		$this->load->helper('string');
 		$this->load->helper('html');
+
+        $this->load->model('application_model');
+        $this->load->library('session');
+        $this->load->library('form_validation');
+        $this->load->database();
+        $this->load->helper('url');
+        $this->load->helper('form');
+
+        // Debugging: Log initialization
+        error_log('MY_Controller initialized with session, form_validation, database, and application_model.');
 	}
 
     public function get_payment_config() {

@@ -12,6 +12,10 @@ class Application_model extends CI_Model
 
     public function get_branch_id()
     {
+        // Debugging: Log branch ID retrieval
+        error_log('get_branch_id called. Superadmin logged in: ' . (is_superadmin_loggedin() ? 'Yes' : 'No'));
+        error_log('Branch ID: ' . (is_superadmin_loggedin() ? $this->input->post('branch_id') : get_loggedin_branch_id()));
+        
         if (is_superadmin_loggedin()) {
             return $this->input->post('branch_id');
         } else {

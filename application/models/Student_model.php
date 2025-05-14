@@ -172,8 +172,11 @@ class Student_model extends MY_Model
         );
         $this->db->insert('login_credential', $inser_data2);
 
-        // Use current year as session ID since session table doesn't exist
-        $session_id = date('Y');
+        // Get the current active session ID
+        $session_id = get_session_id();
+        
+        // Log the session ID for debugging
+        error_log("Using session ID for enrollment: " . $session_id);
 
         //save student enroll information in the database file
         $arrayEnroll = array(
@@ -184,7 +187,15 @@ class Student_model extends MY_Model
             'roll' => $row['Roll'] ?? '',
             'session_id' => $session_id,
         );
+        
+        // Log the enrollment data
+        error_log("Enrollment data: " . json_encode($arrayEnroll));
+        
+        // Insert enrollment record
         $this->db->insert('enroll', $arrayEnroll);
+        
+        // Log the result of the insertion
+        error_log("Enrollment insertion result: " . ($this->db->affected_rows() > 0 ? "Success" : "Failed"));
     }
 
     public function getFeeProgress($id)
@@ -210,7 +221,7 @@ class Student_model extends MY_Model
     public function getStudentList($classID = '', $sectionID = '', $branchID = '', $deactivate = false)
     {
         $sessionID = get_session_id();
-        $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,c.name as class_name,se.name as section_name');
+        $this->db->select('e.*,s.photo, CONCAT(s.first_name, " ", s.last_name) as fullname,s.register_no,s.parent_id,s.email,s.blood_group,s.birthday,c.name as class_name,se.name as section_name,s.active');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 'e.student_id = s.id', 'inner');
         $this->db->join('class as c', 'e.class_id = c.id', 'left');
@@ -234,7 +245,12 @@ class Student_model extends MY_Model
             $this->db->where('e.section_id', $sectionID);
         }
         
-        return $this->db->get()->result_array();
+        // Debug: Log the SQL query
+        $query = $this->db->get();
+        error_log("Student list query: " . $this->db->last_query());
+        error_log("Number of students found in model: " . $query->num_rows());
+        
+        return $query->result_array();
     }
 
     public function getSearchStudentList($search_text)

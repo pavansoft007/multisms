@@ -96,14 +96,18 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<label class="col-md-3 control-label"><?=translate('joining_date')?> <span class="required">*</span></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="joining_date" value="<?=set_value('joining_date', date('Y-m-d'))?>" data-plugin-datepicker
-							data-plugin-options='{ "todayHighlight" : true }' />
-						</div>
-						<span class="error"><?=form_error('joining_date')?></span>
-					</div>
+					<!-- Removed non-existent field
+                        <!-- Removed non-existent field
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><?=translate('joining_date')?> <span class="required">*</span></label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="joining_date" value="<?=set_value('joining_date', date('Y-m-d'))?>" data-plugin-datepicker
+                                data-plugin-options='{ "todayHighlight" : true }' />
+                            </div>
+                            <span class="error"><?=form_error('joining_date')?></span>
+                        </div>
+                        -->
+                        -->
 					
 					<div class="form-group">
 						<label class="col-md-3 control-label"><?=translate('mobile_no')?> <span class="required">*</span></label>
@@ -162,27 +166,35 @@
 							<textarea type="text" rows="3" class="form-control" name="address" ><?=set_value('address')?></textarea>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label"><?=translate('contact_person_name')?> <span class="required">*</span></label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" name="contact_person_name" value="<?=set_value('contact_person_name')?>" />
-							<span class="error"><?=form_error('contact_person_name') ?></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label"><?=translate('contact_person_gender')?> <span class="required">*</span></label>
-						<div class="col-md-6">
-							<?php
-								$array = array(
-									"" => translate('select'),
-									"male" => translate('male'),
-									"female" => translate('female')
-								);
-								echo form_dropdown("contact_person_gender", $array, set_value('contact_person_gender'), "class='form-control' data-plugin-selectTwo data-width='100%'");
-							?>
-							<span class="error"><?=form_error('contact_person_gender') ?></span>
-						</div>
-					</div>
+					<!-- Removed non-existent field
+                        <!-- Removed non-existent field
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><?=translate('contact_person_name')?> <span class="required">*</span></label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="contact_person_name" value="<?=set_value('contact_person_name')?>" />
+                                <span class="error"><?=form_error('contact_person_name') ?></span>
+                            </div>
+                        </div>
+                        -->
+                        -->
+					<!-- Removed non-existent field
+                        <!-- Removed non-existent field
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><?=translate('contact_person_gender')?> <span class="required">*</span></label>
+                            <div class="col-md-6">
+                                <?php
+                                    $array = array(
+                                        "" => translate('select'),
+                                        "male" => translate('male'),
+                                        "female" => translate('female')
+                                    );
+                                    echo form_dropdown("contact_person_gender", $array, set_value('contact_person_gender'), "class='form-control' data-plugin-selectTwo data-width='100%'");
+                                ?>
+                                <span class="error"><?=form_error('contact_person_gender') ?></span>
+                            </div>
+                        </div>
+                        -->
+                        -->
 					<footer class="panel-footer mt-lg">
 						<div class="row">
 							<div class="col-md-2 col-md-offset-3">
