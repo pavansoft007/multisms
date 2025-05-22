@@ -49,6 +49,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'install';
+$route['default_controller'] = 'authentication';
 $route['404_override'] = 'errors';
 $route['translate_uri_dashes'] = FALSE;
+
+// Custom routes for settings
+$route['settings/universal'] = 'settings/universal';
+$route['settings/sidebar'] = 'settings/sidebar';
+
+// Main menu routes
+$route['mainmenu'] = 'mainmenu';
+$route['modules'] = 'mainmenu';
+
+// Bulk student import route
+$route['bulkstudentimport'] = 'bulkstudentimport';
+$route['bulkimport'] = 'bulkimport';
+$route['studentbulkimport'] = 'studentbulkimport';
+$route['simpleimport'] = 'simpleimport';
+
+// Bulk Import CSV route
+$route['bulkimportcsv'] = 'BulkImportCsv/index';
+$route['bulkimportcsv/upload'] = 'BulkImportCsv/upload';
