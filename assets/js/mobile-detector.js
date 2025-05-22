@@ -1,6 +1,7 @@
 // Mobile device detector with Material Design support
 (function() {
     function detectMobileDevice() {
+        if (!document.body) return;
         var isMobile = false;
         
         // Check for mobile user agent
@@ -186,13 +187,19 @@
     }
     
     // Run on page load
-    detectMobileDevice();
-    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof detectMobileDevice === 'function') detectMobileDevice();
+        });
+    } else {
+        if (typeof detectMobileDevice === 'function') detectMobileDevice();
+    }
+
     // Run on window resize
     window.addEventListener('resize', function() {
-        detectMobileDevice();
+        if (typeof detectMobileDevice === 'function') detectMobileDevice();
     });
-    
+
     // Expose to global scope
     window.detectMobileDevice = detectMobileDevice;
 })();

@@ -168,5 +168,53 @@
 			var branchID = $(this).val();
 			window.location.href = base_url + 'fees/group/' + branchID;
 		});
+
+		// Client-side validation for fees group form
+		$('form.frm-submit').on('submit', function(e) {
+			var valid = true;
+			var form = $(this);
+			form.find('.error').html('');
+
+			// Validate group name
+			var groupName = form.find('input[name="name"]').val();
+			if (!groupName) {
+				form.find('input[name="name"]').closest('.form-group').find('.error').html('Group name is required.');
+				valid = false;
+			}
+
+			// Validate branch if superadmin
+			var branchField = form.find('select[name="branch_id"]');
+			if (branchField.length && !branchField.val()) {
+				branchField.closest('.form-group').find('.error').html('Branch is required.');
+				valid = false;
+			}
+
+			// Validate at least one fee type is checked and its fields
+			var checked = false;
+			form.find('input[type="checkbox"][name*="fees_type_id"]:checked').each(function() {
+				checked = true;
+				var row = $(this).closest('tr');
+				var dueDate = row.find('input[name*="[due_date]"]').val();
+				var amount = row.find('input[name*="[amount]"]').val();
+				if (!dueDate) {
+					row.find('input[name*="[due_date]"]').closest('.form-group').find('.error').html('Due date is required.');
+					valid = false;
+				}
+				if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+					row.find('input[name*="[amount]"]').closest('.form-group').find('.error').html('Amount must be greater than 0.');
+					valid = false;
+				}
+			});
+			if (!checked) {
+				form.find('table#tableID').before('<div class="text-danger text-center fees-group-error">Please select at least one fees type and fill all required fields.</div>');
+				valid = false;
+			} else {
+				form.find('.fees-group-error').remove();
+			}
+
+			if (!valid) {
+				e.preventDefault();
+			}
+		});
 	});
 </script>

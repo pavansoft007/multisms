@@ -24,7 +24,6 @@
 <script src="<?php echo base_url('assets/vendor/magnific-popup/jquery.magnific-popup.js');?>"></script>
 <script src="<?php echo base_url('assets/vendor/screenfull/screenfull.min.js');?>"></script>
 <script src="<?php echo base_url('assets/vendor/sweetalert/sweetalert.min.js');?>"></script>
-<script src="<?php echo base_url('assets/js/theme.js')?>"></script>
 <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
 <script src="<?php echo base_url('assets/js/plug.init.js');?>"></script>
 <script src="<?php echo base_url('assets/js/app.js')?>"></script>
