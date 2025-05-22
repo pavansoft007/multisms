@@ -757,8 +757,19 @@ class Student extends Admin_Controller
         if ($_POST) {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
-            $this->data['query'] = $this->student_model->getStudentList($class_id, $section_id, $this->data['branch_id']);
+            $this->data['query'] = $this->student_model->getStudentListByClassSection($class_id, $section_id, $this->data['branch_id']);
         }
+        
+        // Get global settings for the view
+        $this->data['global_config'] = array(
+            'animations' => 'fadeIn'
+        );
+        
+        // Get global images for the view
+        $this->data['global_images'] = array(
+            'printing_logo' => 'logo.png'
+        );
+        
         $this->data['title'] = translate('id_card_generate');
         $this->data['headerelements'] = array(
             'css' => array(
@@ -773,10 +784,23 @@ class Student extends Admin_Controller
     /* generate qrcode by id */
     public function create_qrcode($id)
     {
-        $config['cachedir'] = FCPATH . 'uploads/qrcode_cache/';
+        // Create cache directory if it doesn't exist
+        $cachedir = FCPATH . 'uploads/qrcode_cache/';
+        if (!file_exists($cachedir)) {
+            mkdir($cachedir, 0777, true);
+        }
+        
+        // Load QR Code library
+        $config['cachedir'] = $cachedir;
+        $config['quality'] = true;
+        $config['size'] = '1024';
         $this->load->library('ciqrcode', $config);
+        
+        // Generate QR code
         header("Content-Type: image/png");
-        $params['data'] = $id;
+        $params['data'] = urldecode($id); // Decode URL-encoded text
+        $params['level'] = 'H';
+        $params['size'] = 4;
         $this->ciqrcode->generate($params);
     }
 
@@ -975,4 +999,6 @@ class Student extends Admin_Controller
         }
         echo json_encode(array('status' => $status, 'message' => $message));
     }
+    
+
 }
