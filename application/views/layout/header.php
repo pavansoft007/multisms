@@ -12,9 +12,7 @@
 	<!-- Material Icons -->
 	<link href="<?php echo is_secure('fonts.googleapis.com/icon?family=Material+Icons');?>" rel="stylesheet">
 	<!-- Debug theme config -->
-	<script>
-		console.log('Theme Config:', <?php echo json_encode($theme_config); ?>);
-	</script>
+	
 	<?php
 	// Ensure $theme_config is set before accessing its keys
 	$theme_config = isset($theme_config) ? $theme_config : [];
