@@ -1,0 +1,35 @@
+Array
+(
+    [institute_name] => VBV School
+    [institution_code] => VBV
+    [mobileno] => 98765432767
+    [address] => YLM
+    [currency] => INR
+    [currency_symbol] => ₹
+    [translation] => english
+    [session_id] => 7
+    [timezone] => Asia/Kolkata
+    [animations] => fadeIn
+    [date_format] => Y-m-d
+    [submit] => setting
+)
+Array
+(
+    [institute_name] => VBV School
+    [institution_code] => VBV
+    [reg_prefix] => off
+    [mobileno] => 98765432767
+    [address] => YLM
+    [currency] => INR
+    [currency_symbol] => ₹
+    [translation] => english
+    [timezone] => Asia/Kolkata
+    [animations] => fadeIn
+    [date_format] => Y-m-d
+    [footer_text] => 
+    [facebook_url] => 
+    [twitter_url] => 
+    [linkedin_url] => 
+    [youtube_url] => 
+    [session_id] => 7
+)
