@@ -49,7 +49,9 @@ class Master_school_model extends MY_Model
             'city' => isset($data['city']) ? $data['city'] : '',
             'state' => isset($data['state']) ? $data['state'] : '',
             'address' => isset($data['address']) ? $data['address'] : '',
-            'joining_date' => date("Y-m-d", strtotime($data['joining_date']))
+            'joining_date' => date("Y-m-d", strtotime($data['joining_date'])),
+            'contact_person_gender' => $data['contact_person_gender'],
+            'contact_person_name' => $data['contact_person_name']
         );
 
         if (!isset($data['branch_id'])) {
