@@ -11,7 +11,7 @@ class Role_model extends MY_Model
     function getRoleList()
     {
         $this->db->select('*');
-        $this->db->where_not_in('id', array(1,6,7));
+        $this->db->where_not_in('id', array(1));
         $r = $this->db->get('roles')->result_array();
         return $r;  
     }

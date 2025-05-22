@@ -17,6 +17,12 @@ class Authentication extends Authentication_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('authentication_model');
+        $this->load->model('application_model');
+        $this->load->library('form_validation');
+        $this->load->library('session');
+        $this->load->database();
+        // Removed: $this->data = array(); // Do not overwrite inherited $this->data
     }
 
     /* email is okey lets check the password now */
@@ -29,12 +35,9 @@ class Authentication extends Authentication_Controller
         if ($_POST) {
             $rules = array(
                 array(
-                    'field' => 'email',
-                    'label' => "Email",
-                    'rules' => 'trim|required|valid_email',
-                    'errors' => array(
-                        'valid_email' => 'Please enter a valid email address.',
-                    ),
+                    'field' => 'username',
+                    'label' => "Username",
+                    'rules' => 'trim|required',
                 ),
                 array(
                     'field' => 'password',
@@ -44,25 +47,19 @@ class Authentication extends Authentication_Controller
             );
             $this->form_validation->set_rules($rules);
             if ($this->form_validation->run() !== false) {
-                $email = $this->input->post('email');
+                $username = $this->input->post('username');
                 $password = $this->input->post('password');
-                // username is okey lets check the password now
-                $login_credential = $this->authentication_model->login_credential($email, $password);
+                // Check username and password in the database
+                $login_credential = $this->authentication_model->login_credential($username, $password);
                 if ($login_credential) {
                     if ($login_credential->active) {
-                        if ($login_credential->role == 6) {
-                            $userType = 'parent';
-                        } elseif($login_credential->role == 7) {
-                            $userType = 'student';
-                        } else {
-                            $userType = 'staff';
-                        }
+                        $userType = ($login_credential->role == 6) ? 'parent' : (($login_credential->role == 7) ? 'student' : 'staff');
                         $getUser = $this->application_model->getUserNameByRoleID($login_credential->role, $login_credential->user_id);
                         $getConfig = $this->db->get_where('global_settings', array('id' => 1))->row_array();
-                        if(($login_credential->role !=1) && ($login_credential->role !=8)){
+                        if (($login_credential->role != 1) && ($login_credential->role != 8)) {
                             $getConfig = $this->db->get_where('global_settings', array('branch_id' => $login_credential->user_id))->row_array();
                         }
-                        // get logger name
+                        // Set session data
                         $sessionData = array(
                             'name' => $getUser['name'],
                             'logger_photo' => $getUser['photo'],
@@ -77,14 +74,12 @@ class Authentication extends Authentication_Controller
                         );
                         $this->session->set_userdata($sessionData);
                         $this->db->update('login_credential', array('last_login' => date('Y-m-d H:i:s')), array('id' => $login_credential->id));
-                        // is logged in
+                        // Redirect after login
                         if ($this->session->has_userdata('redirect_url')) {
                             redirect($this->session->userdata('redirect_url'));
                         } else {
-                            // Redirect to the new main menu page
                             redirect(base_url('mainmenu'));
                         }
-
                     } else {
                         set_alert('error', translate('inactive_account'));
                         redirect(base_url('authentication'));
@@ -93,15 +88,35 @@ class Authentication extends Authentication_Controller
                     set_alert('error', translate('username_password_incorrect'));
                     redirect(base_url('authentication'));
                 }
-
             }
         }
-        
-        // Check if the request is coming from a mobile device
+
+        // Ensure global_images and global_config are set to prevent undefined errors
+        if (!isset($this->data['global_images']) || !is_array($this->data['global_images'])) {
+            $this->data['global_images'] = array(
+                'branch_id' => '',
+                'system_logo' => 'logo.png',
+                'text_logo' => 'logo-small.png',
+                'printing_logo' => 'printing-logo.png',
+                'report_logo' => 'report-card-logo.png'
+            );
+        }
+        if (!isset($this->data['global_config']) || !is_array($this->data['global_config'])) {
+            $this->data['global_config'] = array(
+                'institute_name' => '',
+                'address' => '',
+                'facebook_url' => '#',
+                'twitter_url' => '#',
+                'linkedin_url' => '#',
+                'youtube_url' => '#',
+                'footer_text' => ''
+            );
+        }
+
         $is_mobile = $this->is_mobile_device();
         $this->data['is_mobile'] = $is_mobile;
         $this->data['role_id'] = isset($login_credential) ? $login_credential->role : 0;
-        
+
         if ($is_mobile) {
             $this->load->view('authentication/mobile_login', $this->data);
         } else {

@@ -1,1 +1,4 @@
+FirstName,LastName,ClassName,SectionName,Gender,Birthday,Email,Phone
+John,Doe,Class 1,A,Male,2010-01-01,john.doe@email.com,1234567890
+Jane,Smith,Class 2,B,Female,2011-02-02,jane.smith@email.com,0987654321
 FirstName,LastName,BloodGroup,Gender,Birthday,MotherTongue,Religion,Caste,Phone,City,State,PresentAddress,PermanentAddress,CategoryID,Roll,AdmissionDate,StudentEmail,StudentPassword,GuardianName,GuardianRelation,FatherName,MotherName,GuardianOccupation,GuardianMobileNo,GuardianAddress,GuardianEmail,GuardianPassword

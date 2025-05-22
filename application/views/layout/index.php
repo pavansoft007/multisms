@@ -1,7 +1,15 @@
 <!doctype html>
-<html class="fixed sidebar-left-sm <?php echo ($theme_config['dark_skin'] == 'true' ? 'dark' : 'sidebar-light');?>">
+<?php
+// Ensure $theme_config is set before accessing its keys
+$theme_config = isset($theme_config) ? $theme_config : [];
+
+// Use CodeIgniter's singleton to access the loader and session
+$CI = get_instance();
+?>
+
+<html class="fixed sidebar-left-sm <?php echo (isset($theme_config['dark_skin']) && $theme_config['dark_skin'] == 'true' ? 'dark' : 'sidebar-light');?>">
 <!-- html header -->
-<?php $this->load->view('layout/header.php');?>
+<?php $CI->load->view('layout/header.php');?>
 
 <body class="loading-overlay-showing <?php 
 	echo isset($theme_config['menu_text_color']) ? 'menu-text-' . $theme_config['menu_text_color'] : ''; 
@@ -18,14 +26,14 @@
 	</div>
 	<section class="body">
 		<!-- top navbar-->
-		<?php $this->load->view('layout/topbar.php');?>
+		<?php $CI->load->view('layout/topbar.php');?>
 		<div class="inner-wrapper">
 			<!-- sidebar -->
 			<?php 
 			if (is_student_loggedin() || is_parent_loggedin()) {
-				$this->load->view('userrole/sidebar'); 
+				$CI->load->view('userrole/sidebar'); 
 			} else {
-				$this->load->view('layout/sidebar'); 
+				$CI->load->view('layout/sidebar'); 
 			} 
 			?>
 			<!-- page main content -->
@@ -34,25 +42,25 @@
 					<a class="page-title-icon" href="<?php echo base_url('dashboard');?>"><i class="fas fa-home"></i></a>
 					<h2><?php echo $title;?></h2>
 				</header>
-				<?php $this->load->view($sub_page); ?>
+				<?php $CI->load->view($sub_page); ?>
 			</section>
 		</div>
 	</section>
 
 	<!-- JS Scripts -->
-	<?php $this->load->view('layout/script.php');?>
+	<?php $CI->load->view('layout/script.php');?>
 	
 	<?php
 	$alertclass = "";
-	if($this->session->flashdata('alert-message-success')){
+	if($CI->session->flashdata('alert-message-success')){
 		$alertclass = "success";
-	} else if ($this->session->flashdata('alert-message-error')){
+	} else if ($CI->session->flashdata('alert-message-error')){
 		$alertclass = "error";
-	} else if ($this->session->flashdata('alert-message-info')){
+	} else if ($CI->session->flashdata('alert-message-info')){
 		$alertclass = "info";
 	}
 	if($alertclass != ''):
-		$alert_message = $this->session->flashdata('alert-message-'. $alertclass);
+		$alert_message = $CI->session->flashdata('alert-message-'. $alertclass);
 	?>
 		<script type="text/javascript">
 			swal({

@@ -14,8 +14,17 @@ class Role extends Admin_Controller
 {
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(); // Ensure proper inheritance from Admin_Controller
+        $this->data = [];
+        $this->load->library('form_validation');
+        $this->load->library('session');
         $this->load->model('role_model');
+        $this->load->helper(['url', 'form']);
+        $this->load->database();
+        // Debugging: Log initialization
+        error_log('Role controller initialized with session, form_validation, and role_model.');
+        // Debugging: Verify inheritance and initialization
+        error_log('Role controller: Inheriting from Admin_Controller and initializing dependencies.');
         // Temporarily bypass superadmin check
         // if (!is_superadmin_loggedin()) {
         //     access_denied();
@@ -44,7 +53,9 @@ class Role extends Admin_Controller
                 redirect(base_url('role'));
             }
         }
-        $this->data['roles'] = $this->role_model->getRoleList();
+        // Pass the logged-in user's role ID to the getRoleList method
+        $loggedin_role_id = $this->session->userdata('loggedin_role_id');
+        $this->data['roles'] = $this->role_model->getRoleList($loggedin_role_id);
         $this->data['title'] = translate('roles');
         $this->data['sub_page'] = 'role/index';
         $this->data['main_menu'] = 'settings';

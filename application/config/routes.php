@@ -60,3 +60,13 @@ $route['settings/sidebar'] = 'settings/sidebar';
 // Main menu routes
 $route['mainmenu'] = 'mainmenu';
 $route['modules'] = 'mainmenu';
+
+// Bulk student import route
+$route['bulkstudentimport'] = 'bulkstudentimport';
+$route['bulkimport'] = 'bulkimport';
+$route['studentbulkimport'] = 'studentbulkimport';
+$route['simpleimport'] = 'simpleimport';
+
+// Bulk Import CSV route
+$route['bulkimportcsv'] = 'BulkImportCsv/index';
+$route['bulkimportcsv/upload'] = 'BulkImportCsv/upload';

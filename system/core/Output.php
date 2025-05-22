@@ -454,7 +454,12 @@ class CI_Output {
 		if ($this->parse_exec_vars === TRUE)
 		{
 			$memory	= round(memory_get_usage() / 1024 / 1024, 2).'MB';
-			$output = str_replace(array('{elapsed_time}', '{memory_usage}'), array($elapsed, $memory), $output);
+			// Fix: Prevent null $output for str_replace (PHP 8.1+ compatibility)
+			$output = str_replace(
+				array('{elapsed_time}', '{memory_usage}'),
+				array($elapsed, $memory),
+				$output === null ? '' : $output
+			);
 		}
 
 		// --------------------------------------------------------------------

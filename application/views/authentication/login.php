@@ -77,16 +77,16 @@
                                 <h2><?php echo $global_config['institute_name'];?></h2>
                             </div>
                             <?php echo form_open($this->uri->uri_string()); ?>
-                                <div class="form-group <?php if (form_error('email')) echo 'has-error'; ?>">
+                                <div class="form-group <?php if (form_error('username')) echo 'has-error'; ?>">
                                     <div class="input-group input-group-icon">
                                         <span class="input-group-addon">
                                             <span class="icon">
                                                 <i class="far fa-user"></i>
                                             </span>
                                         </span>
-                                        <input type="text" class="form-control" name="email" value="<?php echo set_value('email');?>" placeholder="<?php echo translate('email');?>" />
+                                        <input type="text" class="form-control" name="username" value="<?php echo set_value('username');?>" placeholder="<?php echo translate('username'); ?>" />
                                     </div>
-                                    <span class="error"><?php echo form_error('email'); ?></span>
+                                    <span class="error"><?php echo form_error('username'); ?></span>
                                 </div>
                                 <div class="form-group <?php if (form_error('password')) echo 'has-error'; ?>">
                                     <div class="input-group input-group-icon">

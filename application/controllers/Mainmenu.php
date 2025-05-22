@@ -16,9 +16,9 @@ class Mainmenu extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('role_model');
-        $this->load->helper('menu');
-        $this->load->helper('menu');
+        $this->data = []; // Initialize $data property
+        $this->load->library('session'); // Load session library
+        $this->load->model('role_model'); // Load role_model
         
         // Enable error reporting for debugging
         ini_set('display_errors', 1);
@@ -62,6 +62,12 @@ class Mainmenu extends Admin_Controller
         // Get user info
         $this->data['user_name'] = $this->session->userdata('name');
         $this->data['user_role'] = loggedin_role_name();
+        
+        // Ensure $theme_config is initialized before passing to views
+        $this->data['theme_config'] = isset($this->data['theme_config']) ? $this->data['theme_config'] : [];
+        
+        // Ensure 'border_mode' is set in $theme_config
+        $this->data['theme_config']['border_mode'] = isset($this->data['theme_config']['border_mode']) ? $this->data['theme_config']['border_mode'] : 'true';
         
         // Set page title
         $this->data['title'] = translate('main_menu');

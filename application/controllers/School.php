@@ -69,7 +69,7 @@ class School extends Admin_Controller
                 }
             }
             $this->data['title'] = translate('school');
-            $this->data['sub_page'] = 'school/add';
+            $this->data['sub_page'] = 'school/add_fixed';
             $this->data['main_menu'] = 'school';
             $this->data['roles'] = $this->role_model->getAllRoles();
             $this->load->view('layout/index', $this->data);
@@ -109,7 +109,7 @@ class School extends Admin_Controller
 
             $this->data['data'] = $this->master_school_model->getSingle('branch', $id, true);
             $this->data['title'] = translate('school');
-            $this->data['sub_page'] = 'school/edit';
+            $this->data['sub_page'] = 'school/edit_fixed';
             $this->data['main_menu'] = 'school';
             $this->data['roles'] = $this->role_model->getAllRoles();
             $this->load->view('layout/index', $this->data);

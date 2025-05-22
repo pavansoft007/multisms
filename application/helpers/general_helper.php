@@ -173,7 +173,7 @@ function is_student_loggedin()
 function is_master_loggedin()
 {
     $CI = &get_instance();
-    if ($CI->session->userdata('loggedin_role_id') == 2) {
+    if ($CI->session->userdata('loggedin_role_id') == 1) { // Updated to 1
         return true;
     }
     return false;

@@ -36,20 +36,12 @@ function is_mobile_device() {
 session_start();
 $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
-// Redirect based on device and login status
-if (is_mobile_device()) {
-    if ($is_logged_in) {
-        header('Location: mainmenu');
-    } else {
-        // Include the mainpage.html content
-        include 'mainpage.html';
-        exit;
-    }
+// Redirect based on login status
+if ($is_logged_in) {
+    // If logged in, redirect to mainmenu regardless of device type
+    header('Location: mainmenu');
 } else {
-    if ($is_logged_in) {
-        header('Location: mainmenu');
-    } else {
-        header('Location: authentication');
-    }
+    // If not logged in, always redirect to authentication
+    header('Location: authentication');
 }
 ?>

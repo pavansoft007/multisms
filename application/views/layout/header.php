@@ -15,6 +15,10 @@
 	<script>
 		console.log('Theme Config:', <?php echo json_encode($theme_config); ?>);
 	</script>
+	<?php
+	// Ensure $theme_config is set before accessing its keys
+	$theme_config = isset($theme_config) ? $theme_config : [];
+	?>
 	<?php if (isset($theme_config['sidebar_text_color'])): ?>
 	<meta name="sidebar-text-color" content="<?php echo $theme_config['sidebar_text_color']; ?>">
 	<?php endif; ?>
@@ -64,7 +68,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/ramom.css');?>">
 	<!-- Material Design 3 CSS -->
 	<link href="<?php echo base_url('assets/css/material-design-3.css'); ?>" rel="stylesheet">
-	<?php if ($theme_config["border_mode"] == 'false'): ?>
+	<?php if (isset($theme_config['border_mode']) && $theme_config['border_mode'] == 'false'): ?>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/skins/square-borders.css');?>">
 	<?php endif; ?>
 

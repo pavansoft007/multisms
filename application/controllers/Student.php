@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -17,8 +19,10 @@ class Student extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helpers('download');
-        $this->load->helpers('custom_fields');
+        $this->load->helper('download');
+        $this->load->helper('custom_fields');
+        $this->load->library('form_validation');
+        $this->load->library('session');
         $this->load->model('student_model');
         $this->load->model('email_model');
         $this->load->model('sms_model');
@@ -152,64 +156,101 @@ class Student extends Admin_Controller
         }
 
         $branchID = $this->application_model->get_branch_id();
+        $this->load->library('csvimport');
+        $this->load->model('classes_model');
+        $this->load->model('section_model');
+
         if (isset($_POST['save'])) {
-            $err_msg = "";
-            $i = 0;
-            $this->load->library('csvimport');
-            // form validation rules
-            if (is_superadmin_loggedin() == true) {
-                $this->form_validation->set_rules('branch_id', 'Branch', 'trim|required');
-            }
-            $this->form_validation->set_rules('class_id', 'Class', 'trim|required');
-            $this->form_validation->set_rules('section_id', 'Section', 'trim|required');
-            if (isset($_FILES["userfile"]) && empty($_FILES['userfile']['name'])) {
-                $this->form_validation->set_rules('userfile', 'CSV File', 'required');
-            }
-            if ($this->form_validation->run() == true) {
-                $classID = $this->input->post('class_id');
-                $sectionID = $this->input->post('section_id');
-                $csv_array = $this->csvimport->get_array($_FILES["userfile"]["tmp_name"]);
-                if ($csv_array) {
-                    $columnHeaders = array('FirstName','LastName','BloodGroup','Gender','Birthday','MotherTongue','Religion','Caste','Phone','City','State','PresentAddress','PermanentAddress','CategoryID','Roll','AdmissionDate','StudentEmail','StudentPassword','GuardianName','GuardianRelation','FatherName','MotherName','GuardianOccupation','GuardianMobileNo','GuardianAddress','GuardianEmail','GuardianPassword');
-                    $csvData = array();
-                    foreach ($csv_array as $row) {
-                        if ($i == 0) {
-                            $csvData = array_keys($row);
+            // Check if this is a bulk import
+            $import_mode = $this->input->post('import_mode');
+            if ($import_mode === 'bulk') {
+                // Bulk import logic
+                $errors = [];
+                $success = 0;
+                if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['name'])) {
+                    $csv_array = $this->csvimport->get_array($_FILES['userfile']['tmp_name']);
+                    if ($csv_array) {
+                        foreach ($csv_array as $row) {
+                            $class = $this->classes_model->get_class_by_name($row['ClassName']);
+                            $section = $this->section_model->get_section_by_name($row['SectionName'], $class ? $class['id'] : null);
+                            if (!$class || !$section) {
+                                $errors[] = 'Class or Section not found for: ' . $row['FirstName'] . ' ' . $row['LastName'] . ' (Class: ' . $row['ClassName'] . ', Section: ' . $row['SectionName'] . ')';
+                                continue;
+                            }
+                            $student_data = $row;
+                            $student_data['class_id'] = $class['id'];
+                            $student_data['section_id'] = $section['id'];
+                            $student_data['branch_id'] = $branchID;
+                            $this->student_model->csvImport($student_data, $class['id'], $section['id'], $branchID);
+                            $success++;
                         }
-                        $csv_chk = array_diff($columnHeaders, $csvData);
-                        if (count($csv_chk) <= 0) {
-                            if (filter_var($row['StudentEmail'], FILTER_VALIDATE_EMAIL)) {
-                                $r = $this->csvCheckExistsData($row['StudentEmail'], $row['Roll'], $classID, $branchID);
-                                if ($r['status'] == false) {
-                                    $err_msg .= $row['FirstName'] . ' ' . $row['LastName'] . " - Imported Failed : " . $r['message'] . "<br>";
+                    } else {
+                        $errors[] = 'Invalid or empty CSV file.';
+                    }
+                } else {
+                    $errors[] = 'No file uploaded.';
+                }
+                $this->session->set_flashdata('bulkimport_success', $success);
+                $this->session->set_flashdata('bulkimport_errors', $errors);
+                // Do not redirect away, just reload the page and show messages in the Bulk Import tab
+            } else {
+                // ...existing standard import logic...
+                $err_msg = "";
+                $i = 0;
+                if (is_superadmin_loggedin() == true) {
+                    $this->form_validation->set_rules('branch_id', 'Branch', 'trim|required');
+                }
+                $this->form_validation->set_rules('class_id', 'Class', 'trim|required');
+                $this->form_validation->set_rules('section_id', 'Section', 'trim|required');
+                if (isset($_FILES["userfile"]) && empty($_FILES['userfile']['name'])) {
+                    $this->form_validation->set_rules('userfile', 'CSV File', 'required');
+                }
+                if ($this->form_validation->run() == true) {
+                    $classID = $this->input->post('class_id');
+                    $sectionID = $this->input->post('section_id');
+                    $csv_array = $this->csvimport->get_array($_FILES["userfile"]["tmp_name"]);
+                    if ($csv_array) {
+                        $columnHeaders = array('FirstName','LastName','BloodGroup','Gender','Birthday','MotherTongue','Religion','Caste','Phone','City','State','PresentAddress','PermanentAddress','CategoryID','Roll','AdmissionDate','StudentEmail','StudentPassword','GuardianName','GuardianRelation','FatherName','MotherName','GuardianOccupation','GuardianMobileNo','GuardianAddress','GuardianEmail','GuardianPassword');
+                        $csvData = array();
+                        foreach ($csv_array as $row) {
+                            if ($i == 0) {
+                                $csvData = array_keys($row);
+                            }
+                            $csv_chk = array_diff($columnHeaders, $csvData);
+                            if (count($csv_chk) <= 0) {
+                                if (filter_var($row['StudentEmail'], FILTER_VALIDATE_EMAIL)) {
+                                    $r = $this->csvCheckExistsData($row['StudentEmail'], $row['Roll'], $classID, $branchID);
+                                    if ($r['status'] == false) {
+                                        $err_msg .= $row['FirstName'] . ' ' . $row['LastName'] . " - Imported Failed : " . $r['message'] . "<br>";
+                                    } else {
+                                        $this->student_model->csvImport($row, $classID, $sectionID, $branchID);
+                                        $i++;
+                                    }
                                 } else {
-                                    $this->student_model->csvImport($row, $classID, $sectionID, $branchID);
-                                    $i++;
+                                    $err_msg .= $row['FirstName'] . ' ' . $row['LastName'] . " - Imported Failed : Invalid Email.<br>";
                                 }
                             } else {
-                                $err_msg .= $row['FirstName'] . ' ' . $row['LastName'] . " - Imported Failed : Invalid Email.<br>";
+                                set_alert('error', translate('invalid_csv_file'));
+                                redirect(base_url("student/csv_import"));
                             }
-                        } else {
-                            set_alert('error', translate('invalid_csv_file'));
-                            redirect(base_url("student/csv_import"));
                         }
+                        if ($err_msg != null) {
+                            $this->session->set_flashdata('csvimport', $err_msg);
+                        }
+                        if ($i > 0) {
+                            set_alert('success', $i . ' Students Have Been Successfully Added');
+                        }
+                        redirect(base_url("student/csv_import"));
+                    } else {
+                        set_alert('error', translate('invalid_csv_file'));
+                        redirect(base_url("student/csv_import"));
                     }
-                    if ($err_msg != null) {
-                        $this->session->set_flashdata('csvimport', $err_msg);
-                    }
-                    if ($i > 0) {
-                        set_alert('success', $i . ' Students Have Been Successfully Added');
-                    }
-                    redirect(base_url("student/csv_import"));
-                } else {
-                    set_alert('error', translate('invalid_csv_file'));
-                    redirect(base_url("student/csv_import"));
                 }
             }
         }
         $this->data['title'] = translate('multiple_import');
         $this->data['branch_id'] = $branchID;
-        $this->data['sub_page'] = 'student/multi_add';
+        $this->data['sub_page'] = 'student/bulk_import';
         $this->data['main_menu'] = 'admission';
         $this->data['headerelements'] = array(
             'css' => array(
@@ -747,6 +788,10 @@ class Student extends Admin_Controller
         }
 
         $search_text = $this->input->post('search_text');
+        if (empty($search_text)) {
+            set_alert('error', translate('search_text_cannot_be_empty'));
+            redirect(base_url('student/search'));
+        }
         $this->data['query'] = $this->student_model->getSearchStudentList(trim($search_text));
         $this->data['title'] = translate('searching_results');
         $this->data['sub_page'] = 'student/search';

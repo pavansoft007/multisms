@@ -49,4 +49,15 @@ class Classes_model extends MY_Model
         $this->db->update('subject_assign', array('teacher_id' => $data['staff_id']));
     }
 
+    /**
+     * Get class by name
+     * @param string $name
+     * @return array|null
+     */
+    public function get_class_by_name($name)
+    {
+        $query = $this->db->get_where('class', array('name' => $name));
+        return $query->row_array();
+    }
+
 }

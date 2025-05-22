@@ -68,6 +68,8 @@ class Admin_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->data = [];
+        $this->load->library('session'); // Ensure session library is loaded
         if (!is_loggedin()) {
             $this->session->set_userdata('redirect_url', current_url());
             redirect(base_url('authentication'), 'refresh');
@@ -93,5 +95,9 @@ class Authentication_Controller extends MY_Controller
     {
         parent::__construct();
         $this->load->model('authentication_model');
+        $this->load->model('application_model');
+        $this->load->library('form_validation');
+        $this->load->library('session');
+        $this->load->database();
     }
 }

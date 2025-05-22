@@ -11,16 +11,33 @@ class Master_school_model extends MY_Model
         parent::__construct();
     }
 
-    public function save($data)
+    public function save($data, $id = '')
     {
+        // Debugging: Log input data
+        error_log('Input Data: ' . print_r($data, true));
+
+        // Set default values for missing fields
+        if (!isset($data['joining_date']) || empty($data['joining_date'])) {
+            $data['joining_date'] = date('Y-m-d');
+        }
+        
         // Validate required fields
-        $requiredFields = ['branch_name', 'school_name', 'email', 'mobileno', 'currency', 'currency_symbol', 'joining_date', 'role_id', 'password'];
+        $requiredFields = ['branch_name', 'school_name', 'email', 'mobileno', 'currency', 'currency_symbol', 'role_id'];
+        
+        // Only require password for new records
+        if (empty($id)) {
+            $requiredFields[] = 'password';
+        }
+        
         foreach ($requiredFields as $field) {
             if (empty($data[$field])) {
                 error_log("Missing required field: $field");
                 return false;
             }
         }
+
+        // Debugging: Log validated data
+        error_log('Validated Data: ' . print_r($data, true));
 
         $arrayBranch = array(
             'name' => $data['branch_name'],
@@ -29,12 +46,10 @@ class Master_school_model extends MY_Model
             'mobileno' => $data['mobileno'],
             'currency' => $data['currency'],
             'symbol' => $data['currency_symbol'],
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'address' => $data['address'],
-            'joining_date' => date("Y-m-d", strtotime($data['joining_date'])),
-            'contact_person_gender' => $data['contact_person_gender'],
-            'contact_person_name' => $data['contact_person_name'],
+            'city' => isset($data['city']) ? $data['city'] : '',
+            'state' => isset($data['state']) ? $data['state'] : '',
+            'address' => isset($data['address']) ? $data['address'] : '',
+            'joining_date' => date("Y-m-d", strtotime($data['joining_date']))
         );
 
         if (!isset($data['branch_id'])) {
@@ -77,4 +92,5 @@ class Master_school_model extends MY_Model
             return false;
         }
     }
+
 }

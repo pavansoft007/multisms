@@ -1,4 +1,8 @@
 <?php
+// Enable error reporting
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 /**
  * CodeIgniter
  *
@@ -53,7 +57,7 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 	ob_start();
 /*
  *---------------------------------------------------------------
@@ -66,7 +70,7 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(E_ERROR);
+		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 	break;
 
