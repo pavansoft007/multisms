@@ -35,16 +35,16 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('institute_name')?></label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="institute_name" value="<?=set_value('institute_name', $global_config['institute_name'])?>" />
+						<input type="text" class="form-control" name="institute_name" value="<?=set_value('institute_name', isset($global_config['institute_name']) ? $global_config['institute_name'] : '')?>" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('institution_code')?></label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="institution_code" value="<?=set_value('institution_code', $global_config['institution_code'])?>" />
+						<input type="text" class="form-control" name="institution_code" value="<?=set_value('institution_code', isset($global_config['institution_code']) ? $global_config['institution_code'] : '')?>" />
 						<div class="checkbox-replace mt-md">
 							<label class="i-checks">
-								<input type="checkbox" name="reg_prefix" id="reg_prefix" <?=($global_config['reg_prefix'] == 'on' ? 'checked' : '');?>>
+								<input type="checkbox" name="reg_prefix" id="reg_prefix" <?=(!empty($global_config['reg_prefix']) && $global_config['reg_prefix'] == 'on' ? 'checked' : '');?>>
 								<i></i> The Institute Code will be used as the prefix for Student (Registration No).
 							</label>
 						</div>
@@ -53,13 +53,13 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('mobile_no');?></label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="mobileno" value="<?=set_value('mobileno', $global_config['mobileno'])?>" />
+						<input type="text" class="form-control" name="mobileno" value="<?=set_value('mobileno', isset($global_config['mobileno']) ? $global_config['mobileno'] : '')?>" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-md-3 control-label"><?=translate('address');?></label>
 					<div class="col-md-6">
-						<textarea name="address" rows="2" class="form-control" aria-required="true"><?=set_value('address', $global_config['address'])?></textarea>
+						<textarea name="address" rows="2" class="form-control" aria-required="true"><?=set_value('address', isset($global_config['address']) ? $global_config['address'] : '')?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -84,7 +84,7 @@
 						foreach ($languages as $lang) {
 							$array[$lang->lang_field] = ucfirst($lang->name);
 						}
-						echo form_dropdown("translation", $array, set_value('translation', $global_config['translation']), "class='form-control' data-plugin-selectTwo 
+						echo form_dropdown("translation", $array, set_value('translation', isset($global_config['translation']) ? $global_config['translation'] : ''), "class='form-control' data-plugin-selectTwo 
 							data-width='100%' data-minimum-results-for-search='Infinity' ");
 						?>
 					</div>
@@ -98,7 +98,7 @@
 						foreach ($years as $year) {
 							$arrayYear[$year->id] = $year->school_year;
 						}
-						echo form_dropdown("session_id", $arrayYear, set_value('session_id', $global_config['session_id']), "class='form-control' required
+						echo form_dropdown("session_id", $arrayYear, set_value('session_id', isset($global_config['session_id']) ? $global_config['session_id'] : ''), "class='form-control' required
 						data-plugin-selectTwo data-width='100%' data-minimum-results-for-search='Infinity' ");
 						?>
 					</div>
@@ -108,7 +108,7 @@
 					<div class="col-md-6">
 						<?php
 						$timezones = $this->app_lib->timezone_list();
-						echo form_dropdown("timezone", $timezones, set_value('timezone', $global_config['timezone']), "class='form-control populate' required id='timezones' 
+						echo form_dropdown("timezone", $timezones, set_value('timezone', isset($global_config['timezone']) ? $global_config['timezone'] : ''), "class='form-control populate' required id='timezones' 
 						data-plugin-selectTwo data-width='100%'");
 						?>
 					</div>
@@ -130,7 +130,7 @@
 					<div class="col-md-6">
 						<?php
 						$getDateformat = $this->app_lib->getDateformat();
-						echo form_dropdown("date_format", $getDateformat, set_value('date_format', $global_config['date_format']), "class='form-control' id='date_format' 
+						echo form_dropdown("date_format", $getDateformat, set_value('date_format', isset($global_config['date_format']) ? $global_config['date_format'] : ''), "class='form-control' id='date_format' 
 						data-plugin-selectTwo data-width='100%' data-minimum-results-for-search='Infinity' ");
 						?>
 					</div>
