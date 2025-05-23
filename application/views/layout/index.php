@@ -1,9 +1,23 @@
 <!doctype html>
-<html class="fixed sidebar-left-sm <?php echo ($theme_config['dark_skin'] == 'true' ? 'dark' : 'sidebar-light');?>">
-<!-- html header -->
-<?php $this->load->view('layout/header.php');?>
+<?php
+// Ensure $theme_config is set before accessing its keys
+$theme_config = isset($theme_config) ? $theme_config : [];
 
-<body class="loading-overlay-showing" data-loading-overlay>
+// Use CodeIgniter's singleton to access the loader and session
+$CI = get_instance();
+?>
+
+<html class="fixed sidebar-left-sm <?php echo (isset($theme_config['dark_skin']) && $theme_config['dark_skin'] == 'true' ? 'dark' : 'sidebar-light');?>">
+<!-- html header -->
+<?php $CI->load->view('layout/header.php');?>
+
+<body class="loading-overlay-showing <?php 
+	echo isset($theme_config['menu_text_color']) ? 'menu-text-' . $theme_config['menu_text_color'] : ''; 
+	echo isset($theme_config['menu_bg_color']) && $theme_config['menu_bg_color'] != 'default' ? ' menu-bg-' . $theme_config['menu_bg_color'] : '';
+	echo isset($theme_config['active_menu_text_color']) ? ' active-menu-text-' . $theme_config['active_menu_text_color'] : '';
+	echo isset($theme_config['active_menu_bg']) && $theme_config['active_menu_bg'] != 'default' ? ' active-menu-bg-' . $theme_config['active_menu_bg'] : '';
+	echo isset($theme_config['menu_hover_style']) && $theme_config['menu_hover_style'] != 'default' ? ' menu-hover-' . $theme_config['menu_hover_style'] : '';
+?>" data-loading-overlay>
 	<!-- page preloader -->
 	<div class="loading-overlay dark">
 		<div class="ring-loader">
@@ -12,14 +26,14 @@
 	</div>
 	<section class="body">
 		<!-- top navbar-->
-		<?php $this->load->view('layout/topbar.php');?>
+		<?php $CI->load->view('layout/topbar.php');?>
 		<div class="inner-wrapper">
 			<!-- sidebar -->
 			<?php 
 			if (is_student_loggedin() || is_parent_loggedin()) {
-				$this->load->view('userrole/sidebar'); 
+				$CI->load->view('userrole/sidebar'); 
 			} else {
-				$this->load->view('layout/sidebar'); 
+				$CI->load->view('layout/sidebar'); 
 			} 
 			?>
 			<!-- page main content -->
@@ -28,25 +42,25 @@
 					<a class="page-title-icon" href="<?php echo base_url('dashboard');?>"><i class="fas fa-home"></i></a>
 					<h2><?php echo $title;?></h2>
 				</header>
-				<?php $this->load->view($sub_page); ?>
+				<?php $CI->load->view($sub_page); ?>
 			</section>
 		</div>
 	</section>
 
-	<!-- JS Script -->
-	<?php $this->load->view('layout/script.php');?>
+	<!-- JS Scripts -->
+	<?php $CI->load->view('layout/script.php');?>
 	
 	<?php
 	$alertclass = "";
-	if($this->session->flashdata('alert-message-success')){
+	if($CI->session->flashdata('alert-message-success')){
 		$alertclass = "success";
-	} else if ($this->session->flashdata('alert-message-error')){
+	} else if ($CI->session->flashdata('alert-message-error')){
 		$alertclass = "error";
-	} else if ($this->session->flashdata('alert-message-info')){
+	} else if ($CI->session->flashdata('alert-message-info')){
 		$alertclass = "info";
 	}
 	if($alertclass != ''):
-		$alert_message = $this->session->flashdata('alert-message-'. $alertclass);
+		$alert_message = $CI->session->flashdata('alert-message-'. $alertclass);
 	?>
 		<script type="text/javascript">
 			swal({
@@ -100,5 +114,6 @@
 			});
 		}
 	</script>
+	<?php include(APPPATH . 'views/layout/footer.php'); ?>
 </body>
 </html>

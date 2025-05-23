@@ -11,24 +11,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @copyright : Reserved Bigwala Technologiess Team
  */
 
-class Mainmenu extends Admin_Controller
+class Mainmenu_new extends Admin_Controller
 {
-    public $data = array();
-
     public function __construct()
     {
         parent::__construct();
         $this->load->model('role_model');
-        $this->load->helper('menu');
-        // Assign CI super-object properties for session and input
-        $CI =& get_instance();
-        $this->session = $CI->session;
-        $this->input = $CI->input;
-        $this->role_model = $CI->role_model;
-        // Initialize $this->data as an array if not already set by parent
-        if (!isset($this->data) || !is_array($this->data)) {
-            $this->data = array();
-        }
+        
+        // Enable error reporting for debugging
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
     }
 
     public function index()
@@ -58,39 +51,18 @@ class Mainmenu extends Admin_Controller
             log_message('error', 'Error getting permissions: ' . $e->getMessage());
         }
         
-        // Get all menu items from sidebar
-        $this->data['menu_items'] = get_main_menu_items($role_id);
-        
-        // Get all menu items from sidebar
-        $this->data['menu_items'] = get_main_menu_items($role_id);
-        
         // Get user info
         $this->data['user_name'] = $this->session->userdata('name');
         $this->data['user_role'] = loggedin_role_name();
-        
-        // Ensure $theme_config is initialized before passing to views
-        $this->data['theme_config'] = isset($this->data['theme_config']) ? $this->data['theme_config'] : [];
-        
-        // Ensure 'border_mode' is set in $theme_config
-        $this->data['theme_config']['border_mode'] = isset($this->data['theme_config']['border_mode']) ? $this->data['theme_config']['border_mode'] : 'true';
-        
-        // Set page title
-        $this->data['title'] = translate('main_menu');
-        $this->data['main_menu'] = 'dashboard';
-        $this->data['sub_page'] = 'main_menu_web';
         
         // Check if the request is coming from a mobile device
         $is_mobile = $this->is_mobile_device();
         $this->data['is_mobile'] = $is_mobile;
         
-        // Load the appropriate view based on device type
-        if ($is_mobile) {
-            // For mobile devices, use the standalone view with footer menu
-            $this->load->view('main_menu', $this->data);
-        } else {
-            // For desktop views, use the layout with the main menu web view and sidebar
-            $this->load->view('layout/index', $this->data);
-        }
+        // For all views, use the layout with the simplified view
+        $this->data['sub_page'] = 'mainmenu_web_simple';
+        $this->data['main_menu'] = 'dashboard';
+        $this->load->view('layout/index', $this->data);
     }
     
     // Function to detect if the request is coming from a mobile device
