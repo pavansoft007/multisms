@@ -259,6 +259,20 @@ class Settings extends Admin_Controller
                 'vendor/dropify/js/dropify.min.js',
             ),
         );
+        // Ensure global_images is always set for the view
+        $branchID = $this->application_model->get_branch_id();
+        $this->db->where('branch_id', $branchID ? $branchID : 0);
+        $global_images = $this->db->get('global_images')->row_array();
+        if (empty($global_images)) {
+            $global_images = array(
+                'branch_id' => '',
+                'system_logo' => 'logo.png',
+                'text_logo' => 'logo-small.png',
+                'printing_logo' => 'printing-logo.png',
+                'report_logo' => 'report-card-logo.png'
+            );
+        }
+        $this->data['global_images'] = $global_images;
         $this->load->view('layout/index', $this->data);
     }
 

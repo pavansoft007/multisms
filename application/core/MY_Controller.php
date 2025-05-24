@@ -4,6 +4,7 @@ class MY_Controller extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->data = array();
 		
         $this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
@@ -25,6 +26,16 @@ class MY_Controller extends CI_Controller {
         }
         $this->data['global_config'] = $get_config;
 		$this->data['theme_config'] = $get_theme_config;
+        // Ensure global_images is always an array with defaults if not found
+        if (empty($get_global_images)) {
+            $get_global_images = array(
+                'branch_id' => '',
+                'system_logo' => 'logo.png',
+                'text_logo' => 'logo-small.png',
+                'printing_logo' => 'printing-logo.png',
+                'report_logo' => 'report-card-logo.png'
+            );
+        }
         $this->data['global_images'] = $get_global_images;
 		// Set timezone with fallback to prevent errors
 			if (!empty($get_config) && isset($get_config['timezone']) && !empty($get_config['timezone'])) {
