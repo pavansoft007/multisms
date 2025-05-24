@@ -38,11 +38,18 @@ class Dashboard_model extends CI_Model
 
     public function getMonthlyPayment($id = '')
     {
-        $this->db->select('IFNULL(sum(h.amount),0) as amount');
-        $this->db->from('fee_allocation as fa');
-        $this->db->join('fee_payment_history as h', 'h.allocation_id = fa.id', 'left');
-        $this->db->where("h.date BETWEEN DATE_SUB(CURDATE(),INTERVAL 1 MONTH) AND CURDATE() AND fa.student_id = " . $this->db->escape($id) . " AND fa.session_id = " . $this->db->escape(get_session_id()));
-        return $this->db->get()->row()->amount;
+        $session_id = get_session_id();
+        $sql = "
+            SELECT IFNULL(SUM(h.amount), 0) AS amount
+            FROM fee_allocation AS fa
+            LEFT JOIN fee_payment_history AS h 
+                ON h.allocation_id = fa.id 
+                AND h.date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE()
+            WHERE fa.student_id = ? 
+            AND fa.session_id = ?
+        ";
+        $query = $this->db->query($sql, array($id, $session_id));
+        return $query->row()->amount;
     }
 
     /* annual academic fees summary charts */
