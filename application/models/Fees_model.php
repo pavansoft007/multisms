@@ -69,6 +69,19 @@ class Fees_model extends MY_Model
         fee_groups_details.fee_groups_id = fee_allocation.group_id LEFT JOIN fees_type ON fees_type.id = fee_groups_details.fee_type_id WHERE
         fee_allocation.student_id = " . $this->db->escape($studentID) . " AND fee_allocation.session_id = " . $this->db->escape(get_session_id());
         $balance = $this->db->query($sql)->row_array();
+
+        // Debugging: Log the values of inv_no and balance
+        log_message('debug', 'Invoice Number: ' . $balance['inv_no']);
+        log_message('debug', 'Balance Total: ' . $balance['total']);
+
+        // Validate inv_no and balance values
+        if (empty($balance['inv_no']) || !is_numeric($balance['inv_no'])) {
+            $balance['inv_no'] = 0; // Default to 0 if invalid
+        }
+        if (empty($balance['total']) || !is_numeric($balance['total'])) {
+            $balance['total'] = 0; // Default to 0 if invalid
+        }
+
         $invNo = str_pad($balance['inv_no'], 4, '0', STR_PAD_LEFT);
 
         $sql = "SELECT IFNULL(SUM(fee_payment_history.amount), 0) as amount, IFNULL(SUM(fee_payment_history.discount), 0) as discount, IFNULL(SUM(fee_payment_history.fine), 0) as fine FROM
@@ -255,7 +268,7 @@ class Fees_model extends MY_Model
         return  $this->db->get()->row_array();
     }
 
-    public function getStuPaymentHistory($classID='', $SectionID='', $paymentVia, $start, $end, $branchID, $onlyFine=false)
+    public function getStuPaymentHistory($paymentVia, $start, $end, $branchID, $classID='', $SectionID='', $onlyFine=false)
     {
         $sessionID = get_session_id();
         $this->db->select('h.*,ft.name as type_name,e.student_id,e.roll,s.first_name,s.last_name,s.register_no,s.mobileno,c.name as class_name,se.name as section_name,pt.name as pay_via');
@@ -292,7 +305,7 @@ class Fees_model extends MY_Model
         return $result;
     }
 
-    public function getStuPaymentReport($classID='', $sectionID, $studentID, $typeID, $start, $end, $branchID)
+    public function getStuPaymentReport($studentID, $typeID, $start, $end, $branchID, $classID='', $sectionID='')
     {
         $sessionID = get_session_id();
         $this->db->select('h.*,gd.due_date,ft.name as type_name,e.student_id,e.roll,s.first_name,s.last_name,s.register_no,pt.name as pay_via');

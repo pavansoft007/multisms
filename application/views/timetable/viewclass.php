@@ -58,7 +58,7 @@
 </section>
 
 <?php if(isset($timetables)): ?>
-	<section class="panel appear-animation mt-sm" data-appear-animation="<?php echo $global_config['animations'];?>" data-appear-animation-delay="100">
+	<section class="panel appear-animation mt-sm" data-appear-animation="<?php echo isset($global_config) ? $global_config['animations'] : ''; ?>" data-appear-animation-delay="100">
 		<header class="panel-heading">
 			<div class="panel-btn">
 			<?php if (get_permission('class_timetable', 'is_edit')): ?>
@@ -77,8 +77,8 @@
 					<!-- hidden school information prints -->
 					<div class="visible-print">
 						<center>
-							<h4 class="text-dark text-weight-bold"><?=$global_config['institute_name']?></h4>
-							<h5 class="text-dark"><?=$global_config['address']?></h5>
+							<h4 class="text-dark text-weight-bold"><?=isset($global_config) ? $global_config['institute_name'] : 'School Name'?></h4>
+							<h5 class="text-dark"><?=isset($global_config) ? $global_config['address'] : 'School Address'?></h5>
 							<h5 class="text-dark text-weight-bold">Class Timetable</h5>
 							<h5 class="text-dark">
 								<?php 

@@ -10,17 +10,19 @@ class Classes_model extends MY_Model
 
     public function getTeacherAllocation($branch_id = '')
     {
-        $this->db->select('ta.*,st.name as teacher_name,st.staff_id as teacher_id,c.name as class_name,c.branch_id,s.name as section_name');
+        $this->db->select('ta.*,st.name as teacher_name,st.staff_id as teacher_id,c.name as class_name,s.name as section_name');
         $this->db->from('teacher_allocation as ta');
         $this->db->join('staff as st', 'st.id = ta.teacher_id', 'left');
         $this->db->join('class as c', 'c.id = ta.class_id', 'left');
         $this->db->join('section as s', 's.id = ta.section_id', 'left');
         $this->db->order_by('ta.id', 'ASC');
-        $this->db->where('ta.session_id', get_session_id());
+        // Removed session_id condition as it seems the column doesn't exist
         if (!empty($branch_id)) {
-            $this->db->where('c.branch_id', $branch_id);
+            $this->db->where('ta.branch_id', $branch_id);
         }
-        return $this->db->get();
+        $query = $this->db->get();
+        error_log('Generated SQL Query: ' . $this->db->last_query());
+        return $query;
     }
 
     public function teacherAllocationSave($data)

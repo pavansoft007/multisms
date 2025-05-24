@@ -441,6 +441,8 @@ class Fees extends Admin_Controller
         }
        
         $branchID = $this->application_model->get_branch_id();
+        $this->db->where('branch_id', $branchID ? $branchID : 0);
+        $this->data['global_config'] = $this->db->get('global_settings')->row_array();
        
         if ($this->input->post('search')) {
             $this->data['class_id'] = $this->input->post('class_id');
@@ -486,6 +488,26 @@ class Fees extends Admin_Controller
         }
         $this->data['invoice'] = $this->fees_model->getInvoiceStatus($id);
         $this->data['basic'] = $this->fees_model->getInvoiceBasic($id);
+        
+        // Debugging: Log the ID and fetched data
+        log_message('debug', 'Fetching invoice for ID: ' . $id);
+        log_message('debug', 'Invoice Data: ' . print_r($this->data['invoice'], true));
+        log_message('debug', 'Basic Data: ' . print_r($this->data['basic'], true));
+
+        // Validate fetched data
+        if (empty($this->data['invoice'])) {
+            show_error('Invoice data not found for ID: ' . $id, 500);
+        }
+        if (empty($this->data['basic'])) {
+            show_error('Basic data not found for ID: ' . $id, 500);
+        }
+
+        // Fetch global settings and images for the branch
+        $branchID = $this->application_model->get_branch_id();
+        $this->db->where('branch_id', $branchID ? $branchID : 0);
+        $this->data['global_config'] = $this->db->get('global_settings')->row_array();
+        $this->db->where('branch_id', $branchID ? $branchID : 0);
+        $this->data['global_images'] = $this->db->get('global_images')->row_array();
         $this->data['title'] = translate('invoice_history');
         $this->data['main_menu'] = 'fees';
         $this->data['sub_page'] = 'fees/collect';
@@ -788,7 +810,7 @@ class Fees extends Admin_Controller
             $daterange = explode(' - ', $this->input->post('daterange'));
             $start = date("Y-m-d", strtotime($daterange[0]));
             $end = date("Y-m-d", strtotime($daterange[1]));
-            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($classID, "", $paymentVia, $start, $end, $branchID);
+            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($paymentVia, $start, $end, $branchID, $classID, "");
         }
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('fees_payment_history');
@@ -821,7 +843,7 @@ class Fees extends Admin_Controller
             $daterange = explode(' - ', $this->input->post('daterange'));
             $start = date("Y-m-d", strtotime($daterange[0]));
             $end = date("Y-m-d", strtotime($daterange[1]));
-            $this->data['invoicelist'] = $this->fees_model->getStuPaymentReport($classID, $sectionID, $studentID, $typeID, $start, $end, $branchID);
+            $this->data['invoicelist'] = $this->fees_model->getStuPaymentReport($studentID, $typeID, $start, $end, $branchID, $classID, $sectionID);
         }
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('student_fees_report');
@@ -852,7 +874,7 @@ class Fees extends Admin_Controller
             $daterange = explode(' - ', $this->input->post('daterange'));
             $start = date("Y-m-d", strtotime($daterange[0]));
             $end = date("Y-m-d", strtotime($daterange[1]));
-            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($classID, $sectionID ,$paymentVia, $start, $end, $branchID, true);
+            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($paymentVia, $start, $end, $branchID, $classID, $sectionID, true);
         }
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('fees_fine_reports');
@@ -882,7 +904,7 @@ class Fees extends Admin_Controller
             $daterange = explode(' - ', $this->input->post('daterange'));
             $start = date("Y-m-d", strtotime($daterange[0]));
             $end = date("Y-m-d", strtotime($daterange[1]));
-            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($classID, "", $paymentVia, $start, $end, $branchID);
+            $this->data['invoicelist'] = $this->fees_model->getStuPaymentHistory($paymentVia, $start, $end, $branchID, $classID, "");
         }
         $this->data['branch_id'] = $branchID;
         $this->data['title'] = translate('overall_paid_fee_report');

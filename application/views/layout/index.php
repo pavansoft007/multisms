@@ -42,7 +42,15 @@ $CI = get_instance();
 					<a class="page-title-icon" href="<?php echo base_url('dashboard');?>"><i class="fas fa-home"></i></a>
 					<h2><?php echo $title;?></h2>
 				</header>
-				<?php $CI->load->view($sub_page); ?>
+				<?php 
+// Get the CI instance
+$CI = &get_instance();
+// Extract all variables from $CI->data to make them available in the view
+if (isset($CI->data) && is_array($CI->data)) {
+    extract($CI->data);
+}
+$CI->load->view($sub_page); 
+?>
 			</section>
 		</div>
 	</section>

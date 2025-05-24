@@ -68,7 +68,7 @@ class Admin_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->data = [];
+        // Don't reset $this->data as it contains global_config from parent
         $this->load->library('session'); // Ensure session library is loaded
         if (!is_loggedin()) {
             $this->session->set_userdata('redirect_url', current_url());

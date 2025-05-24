@@ -95,7 +95,7 @@ class Employee_model extends MY_Model
     }
 
     // get staff all list
-    public function getStaffList($branchID = '', $role_id, $active = 1)
+    public function getStaffList($role_id, $branchID = '', $active = 1)
     {
         $this->db->select('staff.*,staff_designation.name as designation_name,staff_department.name as department_name,login_credential.role as role_id, roles.name as role');
         $this->db->from('staff');

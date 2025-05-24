@@ -1,3 +1,9 @@
+<?php
+if (!isset($global_config)) {
+    $global_config = [];
+    $global_config['currency_symbol'] = '$'; // Default value, replace with actual logic if needed
+}
+?>
 <?php $currency_symbol = $global_config['currency_symbol']; ?>
 <section class="panel">
 	<div class="tabs-custom">

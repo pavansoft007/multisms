@@ -1,10 +1,19 @@
 <?php
 if ( !defined( 'BASEPATH' ) )exit( 'No direct script access allowed' );
 
-// return translation
+$CI = &get_instance();
+$CI->load->library('session');
+$CI->load->database();
+
 function translate($word = '')
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->has_userdata('set_lang')) {
         $set_lang = $CI->session->userdata('set_lang');
     } else {
@@ -33,8 +42,14 @@ function translate($word = '')
 
 function get_permission($permission, $can = '')
 {
-    $ci = &get_instance();
-    $role_id = $ci->session->userdata('loggedin_role_id');
+    $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+    $role_id = $CI->session->userdata('loggedin_role_id');
     if ($role_id == 1) {
         return true;
     }
@@ -49,15 +64,27 @@ function get_permission($permission, $can = '')
 
 function get_staff_permissions($id)
 {
-    $ci = &get_instance();
-    $sql = "SELECT `staff_privileges`.*, `permission`.`id` as `permission_id`, `permission`.`prefix` as `permission_prefix` FROM `staff_privileges` JOIN `permission` ON `permission`.`id`=`staff_privileges`.`permission_id` WHERE `staff_privileges`.`role_id` = " . $ci->db->escape($id);
-    $result = $ci->db->query($sql)->result();
+    $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+    $sql = "SELECT `staff_privileges`.*, `permission`.`id` as `permission_id`, `permission`.`prefix` as `permission_prefix` FROM `staff_privileges` JOIN `permission` ON `permission`.`id`=`staff_privileges`.`permission_id` WHERE `staff_privileges`.`role_id` = " . $CI->db->escape($id);
+    $result = $CI->db->query($sql)->result();
     return $result;
 }
 
 function get_session_id()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->has_userdata('set_session_id')) {
         $session_id = $CI->session->userdata('set_session_id');
     } else {
@@ -79,19 +106,24 @@ function is_secure($url)
 function get_global_setting($name = '')
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     $name = trim($name);
     $branchID = get_loggedin_branch_id();
     $roleID = loggedin_role_id();
-    if($roleID != 1){
-        $CI->db->where('branch_id', $branchID);
-        $CI->db->select($name);
+    if ($roleID != 1) {
+        $CI->db->where('global_settings.branch_id', $branchID); // Specify table name
+        $CI->db->select('global_settings.' . $name); // Explicitly specify table name
         $query = $CI->db->get('global_settings');
-    }else{
-        $CI->db->where('id', 1);
-        $CI->db->select($name);
+    } else {
+        $CI->db->where('global_settings.id', 1); // Specify table name
+        $CI->db->select('global_settings.' . $name); // Explicitly specify table name
         $query = $CI->db->get('global_settings');
     }
-    
 
     if ($query->num_rows() > 0) {
         $row = $query->row();
@@ -103,6 +135,12 @@ function get_global_setting($name = '')
 function is_superadmin_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 1) {
         return true;
     }
@@ -113,6 +151,12 @@ function is_superadmin_loggedin()
 function is_admin_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 2) {
         return true;
     }
@@ -123,6 +167,12 @@ function is_admin_loggedin()
 function is_teacher_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 3) {
         return true;
     }
@@ -133,6 +183,12 @@ function is_teacher_loggedin()
 function is_accountant_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 4) {
         return true;
     }
@@ -143,6 +199,12 @@ function is_accountant_loggedin()
 function is_librarian_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 5) {
         return true;
     }
@@ -153,6 +215,12 @@ function is_librarian_loggedin()
 function is_parent_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 6) {
         return true;
     }
@@ -163,6 +231,12 @@ function is_parent_loggedin()
 function is_student_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 7) {
         return true;
     }
@@ -173,6 +247,12 @@ function is_student_loggedin()
 function is_master_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 1) { // Updated to 1
         return true;
     }
@@ -183,6 +263,12 @@ function is_master_loggedin()
 function is_superadmin2_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->userdata('loggedin_role_id') == 9) {
         return true;
     }
@@ -192,21 +278,39 @@ function is_superadmin2_loggedin()
 // get logged in user id - login credential DB id
 function get_loggedin_id()
 {
-    $ci = &get_instance();
-    return $ci->session->userdata('loggedin_id');
+    $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+    return $CI->session->userdata('loggedin_id');
 }
 
 // get staff db id
 function get_loggedin_user_id()
 {
-    $ci = &get_instance();
-    return $ci->session->userdata('loggedin_userid');
+    $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+    return $CI->session->userdata('loggedin_userid');
 }
 
 // get session loggedin
 function is_loggedin()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if ($CI->session->has_userdata('loggedin')) {
         return true;
     }
@@ -217,20 +321,38 @@ function is_loggedin()
 function loggedin_role_name()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     $roleID = $CI->session->userdata('loggedin_role_id');
     return $CI->db->select('name')->where('id', $roleID)->get('roles')->row()->name;
 }
 
 function loggedin_role_id()
 {
-    $ci = &get_instance();
-    return $ci->session->userdata('loggedin_role_id');
+    $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
+    return $CI->session->userdata('loggedin_role_id');
 }
 
 // get logged in user type
 function get_loggedin_user_type()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     return $CI->session->userdata('loggedin_type');
 }
 
@@ -246,8 +368,9 @@ function get_loggedin_branch_id()
         $CI->load->database();
     }
 
-    // Debugging: Log session data
-    error_log('Session Data: ' . print_r($CI->session->userdata(), true));
+    // Debugging: Log session data to verify structure
+    error_log('Session Data in get_loggedin_branch_id: ' . print_r($CI->session->userdata(), true));
+
     return $CI->session->userdata('loggedin_userid');
 }
 
@@ -255,6 +378,12 @@ function get_loggedin_branch_id()
 function get_activeChildren_id()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     return $CI->session->userdata('myChildren_id');
 }
 
@@ -262,6 +391,12 @@ function get_activeChildren_id()
 function get_type_name_by_id($table, $type_id = '', $field = 'name')
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     $get = $CI->db->select($field)->from($table)->where('id', $type_id)->limit(1)->get()->row_array();
     return $get[$field];
 }
@@ -270,6 +405,12 @@ function get_type_name_by_id($table, $type_id = '', $field = 'name')
 function get_type_mobile_by_id($table, $type_id = '', $field = 'mobileno')
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     $get = $CI->db->select($field)->from($table)->where('id', $type_id)->limit(1)->get()->row_array();
     return $get[$field];
 }
@@ -278,6 +419,12 @@ function get_type_mobile_by_id($table, $type_id = '', $field = 'mobileno')
 function set_alert($type, $message)
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     $CI->session->set_flashdata('alert-message-' . $type, $message);
 }
 
@@ -291,6 +438,12 @@ function app_generate_hash()
 function generate_encryption_key()
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     // In case accessed from my_functions_helper.php
     $CI->load->library('encryption');
     $key = bin2hex($CI->encryption->create_key(16));
@@ -342,6 +495,12 @@ function csrf_jquery_token()
 function check_hash_restrictions($table, $id, $hash)
 {
     $CI = &get_instance();
+    if (!isset($CI->session)) {
+        $CI->load->library('session');
+    }
+    if (!isset($CI->db)) {
+        $CI->load->database();
+    }
     if (!$table || !$id || !$hash) {
         show_404();
     }

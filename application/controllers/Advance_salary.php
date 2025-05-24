@@ -64,6 +64,13 @@ class Advance_salary extends Admin_Controller
         $this->data['title']        = translate('advance_salary');
         $this->data['sub_page']     = 'advance_salary/index';
         $this->data['main_menu']    = 'advance_salary';
+        
+        // Define $global_config and add it to $this->data
+        $global_config = [
+            'animations' => 'fadeIn', // Example value, replace with actual logic if needed
+        ];
+        $this->data['global_config'] = $global_config;
+
         $this->load->view('layout/index', $this->data);
     }
 

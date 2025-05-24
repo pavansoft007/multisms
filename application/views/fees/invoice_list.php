@@ -172,3 +172,8 @@
         });
 	});
 </script>
+
+<?php
+$branchID = $this->application_model->get_branch_id();
+$this->db->where('branch_id', $branchID ? $branchID : 0);
+$this->data['global_config'] = $this->db->get('global_settings')->row_array();

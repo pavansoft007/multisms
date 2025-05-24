@@ -242,6 +242,12 @@ class Settings extends Admin_Controller
             redirect(current_url());
         }
 
+        // Fetch global_settings for the current branch and pass to view
+        $branchID = $this->application_model->get_branch_id();
+        $this->db->where('branch_id', $branchID ? $branchID : 0);
+        $global_config = $this->db->get('global_settings')->row_array();
+        $this->data['global_config'] = $global_config;
+
         $this->data['title'] = translate('global_settings');
         $this->data['sub_page'] = 'settings/universal';
         $this->data['main_menu'] = 'settings';
