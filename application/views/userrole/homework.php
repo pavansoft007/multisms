@@ -11,7 +11,7 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#<?php echo $row['id']; ?>">
-									<i class="far fa-sticky-note"></i> <?php echo $row['subject_name']?> - <?=_d($row['date_of_homework'])?>
+									<i class="far fa-sticky-note"></i> <?php echo isset($row['subject_name']) ? $row['subject_name'] : 'N/A'; ?> - <?=_d($row['date_of_homework'])?>
 								</a>
 							</h4>
 						</div>

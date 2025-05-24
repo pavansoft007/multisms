@@ -97,6 +97,16 @@ class Userrole_model extends MY_Model
         } elseif (is_parent_loggedin()) {
             $studentID = get_activeChildren_id();
         }
+
+        // Debugging log to check the value of $studentID
+        log_message('debug', 'getStudentDetails: studentID = ' . json_encode($studentID));
+
+        // Fallback if $studentID is not set
+        if (!isset($studentID)) {
+            log_message('error', 'getStudentDetails: studentID is not set.');
+            return null;
+        }
+
         $this->db->select('CONCAT(s.first_name, " ", s.last_name) as fullname,s.email as student_email,e.branch_id,e.student_id,s.hostel_id,s.room_id,s.route_id,s.vehicle_id,e.class_id,e.section_id,c.name as class_name,se.name as section_name,b.school_name,b.email as school_email,b.mobileno as school_mobileno,b.address as school_address');
         $this->db->from('enroll as e');
         $this->db->join('student as s', 's.id = e.student_id', 'inner');
@@ -104,7 +114,13 @@ class Userrole_model extends MY_Model
         $this->db->join('class as c', 'c.id = e.class_id', 'left');
         $this->db->join('section as se', 'se.id = e.section_id', 'left');
         $this->db->where('s.id', $studentID);
-        return $this->db->get()->row_array();
+
+        $result = $this->db->get()->row_array();
+
+        // Debugging log to check the query result
+        log_message('debug', 'getStudentDetails: result = ' . json_encode($result));
+
+        return $result;
     }
 
     public function getHomeworkList($studentID)
@@ -124,7 +140,20 @@ class Userrole_model extends MY_Model
         $this->db->where('homework.status', 0);
         $this->db->where('homework.session_id', get_session_id());
         $this->db->order_by('homework.id', 'desc');
-        return $this->db->get()->result_array();
+
+        // Debugging: Log the query before execution
+        log_message('debug', 'Executing getHomeworkList query: ' . $this->db->get_compiled_select());
+        // Debugging: Log the compiled query before execution
+        log_message('debug', 'Compiled query in getHomeworkList: ' . $this->db->get_compiled_select());
+
+        // Ensure the FROM clause is explicitly set
+        $this->db->from('homework');
+
+        // Debugging: Log the query results
+        $results = $this->db->get()->result_array();
+        log_message('debug', 'Query results in getHomeworkList: ' . print_r($results, true));
+
+        return $results;
     }
 
     // Get user role details

@@ -335,5 +335,21 @@ function get_main_menu_items($role_id = 0) {
         );
     }
     
+    // Parent role specific menus
+    if ($role_id == 6) {
+        $menu_items[] = array('name' => 'teachers', 'url' => 'userrole/teachers', 'icon' => 'fas fa-chalkboard-teacher', 'desc' => 'View teacher information');
+        $menu_items[] = array('name' => 'subject', 'url' => 'userrole/subject', 'icon' => 'fas fa-school', 'desc' => 'Subjects and classes');
+        $menu_items[] = array('name' => 'leave_application', 'url' => 'userrole/leave_request', 'icon' => 'fas fa-file-alt', 'desc' => 'Submit leave applications');
+        $menu_items[] = array('name' => 'attachments_book', 'url' => 'userrole/attachments', 'icon' => 'fas fa-book', 'desc' => 'View attachment books');
+        $menu_items[] = array('name' => 'homework', 'url' => 'userrole/homework', 'icon' => 'fas fa-tasks', 'desc' => 'View homework assignments');
+        $menu_items[] = array('name' => 'exam_master', 'url' => 'userrole/exam_schedule', 'icon' => 'fas fa-clipboard-list', 'desc' => 'View exam details');
+        $menu_items[] = array('name' => 'supervision', 'url' => 'supervision', 'icon' => 'fas fa-user-shield', 'desc' => 'View supervision details');
+        $menu_items[] = array('name' => 'attendance', 'url' => 'userrole/attendance', 'icon' => 'fas fa-calendar-check', 'desc' => 'View attendance records');
+        $menu_items[] = array('name' => 'library', 'url' => 'userrole/book', 'icon' => 'fas fa-book-reader', 'desc' => 'View library resources');
+        $menu_items[] = array('name' => 'events', 'url' => 'userrole/event', 'icon' => 'fas fa-calendar-alt', 'desc' => 'View school events');
+        $menu_items[] = array('name' => 'fees_history', 'url' => 'userrole/invoice', 'icon' => 'fas fa-money-bill-wave', 'desc' => 'View fees history');
+        $menu_items[] = array('name' => 'message', 'url' => 'communication/mailbox/inbox', 'icon' => 'fas fa-envelope', 'desc' => 'View messages');
+    }
+    
     return $menu_items;
 }
