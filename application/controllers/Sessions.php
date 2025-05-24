@@ -17,11 +17,6 @@ class Sessions extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
-        $this->load->library('form_validation');
-        $this->load->helper(array('url', 'form', 'language'));
-        $this->load->database();
-        $this->data = isset($this->data) ? $this->data : array();
     }
 
     /* form validation rules */
@@ -61,17 +56,6 @@ class Sessions extends Admin_Controller
     public function set_academic($action = '')
     {
         if (is_loggedin()) {
-            // Check if the user is a parent (role ID 6)
-            if (loggedin_role_id() == 6) {
-                // Ensure the parent has an active child selected
-                $activeChildId = get_activeChildren_id();
-                if (empty($activeChildId)) {
-                    set_alert('error', translate('please_select_active_child'));
-                    redirect($_SERVER['HTTP_REFERER']);
-                    return;
-                }
-            }
-
             $this->session->set_userdata('set_session_id', $action);
             if (!empty($_SERVER['HTTP_REFERER'])) {
                 redirect($_SERVER['HTTP_REFERER']);
