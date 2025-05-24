@@ -367,7 +367,9 @@ function get_loggedin_branch_id()
     if (!isset($CI->db)) {
         $CI->load->database();
     }
-
+    if($CI->session->userdata('loggedin_role_id') == 6){
+        return $CI->session->userdata('loggedin_branch');
+    }
     // Debugging: Log session data to verify structure
     error_log('Session Data in get_loggedin_branch_id: ' . print_r($CI->session->userdata(), true));
 
