@@ -22,6 +22,19 @@ class Userrole extends User_Controller
         $this->load->model('fees_model');
         $this->load->model('exam_model');
         $this->load->model('role_model');
+        // --- Parent child_id GET param logic ---
+        if (is_parent_loggedin()) {
+            $child_id = $this->input->get('child_id');
+            if (!empty($child_id) && is_numeric($child_id)) {
+                // Validate that this child belongs to the parent
+                $parent_id = get_loggedin_user_id();
+                $this->db->where(['id' => $child_id, 'parent_id' => $parent_id]);
+                $query = $this->db->get('student');
+                if ($query->num_rows() == 1) {
+                    $this->session->set_userdata('myChildren_id', $child_id);
+                }
+            }
+        }
     }
 
     public function index()
