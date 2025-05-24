@@ -105,28 +105,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         // --- CHILD SELECTION LOGIC FOR PARENT ROLE (from controller) ---
         if (isset($children) && is_array($children) && count($children) > 0) {
-            if (count($children) > 1) {
-                echo '<div style="margin-bottom:20px;">';
-                echo '<div class="btn-group" role="group">';
-                foreach ($children as $child) {
-                    $active = (isset($selected_child_id) && $selected_child_id == $child['id']) ? 'btn-primary' : 'btn-default';
-                    $url = base_url('parents/select_child/' . $child['id']);
-                    echo '<a href="' . $url . '" class="btn ' . $active . '" style="margin-right:5px;">';
-                    echo '<img src="' . base_url('uploads/app_image/' . $child['photo']) . '" style="width:32px;height:32px;border-radius:50%;margin-right:6px;vertical-align:middle;">';
-                    echo htmlspecialchars($child['fullname']) . ' <span style="font-size:12px;color:#888;">(' . $child['class_name'] . ' - ' . $child['section_name'] . ')</span>';
-                    echo '</a>';
-                }
-                echo '</div>';
-                echo '</div>';
-                // If no child selected, default to first
-                if (!isset($selected_child_id) || !$selected_child_id) {
-                    redirect(base_url('parents/select_child/' . $children[0]['id']));
-                }
-            } elseif (count($children) == 1) {
-                // If only one child, set in session automatically
-                if (!isset($selected_child_id) || $selected_child_id != $children[0]['id']) {
-                    redirect(base_url('parents/select_child/' . $children[0]['id']));
-                }
+            echo '<div style="margin-bottom:20px;">';
+            echo '<div class="btn-group" role="group">';
+            foreach ($children as $child) {
+                $active = (isset($selected_child_id) && $selected_child_id == $child['id']) ? 'btn-primary' : 'btn-default';
+                $url = base_url('parents/select_child/' . $child['id']);
+                echo '<a href="' . $url . '" class="btn ' . $active . '" style="margin-right:5px;">';
+                echo '<img src="' . base_url('uploads/app_image/' . $child['photo']) . '" style="width:32px;height:32px;border-radius:50%;margin-right:6px;vertical-align:middle;">';
+                echo htmlspecialchars($child['fullname']) . ' <span style="font-size:12px;color:#888;">(' . $child['class_name'] . ' - ' . $child['section_name'] . ')</span>';
+                echo '</a>';
+            }
+            echo '</div>';
+            echo '</div>';
+            // If no child selected, default to first
+            if (!isset($selected_child_id) || !$selected_child_id) {
+                redirect(base_url('parents/select_child/' . $children[0]['id']));
             }
         }
         // Display all menu items in a single grid
